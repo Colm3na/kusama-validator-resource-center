@@ -2,25 +2,9 @@
   <div class="container">
     <div>
       <Logo />
-      <h1 class="title">kusama-validator-resource-center</h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+      <h1 class="title mt-3">
+        Validator Resource Center and Ranking Website for Kusama
+      </h1>
     </div>
   </div>
 </template>
@@ -40,12 +24,11 @@ export default {}
 }
 
 .title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Space Mono', monospace;
   display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
+  font-weight: 400;
+  font-size: 60px;
+  color: #e6007a;
   letter-spacing: 1px;
 }
 

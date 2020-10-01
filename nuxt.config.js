@@ -29,6 +29,15 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+    // https://www.npmjs.com/package/@nuxtjs/google-fonts
+    [
+      '@nuxtjs/google-fonts',
+      {
+        families: {
+          'Space+Mono': [400, 700],
+        },
+      },
+    ],
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
