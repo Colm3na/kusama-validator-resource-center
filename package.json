@@ -1,0 +1,27 @@
+{
+  "name": "kusama-validator-resource-center",
+  "version": "1.0.0",
+  "description": "Validator Resource Center and Ranking Website for Kusama",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Colm3na/kusama-validator-resource-center.git"
+  },
+  "keywords": [
+    "blockchain",
+    "kusama",
+    "polkadot",
+    "substrate",
+    "PoS",
+    "validator"
+  ],
+  "author": "Mario Pino Uceda",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Colm3na/kusama-validator-resource-center/issues"
+  },
+  "homepage": "https://github.com/Colm3na/kusama-validator-resource-center#readme"
+}
