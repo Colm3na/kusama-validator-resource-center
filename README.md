@@ -1,5 +1,6 @@
-# kusama-validator-resource-center
-Validator Resource Center and Ranking Website for Kusama
+# Validator Resource Center and Ranking Website for Kusama
+
+Resource center website focusing on validators information on Kusama Network. The website aims to provide quantitative and qualitative data about validators’ performance and help nominators to choose the best nomination set that works for them.
 
 ## Build Setup
 
