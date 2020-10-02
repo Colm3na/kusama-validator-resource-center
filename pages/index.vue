@@ -5,12 +5,18 @@
       <h1 class="title mt-3">
         Validator Resource Center and Ranking Website for Kusama
       </h1>
+      <Ranking />
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import Ranking from '../components/Ranking.vue'
+export default {
+  components: {
+    Ranking,
+  },
+}
 </script>
 
 <style>
