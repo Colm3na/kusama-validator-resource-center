@@ -2,7 +2,7 @@
   <div class="container">
     <div>
       <Logo />
-      <h1 class="title mt-3">
+      <h1 class="title my-3">
         Validator Resource Center and Ranking Website for Kusama
       </h1>
       <Ranking />
@@ -33,7 +33,7 @@ export default {
   font-family: 'Space Mono', monospace;
   display: block;
   font-weight: 400;
-  font-size: 60px;
+  font-size: 25px;
   color: #e6007a;
   letter-spacing: 1px;
 }
