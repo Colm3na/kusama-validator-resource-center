@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div v-if="loading">Loading ...</div>
+    <div v-if="loading">
+      <p class="my-3">
+        This is a decentralized app and data collection may take some time,
+        please be patient!
+      </p>
+      <p class="text-center">Loading...</p>
+    </div>
     <div v-else>
       <b-table
         dark
@@ -15,12 +21,19 @@
         :total-rows="rows"
         :per-page="perPage"
         aria-controls="my-table"
+        variant="dark"
       ></b-pagination>
     </div>
   </div>
 </template>
 <script>
 export default {
+  data() {
+    return {
+      perPage: 10,
+      currentPage: 1,
+    }
+  },
   computed: {
     loading() {
       return this.$store.state.ranking.loading
@@ -39,10 +52,9 @@ export default {
       return this.ranking.length
     },
   },
-  data() {
-    return {
-      perPage: 10,
-      currentPage: 1,
+  async created() {
+    if (this.$store.state.ranking.list.length === 0) {
+      await this.$store.dispatch('ranking/update')
     }
   },
   methods: {
@@ -58,11 +70,6 @@ export default {
         return identity.display || ``
       }
     },
-  },
-  async created() {
-    if (this.$store.state.ranking.list.length === 0) {
-      await this.$store.dispatch('ranking/update')
-    }
   },
 }
 </script>

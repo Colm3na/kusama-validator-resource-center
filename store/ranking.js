@@ -28,7 +28,7 @@ export const actions = {
       const { identity } = await api.derive.accounts.info(validator.accountId)
       validator.identity = identity
     }
-    console.log(JSON.parse(JSON.stringify(validatorStaking)))
+    // console.log(JSON.parse(JSON.stringify(validatorStaking)))
     context.commit('update', JSON.parse(JSON.stringify(validatorStaking)))
   },
 }

@@ -1,10 +1,12 @@
 <template>
   <div class="container">
     <div>
-      <Logo />
-      <h1 class="title my-3">
-        Validator Resource Center and Ranking Website for Kusama
-      </h1>
+      <p class="my-3">
+        The Validator Resource Center and Ranking Website for Kusama aims to
+        provide quantitative and qualitative data about validators performance
+        and and help nominators to choose the best nomination set that works for
+        them.
+      </p>
       <Ranking />
     </div>
   </div>
@@ -16,19 +18,22 @@ export default {
   components: {
     Ranking,
   },
+  head: {
+    title: 'Validator Resource Center and Ranking Website for Kusama',
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Validator Resource Center and Ranking Website for Kusama',
+      },
+    ],
+  },
 }
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 .title {
   font-family: 'Space Mono', monospace;
   display: block;
@@ -36,17 +41,5 @@ export default {
   font-size: 25px;
   color: #e6007a;
   letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
 }
 </style>
