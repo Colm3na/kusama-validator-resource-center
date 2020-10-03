@@ -12,9 +12,12 @@
         dark
         striped
         hover
+        :fields="fields"
         :items="ranking"
         :per-page="perPage"
         :current-page="currentPage"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
       ></b-table>
       <div class="row">
         <div class="col-4">
@@ -56,6 +59,14 @@ export default {
     return {
       perPage: 10,
       currentPage: 1,
+      sortBy: 'rank',
+      sortDesc: false,
+      fields: [
+        { key: 'rank', sortable: true },
+        { key: 'name', sortable: true },
+        { key: 'accountId', sortable: true },
+        { key: 'nominators', sortable: true },
+      ],
     }
   },
   computed: {
