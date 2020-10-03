@@ -16,13 +16,37 @@
         :per-page="perPage"
         :current-page="currentPage"
       ></b-table>
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
-        aria-controls="my-table"
-        variant="dark"
-      ></b-pagination>
+      <div class="row">
+        <div class="col-4">
+          <b-button-group>
+            <b-button variant="outline-secondary" @click="setPageSize(10)"
+              >10</b-button
+            >
+            <b-button variant="outline-secondary" @click="setPageSize(20)"
+              >20</b-button
+            >
+            <b-button variant="outline-secondary" @click="setPageSize(50)"
+              >50</b-button
+            >
+            <b-button variant="outline-secondary" @click="setPageSize(100)"
+              >100</b-button
+            >
+            <b-button variant="outline-secondary" @click="setPageSize(1000)"
+              >All</b-button
+            >
+          </b-button-group>
+        </div>
+        <div class="col-8">
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="my-table"
+            variant="dark"
+            align="right"
+          ></b-pagination>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -69,6 +93,9 @@ export default {
       } else {
         return identity.display || ``
       }
+    },
+    setPageSize(size) {
+      this.perPage = size
     },
   },
 }
