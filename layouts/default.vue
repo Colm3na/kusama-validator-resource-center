@@ -82,4 +82,7 @@ body {
   border: 0;
   outline: 0;
 }
+.identicon {
+  display: inline-block;
+}
 </style>

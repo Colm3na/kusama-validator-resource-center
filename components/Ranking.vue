@@ -1,24 +1,55 @@
 <template>
   <div>
     <div v-if="loading">
-      <p class="my-3">
+      <p class="text-center my-3">
         This is a decentralized app and data collection may take some time,
         please be patient!
       </p>
       <p class="text-center">Loading...</p>
     </div>
     <div v-else>
+      Exclude:
+      <div class="row">
+        <div class="col-6">
+          <b-form-group>
+            <b-form-checkbox-group
+              id="checkbox-group-1"
+              v-model="exclude"
+              :options="options"
+              name="exclude"
+            ></b-form-checkbox-group>
+          </b-form-group>
+        </div>
+        <div class="col-6 text-right">
+          {{ filteredRanking.length }} / {{ ranking.length }}
+        </div>
+      </div>
       <b-table
         dark
         striped
         hover
+        responsive
         :fields="fields"
-        :items="ranking"
+        :items="filteredRanking"
         :per-page="perPage"
         :current-page="currentPage"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
-      ></b-table>
+      >
+        <template v-slot:cell(accountId)="data">
+          <Identicon
+            :key="data.item.accountId"
+            :size="28"
+            :theme="'polkadot'"
+            :value="data.item.accountId"
+            class="identicon"
+          />
+          {{ shortAddress(data.item.accountId) }}
+        </template>
+        <template v-slot:cell(commission)="data">
+          {{ data.item.commission }}%
+        </template>
+      </b-table>
       <div class="row">
         <div class="col-4">
           <b-button-group>
@@ -54,7 +85,13 @@
   </div>
 </template>
 <script>
+import Identicon from '@polkadot/vue-identicon'
+import commonMixin from '../mixins/commonMixin.js'
 export default {
+  components: {
+    Identicon,
+  },
+  mixins: [commonMixin],
   data() {
     return {
       perPage: 10,
@@ -66,6 +103,12 @@ export default {
         { key: 'name', sortable: true },
         { key: 'accountId', sortable: true },
         { key: 'nominators', sortable: true },
+        { key: 'commission', sortable: true, class: 'text-right' },
+      ],
+      exclude: [],
+      options: [
+        { text: '100% commission', value: 'greedy' },
+        { text: 'No identity set', value: 'noIdentity' },
       ],
     }
   },
@@ -80,8 +123,20 @@ export default {
           name: this.getName(validator.identity),
           accountId: validator.accountId,
           nominators: validator.exposure.others.length,
+          commission: (validator.validatorPrefs.commission / 10000000).toFixed(
+            0
+          ),
         }
       })
+    },
+    filteredRanking() {
+      let filteredRanking = this.exclude.includes('greedy')
+        ? this.ranking.filter(({ commission }) => commission !== `100`)
+        : this.ranking
+      filteredRanking = this.exclude.includes('noIdentity')
+        ? filteredRanking.filter(({ name }) => name !== '')
+        : filteredRanking
+      return filteredRanking
     },
     rows() {
       return this.ranking.length
@@ -111,8 +166,4 @@ export default {
   },
 }
 </script>
-<style>
-.validator pre {
-  color: #fff;
-}
-</style>
+<style></style>

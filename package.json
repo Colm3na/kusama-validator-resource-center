@@ -33,6 +33,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
     "@polkadot/api": "^2.0.1",
+    "@polkadot/vue-identicon": "^0.59.1",
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.16.0",
     "core-js": "^3.6.5",
