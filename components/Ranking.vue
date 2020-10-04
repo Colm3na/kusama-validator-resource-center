@@ -5,7 +5,16 @@
         This is a decentralized app and data collection may take some time,
         please be patient!
       </p>
-      <p class="text-center">Loading...</p>
+      <text-typing
+        :texts="['Fetching chain data...']"
+        :speed="100"
+        :delay="3000"
+        fixed-text-class="text-white"
+        dynamic-text-class="text-teal-200"
+        caret-class="text-white"
+        class="pt-3 text-center"
+      >
+      </text-typing>
     </div>
     <div v-else>
       Exclude:
@@ -97,6 +106,7 @@
 <script>
 import Identicon from '@polkadot/vue-identicon'
 import commonMixin from '../mixins/commonMixin.js'
+
 export default {
   components: {
     Identicon,

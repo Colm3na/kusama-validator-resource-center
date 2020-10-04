@@ -41,7 +41,8 @@
     "core-js": "^3.6.5",
     "nuxt": "^2.14.5",
     "sass": "^1.26.11",
-    "sass-loader": "^10.0.2"
+    "sass-loader": "^10.0.2",
+    "vue-typed-text": "^1.0.5"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^5.15.0",

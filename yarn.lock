@@ -11139,6 +11139,11 @@ vue-router@^3.4.3:
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.4.5.tgz#d396ec037b35931bdd1e9b7edd86f9788dc15175"
   integrity sha512-ioRY5QyDpXM9TDjOX6hX79gtaMXSVDDzSlbIlyAmbHNteIL81WIVB2e+jbzV23vzxtoV0krdS2XHm+GxFg+Nxg==
 
+vue-runtime-helpers@^1.0.0:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/vue-runtime-helpers/-/vue-runtime-helpers-1.1.2.tgz#446b7b820888ab0c5264d2c3a32468e72e4100f3"
+  integrity sha512-pZfGp+PW/IXEOyETE09xQHR1CKkR9HfHZdnMD/FVLUNI+HxYTa82evx5WrF6Kz4s82qtqHvMZ8MZpbk2zT2E1Q==
+
 vue-server-renderer@^2.6.12:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue-server-renderer/-/vue-server-renderer-2.6.12.tgz#a8cb9c49439ef205293cb41c35d0d2b0541653a5"
@@ -11173,6 +11178,13 @@ vue-template-es2015-compiler@^1.6.0, vue-template-es2015-compiler@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
+
+vue-typed-text@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/vue-typed-text/-/vue-typed-text-1.0.5.tgz#7ebc34a607b8c78020048e6aaf453186824a4fee"
+  integrity sha512-HscvFycLotaoRYckg19+F5hElC0sTHeeOmKOvMOoF9WSwyPUuWjMb7FD7YK4uscDAYvQrOt+P5TqIOz0PyFvaw==
+  dependencies:
+    vue-runtime-helpers "^1.0.0"
 
 vue@^2.6.12:
   version "2.6.12"
