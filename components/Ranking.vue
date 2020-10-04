@@ -38,6 +38,7 @@
         striped
         hover
         responsive
+        stacked="md"
         :fields="fields"
         :items="filteredRanking"
         :per-page="perPage"
