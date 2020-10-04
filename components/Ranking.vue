@@ -46,31 +46,31 @@
         :sort-desc.sync="sortDesc"
       >
         <template v-slot:cell(name)="data">
-          <font-awesome-icon
-            v-if="data.item.verifiedIdentity"
-            v-b-tooltip.hover
-            icon="check"
-            class="text-success verified"
-            title="Verified identity"
-          />
+          <span v-b-tooltip.hover title="Verified identity">
+            <font-awesome-icon
+              v-if="data.item.verifiedIdentity"
+              icon="check"
+              class="text-success verified"
+            />
+          </span>
           {{ data.item.name }}
         </template>
-        <template v-slot:cell(accountId)="data">
+        <template v-slot:cell(stashAddress)="data">
           <Identicon
-            :key="data.item.accountId"
+            :key="data.item.stashAddress"
             :size="28"
             :theme="'polkadot'"
-            :value="data.item.accountId"
+            :value="data.item.stashAddress"
             class="identicon"
           />
-          {{ shortAddress(data.item.accountId) }}
+          {{ shortAddress(data.item.stashAddress) }}
         </template>
         <template v-slot:cell(commission)="data">
           {{ data.item.commission }}%
         </template>
       </b-table>
       <div class="row">
-        <div class="col-4">
+        <div class="col-6">
           <b-button-group>
             <b-button variant="outline-secondary" @click="setPageSize(10)"
               >10</b-button
@@ -81,15 +81,12 @@
             <b-button variant="outline-secondary" @click="setPageSize(50)"
               >50</b-button
             >
-            <b-button variant="outline-secondary" @click="setPageSize(100)"
-              >100</b-button
-            >
             <b-button variant="outline-secondary" @click="setPageSize(1000)"
               >All</b-button
             >
           </b-button-group>
         </div>
-        <div class="col-8">
+        <div class="col-6">
           <b-pagination
             v-model="currentPage"
             :total-rows="rows"
@@ -121,7 +118,7 @@ export default {
       fields: [
         { key: 'rank', sortable: true },
         { key: 'name', sortable: true },
-        { key: 'accountId', sortable: true },
+        { key: 'stashAddress', sortable: true },
         { key: 'nominators', sortable: true, class: 'text-right' },
         { key: 'commission', sortable: true, class: 'text-right' },
       ],
@@ -143,7 +140,7 @@ export default {
           rank: index + 1,
           name: this.getName(validator.identity),
           verifiedIdentity: validator.verifiedIdentity,
-          accountId: validator.accountId,
+          stashAddress: validator.accountId,
           nominators: validator.exposure.others.length,
           commission: (validator.validatorPrefs.commission / 10000000).toFixed(
             0
