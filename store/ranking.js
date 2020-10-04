@@ -35,7 +35,7 @@ export const actions = {
           ([, judgement]) => judgement.isKnownGood || judgement.isReasonable
         ) || false
     }
-    console.log(JSON.parse(JSON.stringify(validatorStaking)))
+    // console.log(JSON.parse(JSON.stringify(validatorStaking)))
     context.commit('update', JSON.parse(JSON.stringify(validatorStaking)))
   },
 }

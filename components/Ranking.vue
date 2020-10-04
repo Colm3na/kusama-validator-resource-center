@@ -10,7 +10,7 @@
     <div v-else>
       Exclude:
       <div class="row">
-        <div class="col-6">
+        <div class="col-8">
           <b-form-group>
             <b-form-checkbox-group
               id="checkbox-group-1"
@@ -20,7 +20,7 @@
             ></b-form-checkbox-group>
           </b-form-group>
         </div>
-        <div class="col-6 text-right">
+        <div class="col-4 text-right">
           {{ filteredRanking.length }} / {{ ranking.length }}
         </div>
       </div>
@@ -39,8 +39,10 @@
         <template v-slot:cell(name)="data">
           <font-awesome-icon
             v-if="data.item.verifiedIdentity"
+            v-b-tooltip.hover
             icon="check"
-            class="text-success"
+            class="text-success verified"
+            title="Verified identity"
           />
           {{ data.item.name }}
         </template>
@@ -116,7 +118,8 @@ export default {
       exclude: [],
       options: [
         { text: '100% commission', value: 'greedy' },
-        { text: 'No identity set', value: 'noIdentity' },
+        { text: 'No identity', value: 'noIdentity' },
+        { text: 'No verified identity', value: 'noVerifiedIdentity' },
       ],
     }
   },
@@ -144,6 +147,9 @@ export default {
         : this.ranking
       filteredRanking = this.exclude.includes('noIdentity')
         ? filteredRanking.filter(({ name }) => name !== '')
+        : filteredRanking
+      filteredRanking = this.exclude.includes('noVerifiedIdentity')
+        ? filteredRanking.filter(({ verifiedIdentity }) => verifiedIdentity)
         : filteredRanking
       return filteredRanking
     },
@@ -175,4 +181,8 @@ export default {
   },
 }
 </script>
-<style></style>
+<style>
+.verified {
+  font-size: 0.7rem;
+}
+</style>
