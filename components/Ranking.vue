@@ -102,7 +102,7 @@ export default {
         { key: 'rank', sortable: true },
         { key: 'name', sortable: true },
         { key: 'accountId', sortable: true },
-        { key: 'nominators', sortable: true },
+        { key: 'nominators', sortable: true, class: 'text-right' },
         { key: 'commission', sortable: true, class: 'text-right' },
       ],
       exclude: [],
