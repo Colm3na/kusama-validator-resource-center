@@ -36,6 +36,14 @@
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
       >
+        <template v-slot:cell(name)="data">
+          <font-awesome-icon
+            v-if="data.item.verifiedIdentity"
+            icon="check"
+            class="text-success"
+          />
+          {{ data.item.name }}
+        </template>
         <template v-slot:cell(accountId)="data">
           <Identicon
             :key="data.item.accountId"
@@ -121,6 +129,7 @@ export default {
         return {
           rank: index + 1,
           name: this.getName(validator.identity),
+          verifiedIdentity: validator.verifiedIdentity,
           accountId: validator.accountId,
           nominators: validator.exposure.others.length,
           commission: (validator.validatorPrefs.commission / 10000000).toFixed(

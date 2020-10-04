@@ -26,9 +26,16 @@ export const actions = {
     for (let i = 0; i < validatorStaking.length; i++) {
       const validator = validatorStaking[i]
       const { identity } = await api.derive.accounts.info(validator.accountId)
+      const judgements = identity.judgements.filter(
+        ([, judgement]) => !judgement.isFeePaid
+      )
       validator.identity = identity
+      validator.verifiedIdentity =
+        judgements.some(
+          ([, judgement]) => judgement.isKnownGood || judgement.isReasonable
+        ) || false
     }
-    // console.log(JSON.parse(JSON.stringify(validatorStaking)))
+    console.log(JSON.parse(JSON.stringify(validatorStaking)))
     context.commit('update', JSON.parse(JSON.stringify(validatorStaking)))
   },
 }

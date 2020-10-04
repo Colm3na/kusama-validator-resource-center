@@ -31,6 +31,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.31",
+    "@fortawesome/free-regular-svg-icons": "^5.15.0",
     "@nuxtjs/axios": "^5.12.2",
     "@polkadot/api": "^2.0.1",
     "@polkadot/vue-identicon": "^0.59.1",
@@ -42,8 +44,11 @@
     "sass-loader": "^10.0.2"
   },
   "devDependencies": {
+    "@fortawesome/free-brands-svg-icons": "^5.15.0",
+    "@fortawesome/free-solid-svg-icons": "^5.15.0",
     "@nuxtjs/eslint-config": "^3.1.0",
     "@nuxtjs/eslint-module": "^2.0.0",
+    "@nuxtjs/fontawesome": "^1.1.2",
     "@nuxtjs/google-fonts": "^1.0.3",
     "@vue/test-utils": "^1.1.0",
     "babel-core": "7.0.0-bridge.0",
