@@ -35,7 +35,6 @@
       </div>
       <b-table
         dark
-        striped
         hover
         responsive
         stacked="md"

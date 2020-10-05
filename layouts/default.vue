@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="dark">
+    <b-navbar toggleable="lg" type="dark" variant="dark" sticky>
       <b-container>
         <b-navbar-brand href="#">
           <img class="logo mb-1" src="../assets/img/kusama-logo.svg" />
@@ -59,6 +59,8 @@ $pagination-active-border-color: $secondary !default;
 $pagination-disabled-color: $secondary !default;
 $pagination-disabled-bg: $dark !default;
 $pagination-disabled-border-color: $secondary !default;
+
+$table-dark-bg: $body-bg !default;
 
 // Bootstrap and its default variables
 @import '../node_modules/bootstrap/scss/bootstrap';
