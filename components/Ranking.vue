@@ -45,6 +45,18 @@
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
       >
+        <template v-slot:cell(active)="data">
+          <span
+            v-if="data.item.active"
+            v-b-tooltip.hover
+            title="Active validator"
+          >
+            <font-awesome-icon icon="circle" class="text-success led-green" />
+          </span>
+          <span v-else v-b-tooltip.hover title="Inactive validator">
+            <font-awesome-icon icon="circle" class="text-danger led-red" />
+          </span>
+        </template>
         <template v-slot:cell(name)="data">
           <span v-b-tooltip.hover title="Verified identity">
             <font-awesome-icon
@@ -129,6 +141,7 @@ export default {
       sortDesc: false,
       fields: [
         { key: 'rank', sortable: true },
+        { key: 'active', sortable: true, class: 'text-center' },
         { key: 'name', sortable: true },
         { key: 'stashAddress', sortable: true },
         { key: 'nominators', sortable: true, class: 'text-right' },
@@ -136,6 +149,7 @@ export default {
       ],
       exclude: [],
       options: [
+        { text: 'Inactive', value: 'inactive' },
         { text: '100% commission', value: 'greedy' },
         { text: 'No identity', value: 'noIdentity' },
         { text: 'No verified identity', value: 'noVerifiedIdentity' },
@@ -147,23 +161,15 @@ export default {
       return this.$store.state.ranking.loading
     },
     ranking() {
-      return this.$store.state.ranking.list.map((validator, index) => {
-        return {
-          rank: index + 1,
-          name: this.getName(validator.identity),
-          verifiedIdentity: validator.verifiedIdentity,
-          stashAddress: validator.accountId,
-          nominators: validator.exposure.others.length,
-          commission: (validator.validatorPrefs.commission / 10000000).toFixed(
-            0
-          ),
-        }
-      })
+      return this.$store.state.ranking.list
     },
     filteredRanking() {
-      let filteredRanking = this.exclude.includes('greedy')
-        ? this.ranking.filter(({ commission }) => commission !== `100`)
+      let filteredRanking = this.exclude.includes('inactive')
+        ? this.ranking.filter(({ active }) => active)
         : this.ranking
+      filteredRanking = this.exclude.includes('greedy')
+        ? filteredRanking.filter(({ commission }) => commission !== `100`)
+        : filteredRanking
       filteredRanking = this.exclude.includes('noIdentity')
         ? filteredRanking.filter(({ name }) => name !== '')
         : filteredRanking
@@ -173,7 +179,7 @@ export default {
       return filteredRanking
     },
     rows() {
-      return this.ranking.length
+      return this.filteredRanking.length
     },
   },
   async created() {
@@ -182,18 +188,6 @@ export default {
     }
   },
   methods: {
-    getName(identity) {
-      if (
-        identity.displayParent &&
-        identity.displayParent !== `` &&
-        identity.display &&
-        identity.display !== ``
-      ) {
-        return `${identity.displayParent} / ${identity.display}`
-      } else {
-        return identity.display || ``
-      }
-    },
     setPageSize(size) {
       this.perPage = size
     },
@@ -203,5 +197,15 @@ export default {
 <style>
 .verified {
   font-size: 0.7rem;
+}
+.led-green {
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px,
+    #89ff00 0 2px 12px;
+}
+.led-red {
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px,
+    rgba(255, 0, 0, 1) 0 2px 12px;
 }
 </style>
