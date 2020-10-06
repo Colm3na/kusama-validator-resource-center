@@ -17,120 +17,151 @@
       </text-typing>
     </div>
     <div v-else>
-      Exclude:
-      <div class="row">
-        <div class="col-8">
-          <b-form-group>
-            <b-form-checkbox-group
-              id="checkbox-group-1"
-              v-model="exclude"
-              :options="options"
-              name="exclude"
-            ></b-form-checkbox-group>
-          </b-form-group>
-        </div>
-        <div class="col-4 text-right">
-          {{ filteredRanking.length }} / {{ ranking.length }}
-        </div>
-      </div>
-      <b-table
-        dark
-        hover
-        responsive
-        stacked="md"
-        :fields="fields"
-        :items="filteredRanking"
-        :per-page="perPage"
-        :current-page="currentPage"
-        :sort-by.sync="sortBy"
-        :sort-desc.sync="sortDesc"
-      >
-        <template v-slot:cell(active)="data">
-          <span
-            v-if="data.item.active"
-            v-b-tooltip.hover
-            title="Active validator"
-          >
-            <font-awesome-icon icon="circle" class="text-success led-green" />
-          </span>
-          <span v-else v-b-tooltip.hover title="Inactive validator">
-            <font-awesome-icon icon="circle" class="text-danger led-red" />
-          </span>
-        </template>
-        <template v-slot:cell(name)="data">
-          <span v-b-tooltip.hover title="Verified identity">
-            <font-awesome-icon
-              v-if="data.item.verifiedIdentity"
-              icon="check"
-              class="text-success verified"
-            />
-          </span>
-          {{ data.item.name }}
-        </template>
-        <template v-slot:cell(stashAddress)="data">
-          <Identicon
-            :key="data.item.stashAddress"
-            :size="28"
-            :theme="'polkadot'"
-            :value="data.item.stashAddress"
-            class="identicon"
-          />
-          {{ shortAddress(data.item.stashAddress) }}
-        </template>
-        <template v-slot:cell(commission)="data">
-          {{ data.item.commission }}%
-        </template>
-      </b-table>
-      <div class="row">
-        <div class="col-6">
-          <b-button-group>
-            <b-button
-              variant="outline-secondary"
-              :class="{ 'text-primary': perPage === 10 }"
-              @click="setPageSize(10)"
-              >10</b-button
-            >
-            <b-button
-              variant="outline-secondary"
-              :class="{ 'text-primary': perPage === 50 }"
-              @click="setPageSize(50)"
-              >50</b-button
-            >
-            <b-button
-              variant="outline-secondary"
-              :class="{ 'text-primary': perPage === 100 }"
-              @click="setPageSize(100)"
-              >100</b-button
-            >
-            <b-button
-              variant="outline-secondary"
-              :class="{ 'text-primary': perPage === 1000 }"
-              @click="setPageSize(1000)"
-              >All</b-button
-            >
-          </b-button-group>
-        </div>
-        <div class="col-6">
-          <b-pagination
-            v-model="currentPage"
-            :total-rows="rows"
+      <b-tabs content-class="mt-3">
+        <b-tab title="Ranking" active>
+          Exclude:
+          <div class="row">
+            <div class="col-8">
+              <b-form-group>
+                <b-form-checkbox-group
+                  id="checkbox-group-1"
+                  v-model="exclude"
+                  :options="options"
+                  name="exclude"
+                ></b-form-checkbox-group>
+              </b-form-group>
+            </div>
+            <div class="col-4 text-right">
+              {{ filteredRanking.length }} / {{ ranking.length }}
+            </div>
+          </div>
+          <b-table
+            dark
+            hover
+            responsive
+            stacked="md"
+            :fields="fields"
+            :items="filteredRanking"
             :per-page="perPage"
-            aria-controls="my-table"
-            variant="dark"
-            align="right"
-          ></b-pagination>
-        </div>
-      </div>
+            :current-page="currentPage"
+            :sort-by.sync="sortBy"
+            :sort-desc.sync="sortDesc"
+          >
+            <template v-slot:cell(active)="data">
+              <span
+                v-if="data.item.active"
+                v-b-tooltip.hover
+                title="Active validator"
+              >
+                <font-awesome-icon
+                  icon="circle"
+                  class="text-success led-green"
+                />
+              </span>
+              <span v-else v-b-tooltip.hover title="Inactive validator">
+                <font-awesome-icon icon="circle" class="text-danger led-red" />
+              </span>
+            </template>
+            <template v-slot:cell(name)="data">
+              <span v-b-tooltip.hover title="Verified identity">
+                <font-awesome-icon
+                  v-if="data.item.verifiedIdentity"
+                  icon="check"
+                  class="text-success verified"
+                />
+              </span>
+              {{ data.item.name }}
+            </template>
+            <template v-slot:cell(stashAddress)="data">
+              <Identicon
+                :key="data.item.stashAddress"
+                :size="28"
+                :theme="'polkadot'"
+                :value="data.item.stashAddress"
+                class="identicon"
+              />
+              {{ shortAddress(data.item.stashAddress) }}
+            </template>
+            <template v-slot:cell(commission)="data">
+              {{ data.item.commission }}%
+            </template>
+            <template v-slot:cell(selected)="data">
+              <p class="text-center mb-0">
+                <a
+                  class="selected"
+                  @click="toggleSelected(data.item.stashAddress)"
+                >
+                  <font-awesome-icon
+                    v-if="data.item.selected"
+                    icon="hand-paper"
+                    class="text-warning"
+                  />
+                  <font-awesome-icon
+                    v-else
+                    icon="hand-paper"
+                    class="text-secondary"
+                  />
+                </a>
+              </p>
+            </template>
+          </b-table>
+          <div class="row">
+            <div class="col-6">
+              <b-button-group>
+                <b-button
+                  variant="outline-secondary"
+                  :class="{ 'text-primary': perPage === 10 }"
+                  @click="setPageSize(10)"
+                  >10</b-button
+                >
+                <b-button
+                  variant="outline-secondary"
+                  :class="{ 'text-primary': perPage === 50 }"
+                  @click="setPageSize(50)"
+                  >50</b-button
+                >
+                <b-button
+                  variant="outline-secondary"
+                  :class="{ 'text-primary': perPage === 100 }"
+                  @click="setPageSize(100)"
+                  >100</b-button
+                >
+                <b-button
+                  variant="outline-secondary"
+                  :class="{ 'text-primary': perPage === 1000 }"
+                  @click="setPageSize(1000)"
+                  >All</b-button
+                >
+              </b-button-group>
+            </div>
+            <div class="col-6">
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="rows"
+                :per-page="perPage"
+                aria-controls="my-table"
+                variant="dark"
+                align="right"
+              ></b-pagination>
+            </div>
+          </div>
+        </b-tab>
+        <b-tab title="Selected validators">
+          <SelectedValidators :list="selectedValidators" />
+        </b-tab>
+      </b-tabs>
     </div>
   </div>
 </template>
 <script>
 import Identicon from '@polkadot/vue-identicon'
+import SelectedValidators from '../components/SelectedValidators.vue'
 import commonMixin from '../mixins/commonMixin.js'
 
 export default {
   components: {
     Identicon,
+    SelectedValidators,
   },
   mixins: [commonMixin],
   data() {
@@ -146,6 +177,7 @@ export default {
         { key: 'stashAddress', sortable: true },
         { key: 'nominators', sortable: true, class: 'text-right' },
         { key: 'commission', sortable: true, class: 'text-right' },
+        { key: 'selected', sortable: true, class: 'text-center' },
       ],
       exclude: [],
       options: [
@@ -154,6 +186,7 @@ export default {
         { text: 'No identity', value: 'noIdentity' },
         { text: 'No verified identity', value: 'noVerifiedIdentity' },
       ],
+      selectedValidatorAddresses: [],
     }
   },
   computed: {
@@ -161,7 +194,17 @@ export default {
       return this.$store.state.ranking.loading
     },
     ranking() {
-      return this.$store.state.ranking.list
+      return this.$store.state.ranking.list.map((validator) => {
+        return {
+          ...validator,
+          selected: this.isSelected(validator.stashAddress),
+        }
+      })
+    },
+    selectedValidators() {
+      return this.ranking.filter(({ stashAddress }) =>
+        this.selectedValidatorAddresses.includes(stashAddress)
+      )
     },
     filteredRanking() {
       let filteredRanking = this.exclude.includes('inactive')
@@ -182,14 +225,42 @@ export default {
       return this.filteredRanking.length
     },
   },
+  watch: {
+    selectedValidatorAddresses(selectedValidatorAddresses) {
+      this.$cookies.set(
+        'selectedValidatorAddresses',
+        selectedValidatorAddresses,
+        {
+          path: '/',
+          maxAge: 60 * 60 * 24 * 7,
+        }
+      )
+    },
+  },
   async created() {
     if (this.$store.state.ranking.list.length === 0) {
       await this.$store.dispatch('ranking/update')
+    }
+    if (this.$cookies.get('selectedValidatorAddresses')) {
+      this.favorites = this.$cookies.get('selectedValidatorAddresses')
     }
   },
   methods: {
     setPageSize(size) {
       this.perPage = size
+    },
+    isSelected(accountId) {
+      return this.selectedValidatorAddresses.includes(accountId)
+    },
+    toggleSelected(accountId) {
+      if (this.selectedValidatorAddresses.includes(accountId)) {
+        this.selectedValidatorAddresses.splice(
+          this.selectedValidatorAddresses.indexOf(accountId),
+          1
+        )
+      } else {
+        this.selectedValidatorAddresses.push(accountId)
+      }
     },
   },
 }
@@ -207,5 +278,8 @@ export default {
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px,
     rgba(255, 0, 0, 1) 0 2px 12px;
+}
+.selected {
+  cursor: pointer;
 }
 </style>
