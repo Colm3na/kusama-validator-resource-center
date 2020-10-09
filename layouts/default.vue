@@ -103,23 +103,4 @@ body {
 .custom-switch .custom-control-label {
   cursor: pointer;
 }
-// Scan lines
-.scanlines {
-  overflow: hidden;
-  mix-blend-mode: difference;
-}
-.scanlines::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(255, 255, 255, 0.05) 0.5%,
-    transparent 0.9%
-  );
-}
 </style>

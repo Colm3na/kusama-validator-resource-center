@@ -1,5 +1,5 @@
 <template>
-  <div class="container pt-3 scanlines">
+  <div class="container pt-3">
     <div>
       <b-alert show dismissible variant="info" class="text-center py-3 glitch">
         The Validator Resource Center and Ranking Website for Kusama aims to
