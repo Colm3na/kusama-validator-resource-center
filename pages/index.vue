@@ -1,11 +1,11 @@
 <template>
   <div class="container pt-3">
     <div>
-      <p class="text-center py-3">
+      <b-alert show dismissible variant="info" class="text-center py-3">
         The Validator Resource Center and Ranking Website for Kusama aims to
         provide quantitative and qualitative data about validators performance
         and help nominators to choose their best nomination set
-      </p>
+      </b-alert>
       <Ranking />
     </div>
   </div>

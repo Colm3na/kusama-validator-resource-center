@@ -159,7 +159,7 @@
             </div>
           </div>
         </b-tab>
-        <b-tab title="Selected validators">
+        <b-tab :title="`Selected validators (${selectedValidators.length})`">
           <SelectedValidators :list="selectedValidators" />
         </b-tab>
       </b-tabs>
@@ -193,7 +193,7 @@ export default {
       ],
       exclude: [],
       options: [
-        { text: 'Inactive validators', value: 'inactive' },
+        { text: 'Inactive', value: 'inactive' },
         { text: '100% commission', value: 'greedy' },
         { text: 'Slashed', value: 'slashed' },
         { text: 'Oversubscribed', value: 'oversubscribed' },
@@ -201,7 +201,7 @@ export default {
         { text: 'No verified identity', value: 'noVerifiedIdentity' },
         { text: 'No auto-payout', value: 'noAutoPayout' },
         {
-          text: "Don't participate in governance",
+          text: "Doesn't participate in governance",
           value: 'noParticipateGovernance',
         },
       ],

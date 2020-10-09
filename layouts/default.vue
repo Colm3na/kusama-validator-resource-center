@@ -50,7 +50,7 @@ $border-radius: 0 !default;
 $border-radius-lg: 0 !default;
 $border-radius-sm: 0 !default;
 
-$pagination-color: #fff !default;
+$pagination-color: $body-color !default;
 $pagination-bg: $dark !default;
 $pagination-border-color: $secondary !default;
 
@@ -67,6 +67,12 @@ $pagination-disabled-bg: $dark !default;
 $pagination-disabled-border-color: $secondary !default;
 
 $table-dark-bg: $body-bg !default;
+
+$alert-bg-level: 10;
+$alert-border-level: 1;
+$alert-color-level: -10;
+
+$nav-tabs-link-active-color: $body-color !default;
 
 // Bootstrap and its default variables
 @import '../node_modules/bootstrap/scss/bootstrap';
@@ -92,5 +98,8 @@ body {
 }
 .identicon {
   display: inline-block;
+}
+.custom-switch .custom-control-label {
+  cursor: pointer;
 }
 </style>
