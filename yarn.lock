@@ -1671,10 +1671,10 @@
     memoizee "^0.4.14"
     rxjs "^6.6.3"
 
-"@polkadot/ui-shared@0.59.1":
-  version "0.59.1"
-  resolved "https://registry.yarnpkg.com/@polkadot/ui-shared/-/ui-shared-0.59.1.tgz#a90c6e791e27660acfd37ffd5015ed53ba083ba5"
-  integrity sha512-jkWK1PhqLgdYrOI0rkQcHqLdok5J3BOV6uBI+iLfxAq+qkDBjtq4jGJDRbJR8/1axjgNE2+drRUXvhUtE2lZSQ==
+"@polkadot/ui-shared@0.60.1":
+  version "0.60.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/ui-shared/-/ui-shared-0.60.1.tgz#653aeafe51f6873f86eaa548f41c3bc4f8708acf"
+  integrity sha512-P3vfdo6fYin3/6GdpHxoMRgDwVIRn4K/IyLx9kzQ5pUAlJjZKuywEDI3DGdKo99MZ8gshjdtYH91lToH8zlDxw==
   dependencies:
     "@babel/runtime" "^7.11.2"
     color "^3.1.2"
@@ -1712,13 +1712,13 @@
     chalk "^4.1.0"
     ip-regex "^4.1.0"
 
-"@polkadot/vue-identicon@^0.59.1":
-  version "0.59.1"
-  resolved "https://registry.yarnpkg.com/@polkadot/vue-identicon/-/vue-identicon-0.59.1.tgz#a9e6512e5eed71823a2376e58ead6f07456cc9ff"
-  integrity sha512-r3Wqd5QcMaCouSml5oK0FnFteD7CiA8PSP7l6sWtRXUXyCC/nhxgOK4+V7sY2aOP5V5eilN9ZqpUUEULVcSCbw==
+"@polkadot/vue-identicon@^0.60.1":
+  version "0.60.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/vue-identicon/-/vue-identicon-0.60.1.tgz#ec023b1790e97483da65d92d2e5ee42fafd5e644"
+  integrity sha512-62qJnXwAKP522xhCe/QmCIPmESHJSNvlZajEPFJTR68IjhcAk0aLVqIfwuNJN1zokBodXHr5a2s7AhsgD1yqpg==
   dependencies:
     "@babel/runtime" "^7.11.2"
-    "@polkadot/ui-shared" "0.59.1"
+    "@polkadot/ui-shared" "0.60.1"
     jdenticon "2.2.0"
 
 "@polkadot/wasm-crypto@^1.4.1":
