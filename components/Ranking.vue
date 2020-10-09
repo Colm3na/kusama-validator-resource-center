@@ -79,19 +79,21 @@
                 :value="data.item.stashAddress"
                 class="identicon"
               />
-              <span v-if="data.item.name">
-                {{ data.item.name }}
-                <span v-b-tooltip.hover title="Verified identity">
-                  <font-awesome-icon
-                    v-if="data.item.verifiedIdentity"
-                    icon="check"
-                    class="text-success verified"
-                  />
+              <nuxt-link :to="`/validator/${data.item.stashAddress}`">
+                <span v-if="data.item.name">
+                  {{ data.item.name }}
+                  <span v-b-tooltip.hover title="Verified identity">
+                    <font-awesome-icon
+                      v-if="data.item.verifiedIdentity"
+                      icon="check"
+                      class="text-success verified"
+                    />
+                  </span>
                 </span>
-              </span>
-              <span v-else>
-                {{ shortAddress(data.item.stashAddress) }}
-              </span>
+                <span v-else>
+                  {{ shortAddress(data.item.stashAddress) }}
+                </span>
+              </nuxt-link>
             </template>
             <template v-slot:cell(commission)="data">
               {{ data.item.commission }}%

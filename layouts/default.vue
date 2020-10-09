@@ -2,8 +2,14 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="dark" sticky>
       <b-container>
-        <b-navbar-brand href="#">
-          <img class="logo mb-1" src="../assets/img/kusama-logo.svg" />
+        <b-navbar-brand>
+          <nuxt-link
+            to="/"
+            class="navbar-brand"
+            title="Validator Resource Center and Ranking Website for Kusama"
+          >
+            <img class="logo mb-1" src="../assets/img/kusama-logo.svg" />
+          </nuxt-link>
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse">
           <template>
