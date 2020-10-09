@@ -20,13 +20,13 @@
       <b-tabs content-class="mt-3">
         <b-tab title="Validator ranking" active>
           <h5 class="text-center">Exclude:</h5>
-          <div class="row py-3">
+          <div class="row pt-3">
             <div
               v-for="option in options"
               :key="option.text"
               class="col-md-3 mb-3"
             >
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-9">
                   {{ option.text }}
                 </div>
@@ -38,7 +38,14 @@
                     @change="toggleExcluded(option.value)"
                   />
                 </div>
-              </div>
+              </div> -->
+              <b-form-checkbox
+                switch
+                size="lg"
+                @change="toggleExcluded(option.value)"
+              >
+                {{ option.text }}
+              </b-form-checkbox>
             </div>
           </div>
           <p class="text-right mb-0">
@@ -201,7 +208,7 @@ export default {
         { text: 'No verified identity', value: 'noVerifiedIdentity' },
         { text: 'No auto-payout', value: 'noAutoPayout' },
         {
-          text: "Doesn't participate in governance",
+          text: 'No participation in governance',
           value: 'noParticipateGovernance',
         },
       ],
@@ -307,5 +314,9 @@ export default {
 }
 .selected {
   cursor: pointer;
+}
+.custom-switch.b-custom-control-lg .custom-control-label,
+.input-group-lg .custom-switch .custom-control-label {
+  font-size: 0.9rem;
 }
 </style>
