@@ -112,6 +112,7 @@ export const actions = {
     // console.log(JSON.parse(JSON.stringify(ranking)))
     context.commit('update', ranking)
     const endTime = new Date().getTime()
+    // eslint-disable-next-line
     console.log(
       `data collection time: ${((endTime - startTime) / 1000).toFixed(2)}s`
     )

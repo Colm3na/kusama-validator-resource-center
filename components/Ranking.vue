@@ -33,9 +33,9 @@
                 <div class="col-3">
                   <b-form-checkbox
                     switch
-                    @change="toggleExcluded(option.value)"
                     size="lg"
                     class="text-right"
+                    @change="toggleExcluded(option.value)"
                   />
                 </div>
               </div>
@@ -280,7 +280,6 @@ export default {
       }
     },
     toggleExcluded(value) {
-      console.log(value)
       if (this.exclude.includes(value)) {
         this.exclude.splice(this.exclude.indexOf(value), 1)
       } else {
