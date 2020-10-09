@@ -18,23 +18,32 @@
     </div>
     <div v-else>
       <b-tabs content-class="mt-3">
-        <b-tab title="Ranking" active>
-          Exclude:
-          <div class="row">
-            <div class="col-8">
-              <b-form-group>
-                <b-form-checkbox-group
-                  id="checkbox-group-1"
-                  v-model="exclude"
-                  :options="options"
-                  name="exclude"
-                ></b-form-checkbox-group>
-              </b-form-group>
-            </div>
-            <div class="col-4 text-right">
-              {{ filteredRanking.length }} / {{ ranking.length }}
+        <b-tab title="Validator ranking" active>
+          <h5 class="text-center">Exclude:</h5>
+          <div class="row py-3">
+            <div
+              v-for="option in options"
+              :key="option.text"
+              class="col-md-3 mb-3"
+            >
+              <div class="row">
+                <div class="col-9">
+                  {{ option.text }}
+                </div>
+                <div class="col-3">
+                  <b-form-checkbox
+                    switch
+                    @change="toggleExcluded(option.value)"
+                    size="lg"
+                    class="text-right"
+                  />
+                </div>
+              </div>
             </div>
           </div>
+          <p class="text-right mb-0">
+            {{ filteredRanking.length }} / {{ ranking.length }}
+          </p>
           <b-table
             dark
             hover
@@ -63,16 +72,6 @@
               </span>
             </template>
             <template v-slot:cell(name)="data">
-              <span v-b-tooltip.hover title="Verified identity">
-                <font-awesome-icon
-                  v-if="data.item.verifiedIdentity"
-                  icon="check"
-                  class="text-success verified"
-                />
-              </span>
-              {{ data.item.name }}
-            </template>
-            <template v-slot:cell(stashAddress)="data">
               <Identicon
                 :key="data.item.stashAddress"
                 :size="28"
@@ -80,7 +79,19 @@
                 :value="data.item.stashAddress"
                 class="identicon"
               />
-              {{ shortAddress(data.item.stashAddress) }}
+              <span v-if="data.item.name">
+                {{ data.item.name }}
+                <span v-b-tooltip.hover title="Verified identity">
+                  <font-awesome-icon
+                    v-if="data.item.verifiedIdentity"
+                    icon="check"
+                    class="text-success verified"
+                  />
+                </span>
+              </span>
+              <span v-else>
+                {{ shortAddress(data.item.stashAddress) }}
+              </span>
             </template>
             <template v-slot:cell(commission)="data">
               {{ data.item.commission }}%
@@ -174,17 +185,23 @@ export default {
         { key: 'rank', sortable: true },
         { key: 'active', sortable: true, class: 'text-center' },
         { key: 'name', sortable: true },
-        { key: 'stashAddress', sortable: true },
         { key: 'nominators', sortable: true, class: 'text-right' },
         { key: 'commission', sortable: true, class: 'text-right' },
         { key: 'selected', sortable: true, class: 'text-center' },
       ],
       exclude: [],
       options: [
-        { text: 'Inactive', value: 'inactive' },
+        { text: 'Inactive validators', value: 'inactive' },
         { text: '100% commission', value: 'greedy' },
+        { text: 'Slashed', value: 'slashed' },
+        { text: 'Oversubscribed', value: 'oversubscribed' },
         { text: 'No identity', value: 'noIdentity' },
         { text: 'No verified identity', value: 'noVerifiedIdentity' },
+        { text: 'No auto-payout', value: 'noAutoPayout' },
+        {
+          text: "Don't participate in governance",
+          value: 'noParticipateGovernance',
+        },
       ],
       selectedValidatorAddresses: [],
     }
@@ -260,6 +277,14 @@ export default {
         )
       } else {
         this.selectedValidatorAddresses.push(accountId)
+      }
+    },
+    toggleExcluded(value) {
+      console.log(value)
+      if (this.exclude.includes(value)) {
+        this.exclude.splice(this.exclude.indexOf(value), 1)
+      } else {
+        this.exclude.push(value)
       }
     },
   },
