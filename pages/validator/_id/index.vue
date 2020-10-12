@@ -30,7 +30,12 @@
           </h1>
         </div>
         <div class="col-2 text-right mt-4">
-          <a class="selected" @click="toggleSelected(validator.stashAddress)">
+          <a
+            class="selected"
+            @click="toggleSelected(validator.stashAddress)"
+            v-b-tooltip.hover
+            title="Select / Unselect validator"
+          >
             <font-awesome-icon
               v-if="isSelected(validator.stashAddress)"
               icon="hand-paper"

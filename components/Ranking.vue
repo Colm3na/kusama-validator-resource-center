@@ -84,6 +84,8 @@
                 <a
                   class="selected"
                   @click="toggleSelected(data.item.stashAddress)"
+                  v-b-tooltip.hover
+                  title="Select / Unselect validator"
                 >
                   <font-awesome-icon
                     v-if="data.item.selected"
