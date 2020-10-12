@@ -288,6 +288,18 @@ export default {
       }
     },
   },
+  watch: {
+    selectedValidatorAddresses(selectedValidatorAddresses) {
+      this.$cookies.set(
+        'selectedValidatorAddresses',
+        selectedValidatorAddresses,
+        {
+          path: '/',
+          maxAge: 60 * 60 * 24 * 7,
+        }
+      )
+    },
+  },
   async created() {
     if (this.$store.state.ranking.list.length === 0) {
       await this.$store.dispatch('ranking/update')
