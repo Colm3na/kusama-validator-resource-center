@@ -148,4 +148,7 @@ body {
 .footer a {
   color: white;
 }
+.close:hover {
+  color: #d1ecf1;
+}
 </style>

@@ -49,9 +49,17 @@
           </a>
         </div>
       </div>
-      <!-- <pre class="text-white">{{ JSON.stringify(validator, null, 2) }}</pre> -->
-      <b-tabs content-class="pt-4">
+      <b-tabs content-class="py-4">
         <b-tab title="Chain data" active>
+          <b-alert
+            show
+            dismissible
+            variant="info"
+            class="text-center py-3 glitch"
+          >
+            This information is verified and provided by historical data on the
+            Kusama blockchain
+          </b-alert>
           <div class="row pt-4">
             <div class="col-md-6 mb-5">
               <div class="row">
@@ -253,6 +261,14 @@
           </div>
         </b-tab>
         <b-tab title="Additional data">
+          <b-alert
+            show
+            dismissible
+            variant="info"
+            class="text-center py-3 glitch"
+          >
+            This information is unverified and provided by the validator
+          </b-alert>
           <Additional :address="validator.stashAddress" />
         </b-tab>
       </b-tabs>
@@ -337,10 +353,10 @@ export default {
 .validator-page .metric {
   min-height: 10rem;
 }
-.validator .card-body {
+.validator-page .card-body {
   position: relative;
 }
-.validator .rating {
+.validator-page .rating {
   position: absolute;
   top: 0px;
   right: 0px;
