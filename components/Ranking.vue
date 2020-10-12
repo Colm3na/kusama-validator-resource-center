@@ -5,7 +5,7 @@
     </div>
     <div v-else>
       <b-tabs content-class="mt-3">
-        <b-tab title="Validator ranking" active>
+        <b-tab title="Ranking" active>
           <h5 class="text-center">Exclude:</h5>
           <div class="row pt-3">
             <div
@@ -82,10 +82,10 @@
             <template v-slot:cell(selected)="data">
               <p class="text-center mb-0">
                 <a
-                  class="selected"
-                  @click="toggleSelected(data.item.stashAddress)"
                   v-b-tooltip.hover
+                  class="selected"
                   title="Select / Unselect validator"
+                  @click="toggleSelected(data.item.stashAddress)"
                 >
                   <font-awesome-icon
                     v-if="data.item.selected"
@@ -142,7 +142,7 @@
             </div>
           </div>
         </b-tab>
-        <b-tab :title="`Selected validators (${selectedValidators.length})`">
+        <b-tab :title="`Selected (${selectedValidators.length})`">
           <SelectedValidators :list="selectedValidators" />
         </b-tab>
       </b-tabs>
