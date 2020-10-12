@@ -27,11 +27,11 @@
         </span>
       </h1>
       <h5 class="mb-5">Edit qualitative information</h5>
-      <b-form>
+      <b-form @submit="onSubmit">
         <label for="architecture">Validator architecture</label>
         <b-form-textarea
           id="architecture"
-          v-model="architecture"
+          v-model="data.architecture"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -43,7 +43,7 @@
         >
         <b-form-textarea
           id="automation"
-          v-model="automation"
+          v-model="data.automation"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -56,7 +56,7 @@
         </label>
         <b-form-textarea
           id="metrics"
-          v-model="metrics"
+          v-model="data.metrics"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -67,7 +67,7 @@
           Monitoring and alert system in place?
         </label>
         <b-form-radio-group
-          v-model="monitoring"
+          v-model="data.monitoring"
           :options="['Yes', 'No']"
           name="radio-inline"
           class="mb-4"
@@ -78,7 +78,7 @@
         </label>
         <b-form-textarea
           id="monitoringDescription"
-          v-model="monitoringDescription"
+          v-model="data.monitoringDescription"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -88,7 +88,7 @@
         <label for="keyHandling">Keyhandling policies</label>
         <b-form-textarea
           id="keyHandling"
-          v-model="keyHandling"
+          v-model="data.keyHandling"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -100,7 +100,7 @@
         >
         <b-form-textarea
           id="highAvailability"
-          v-model="highAvailability"
+          v-model="data.highAvailability"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -113,7 +113,7 @@
         >
         <b-form-textarea
           id="upgradeProcedure"
-          v-model="upgradeProcedure"
+          v-model="data.upgradeProcedure"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -123,7 +123,7 @@
         <label for="providers">Which providers does the validator use?</label>
         <b-form-textarea
           id="providers"
-          v-model="providers"
+          v-model="data.providers"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -136,7 +136,7 @@
         >
         <b-form-textarea
           id="RBAC"
-          v-model="RBAC"
+          v-model="data.RBAC"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -149,7 +149,7 @@
         >
         <b-form-textarea
           id="stakeAutomation"
-          v-model="stakeAutomation"
+          v-model="data.stakeAutomation"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -159,7 +159,7 @@
         <label for="DDoSProtection">DDoS Protection</label>
         <b-form-textarea
           id="DDoSProtection"
-          v-model="DDoSProtection"
+          v-model="data.DDoSProtection"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -172,7 +172,7 @@
         >
         <b-form-textarea
           id="communication"
-          v-model="communication"
+          v-model="data.communication"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -185,7 +185,7 @@
         >
         <b-form-textarea
           id="communication"
-          v-model="communication"
+          v-model="data.communication"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -198,7 +198,7 @@
         >
         <b-form-textarea
           id="education"
-          v-model="education"
+          v-model="data.education"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -210,7 +210,7 @@
         >
         <b-form-textarea
           id="regions"
-          v-model="regions"
+          v-model="data.regions"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -223,7 +223,7 @@
         >
         <b-form-textarea
           id="supportChannels"
-          v-model="supportChannels"
+          v-model="data.supportChannels"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -236,7 +236,7 @@
         >
         <b-form-textarea
           id="contributions"
-          v-model="contributions"
+          v-model="data.contributions"
           placeholder="Please describe..."
           rows="3"
           max-rows="6"
@@ -252,38 +252,6 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      accountId: this.$route.params.id,
-      architecture: 'asasas',
-      automation: '',
-      metrics: '',
-      monitoring: true,
-      monitoringDescription: '',
-      keyHandling: '',
-      highAvailability: '',
-      upgradeProcedure: '',
-      providers: ['Azure', 'AWS'],
-      RBAC: '',
-      stakeAutomation: '',
-      DDoSProtection: '',
-      communication: '',
-      education: '',
-      regions: ['Asia', 'Europe', 'North America'],
-      supportChannels: '',
-      contributions: [
-        {
-          name: 'Project name',
-          url: 'Repository URL',
-        },
-      ],
-    }
-  },
-}
-</script>
-
-<script>
 import Identicon from '@polkadot/vue-identicon'
 import Loading from '../../../components/Loading.vue'
 import commonMixin from '../../../mixins/commonMixin.js'
@@ -297,6 +265,30 @@ export default {
   data() {
     return {
       accountId: this.$route.params.id,
+      data: {
+        architecture: 'asasas',
+        automation: '',
+        metrics: '',
+        monitoring: true,
+        monitoringDescription: '',
+        keyHandling: '',
+        highAvailability: '',
+        upgradeProcedure: '',
+        providers: ['Azure', 'AWS'],
+        RBAC: '',
+        stakeAutomation: '',
+        DDoSProtection: '',
+        communication: '',
+        education: '',
+        regions: ['Asia', 'Europe', 'North America'],
+        supportChannels: '',
+        contributions: [
+          {
+            name: 'Project name',
+            url: 'Repository URL',
+          },
+        ],
+      },
     }
   },
   computed: {
@@ -315,6 +307,11 @@ export default {
       await this.$store.dispatch('ranking/update')
     }
   },
-  methods: {},
+  methods: {
+    onSubmit(evt) {
+      evt.preventDefault()
+      alert(JSON.stringify(this.data))
+    },
+  },
 }
 </script>

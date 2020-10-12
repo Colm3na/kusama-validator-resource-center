@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p class="text-center my-3">
-      This is a decentralized app and data collection may take some time, please
-      be patient!
+    <p class="loading text-center">
+      This is a decentralized app and data collection may take around 1 minute
+      so please be patient
     </p>
     <text-typing
       :texts="['Fetching chain data...']"
@@ -19,3 +19,9 @@
 <script>
 export default {}
 </script>
+
+<style>
+.loading {
+  margin-top: calc(30vh);
+}
+</style>
