@@ -28,38 +28,40 @@ export const actions = {
       api.derive.staking.waitingInfo(),
       api.query.staking.nominators.entries(),
     ])
-    const validatorStaking = await Promise.all(
+    let validators = await Promise.all(
       validatorAddresses.map((authorityId) =>
         api.derive.staking.account(authorityId)
       )
     )
-    for (let i = 0; i < validatorStaking.length; i++) {
-      const validator = validatorStaking[i]
-      const { identity } = await api.derive.accounts.info(validator.accountId)
-      const judgements = identity.judgements.filter(
+    validators = await Promise.all(
+      validators.map((validator) =>
+        api.derive.accounts.info(validator.accountId).then(({ identity }) => {
+          return {
+            ...validator,
+            identity,
+          }
+        })
+      )
+    )
+    validators = validators.map((validator) => {
+      const judgements = validator.identity.judgements.filter(
         ([, judgement]) => !judgement.isFeePaid
       )
-      validator.identity = identity
-      validator.verifiedIdentity =
+      const verifiedIdentity =
         judgements.some(
           ([, judgement]) => judgement.isKnownGood || judgement.isReasonable
         ) || false
-    }
-    const validators = JSON.parse(JSON.stringify(validatorStaking)).map(
-      (validator) => {
-        return {
-          active: true,
-          name: getName(validator.identity),
-          verifiedIdentity: validator.verifiedIdentity,
-          identity: JSON.parse(JSON.stringify(validator.identity)),
-          stashAddress: validator.accountId,
-          nominators: validator.exposure.others.length,
-          commission: (validator.validatorPrefs.commission / 10000000).toFixed(
-            0
-          ),
-        }
+      validator = JSON.parse(JSON.stringify(validator))
+      return {
+        active: true,
+        name: getName(validator.identity),
+        verifiedIdentity,
+        identity: JSON.parse(JSON.stringify(validator.identity)),
+        stashAddress: validator.accountId,
+        nominators: validator.exposure.others.length,
+        commission: (validator.validatorPrefs.commission / 10000000).toFixed(0),
       }
-    )
+    })
 
     //
     // waiting validators
@@ -73,9 +75,18 @@ export const actions = {
         targets,
       }
     })
-    const intentionStaking = JSON.parse(JSON.stringify(waitingInfo.info))
-    for (let i = 0; i < intentionStaking.length; i++) {
-      const intention = intentionStaking[i]
+    let intentions = JSON.parse(JSON.stringify(waitingInfo.info))
+    intentions = await Promise.all(
+      intentions.map((intention) =>
+        api.derive.accounts.info(intention.accountId).then(({ identity }) => {
+          return {
+            ...intention,
+            identity,
+          }
+        })
+      )
+    )
+    intentions = intentions.map((intention) => {
       intention.stakers = nominations
         .filter((nomination) =>
           nomination.targets.some(
@@ -83,21 +94,17 @@ export const actions = {
           )
         )
         .map((nomination) => nomination.nominator)
-      const { identity } = await api.derive.accounts.info(intention.accountId)
-      const judgements = identity.judgements.filter(
+      const judgements = intention.identity.judgements.filter(
         ([, judgement]) => !judgement.isFeePaid
       )
-      intention.identity = identity
-      intention.verifiedIdentity =
+      const verifiedIdentity =
         judgements.some(
           ([, judgement]) => judgement.isKnownGood || judgement.isReasonable
         ) || false
-    }
-    const intentions = intentionStaking.map((intention) => {
       return {
         active: false,
         name: getName(intention.identity),
-        verifiedIdentity: intention.verifiedIdentity,
+        verifiedIdentity,
         identity: JSON.parse(JSON.stringify(intention.identity)),
         stashAddress: intention.accountId,
         nominators: intention.stakers.length,
@@ -111,7 +118,7 @@ export const actions = {
       }
     })
 
-    console.log(JSON.parse(JSON.stringify(ranking)))
+    // console.log(JSON.parse(JSON.stringify(ranking)))
     context.commit('update', ranking)
     const endTime = new Date().getTime()
     // eslint-disable-next-line
