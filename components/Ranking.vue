@@ -16,6 +16,7 @@
               <b-form-checkbox
                 switch
                 size="lg"
+                :checked="getExcludeState(option.value)"
                 @change="toggleExcluded(option.value)"
               >
                 {{ option.text }}
@@ -240,6 +241,12 @@ export default {
         }
       )
     },
+    exclude(exclude) {
+      this.$cookies.set('exclude', exclude, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7,
+      })
+    },
   },
   async created() {
     if (this.$store.state.ranking.list.length === 0) {
@@ -249,6 +256,9 @@ export default {
       this.selectedValidatorAddresses = this.$cookies.get(
         'selectedValidatorAddresses'
       )
+    }
+    if (this.$cookies.get('exclude')) {
+      this.exclude = this.$cookies.get('exclude')
     }
   },
   methods: {
@@ -274,6 +284,12 @@ export default {
       } else {
         this.exclude.push(value)
       }
+    },
+    getExcludeState(value) {
+      if (this.exclude.includes(value)) {
+        return true
+      }
+      return false
     },
   },
 }
