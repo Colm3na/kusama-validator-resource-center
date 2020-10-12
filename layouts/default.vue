@@ -36,8 +36,27 @@
       </b-container>
     </b-navbar>
     <Nuxt />
+    <footer class="footer">
+      <div class="container text-center">
+        &copy; {{ new Date().getFullYear() }}
+        Kusama ·
+        <a href="https://kusama.network/privacy" target="_blank"
+          >Privacy Policy</a
+        >
+        ·
+        <a href="https://kusama.network/terms" target="_blank"
+          >Terms and Conditions</a
+        >
+        ·
+        <a href="#" target="_blank">Cookie Settings</a>
+      </div>
+    </footer>
   </div>
 </template>
+
+<script>
+export default {}
+</script>
 
 <style lang="scss">
 // Variable overrides
@@ -75,13 +94,20 @@ $alert-color-level: -10;
 
 $nav-tabs-link-active-color: $body-color !default;
 
+$hr-border-color: rgba(255, 255, 255, 0.2) !default;
+
 // Bootstrap and its default variables
 @import '../node_modules/bootstrap/scss/bootstrap';
 // BootstrapVue and its default variables
 @import '../node_modules/bootstrap-vue/src/index.scss';
 
+html {
+  position: relative;
+  min-height: 100%;
+}
 body {
   font-family: 'Space Mono', monospace;
+  margin-bottom: 60px;
 }
 .logo {
   height: 1.65rem;
@@ -102,5 +128,19 @@ body {
 }
 .custom-switch .custom-control-label {
   cursor: pointer;
+}
+.hr {
+  color: gray;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  font-size: 0.8rem;
+}
+.footer a {
+  color: white;
 }
 </style>

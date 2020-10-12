@@ -257,9 +257,9 @@
 
 <script>
 import Identicon from '@polkadot/vue-identicon'
-import Loading from '../../components/Loading.vue'
-import Additional from '../../components/Additional.vue'
-import commonMixin from '../../mixins/commonMixin.js'
+import Loading from '../../../components/Loading.vue'
+import Additional from '../../../components/Additional.vue'
+import commonMixin from '../../../mixins/commonMixin.js'
 
 export default {
   components: {

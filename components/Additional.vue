@@ -1,5 +1,10 @@
 <template>
   <div>
+    <p class="mb-0 text-right">
+      Do you own this validator?
+      <b-button variant="outline-primary">Edit information</b-button>
+    </p>
+
     <h5 class="pt-4">Description of overall architecture</h5>
     <hr />
     <p>
