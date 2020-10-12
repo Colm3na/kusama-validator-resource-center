@@ -266,7 +266,7 @@ export default {
     return {
       accountId: this.$route.params.id,
       data: {
-        architecture: 'asasas',
+        architecture: '',
         automation: '',
         metrics: '',
         monitoring: true,
