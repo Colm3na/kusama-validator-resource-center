@@ -1,8 +1,7 @@
 <template>
   <div>
     <p class="loading text-center">
-      This is a decentralized app and data collection may take around 1 minute
-      so please be patient
+      data collection may take around 1 minute to complete, please be patient
     </p>
     <text-typing
       :texts="['Fetching chain data...']"
@@ -23,5 +22,7 @@ export default {}
 <style>
 .loading {
   margin-top: calc(30vh);
+  font-family: 'Visuelt', sans-serif;
+  font-size: 2rem;
 }
 </style>

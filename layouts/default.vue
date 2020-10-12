@@ -59,6 +59,11 @@ export default {}
 </script>
 
 <style lang="scss">
+@font-face {
+  font-family: 'Visuelt';
+  src: url('../assets/fonts/Visuelt/Visuelt.ttf') format('truetype');
+}
+
 // Variable overrides
 $body-bg: #000;
 $body-color: #fff;
