@@ -51,6 +51,7 @@ export const actions = {
           active: true,
           name: getName(validator.identity),
           verifiedIdentity: validator.verifiedIdentity,
+          identity: JSON.parse(JSON.stringify(validator.identity)),
           stashAddress: validator.accountId,
           nominators: validator.exposure.others.length,
           commission: (validator.validatorPrefs.commission / 10000000).toFixed(
@@ -97,6 +98,7 @@ export const actions = {
         active: false,
         name: getName(intention.identity),
         verifiedIdentity: intention.verifiedIdentity,
+        identity: JSON.parse(JSON.stringify(intention.identity)),
         stashAddress: intention.accountId,
         nominators: intention.stakers.length,
         commission: (intention.validatorPrefs.commission / 10000000).toFixed(0),
@@ -109,7 +111,7 @@ export const actions = {
       }
     })
 
-    // console.log(JSON.parse(JSON.stringify(ranking)))
+    console.log(JSON.parse(JSON.stringify(ranking)))
     context.commit('update', ranking)
     const endTime = new Date().getTime()
     // eslint-disable-next-line

@@ -1,20 +1,7 @@
 <template>
   <div>
     <div v-if="loading">
-      <p class="text-center my-3">
-        This is a decentralized app and data collection may take some time,
-        please be patient!
-      </p>
-      <text-typing
-        :texts="['Fetching chain data...']"
-        :speed="100"
-        :delay="3000"
-        fixed-text-class="text-white"
-        dynamic-text-class="text-teal-200"
-        caret-class="text-white"
-        class="pt-3 text-center"
-      >
-      </text-typing>
+      <Loading />
     </div>
     <div v-else>
       <b-tabs content-class="mt-3">
@@ -26,19 +13,6 @@
               :key="option.text"
               class="col-md-3 mb-3"
             >
-              <!-- <div class="row">
-                <div class="col-9">
-                  {{ option.text }}
-                </div>
-                <div class="col-3">
-                  <b-form-checkbox
-                    switch
-                    size="lg"
-                    class="text-right"
-                    @change="toggleExcluded(option.value)"
-                  />
-                </div>
-              </div> -->
               <b-form-checkbox
                 switch
                 size="lg"
@@ -176,12 +150,14 @@
 <script>
 import Identicon from '@polkadot/vue-identicon'
 import SelectedValidators from '../components/SelectedValidators.vue'
+import Loading from '../components/Loading.vue'
 import commonMixin from '../mixins/commonMixin.js'
 
 export default {
   components: {
     Identicon,
     SelectedValidators,
+    Loading,
   },
   mixins: [commonMixin],
   data() {
@@ -268,7 +244,9 @@ export default {
       await this.$store.dispatch('ranking/update')
     }
     if (this.$cookies.get('selectedValidatorAddresses')) {
-      this.favorites = this.$cookies.get('selectedValidatorAddresses')
+      this.selectedValidatorAddresses = this.$cookies.get(
+        'selectedValidatorAddresses'
+      )
     }
   },
   methods: {
