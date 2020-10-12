@@ -4,20 +4,50 @@
       <Loading />
     </div>
     <div v-else>
-      <h1 class="text-center my-3">
-        <Identicon
-          :key="accountId"
-          :size="64"
-          :theme="'polkadot'"
-          :value="accountId"
-          class="identicon"
-        />
-        Validator {{ shortAddress(accountId) }}
-      </h1>
+      <div class="row">
+        <div class="col-10">
+          <h1 class="mt-3 mb-4">
+            <Identicon
+              :key="accountId"
+              :size="64"
+              :theme="'polkadot'"
+              :value="accountId"
+              class="identicon"
+            />
+            <span v-if="validator.name">
+              {{ validator.name }}
+              <span v-b-tooltip.hover title="Verified identity">
+                <font-awesome-icon
+                  v-if="validator.verifiedIdentity"
+                  icon="check"
+                  class="text-success"
+                />
+              </span>
+            </span>
+            <span v-else>
+              {{ shortAddress(accountId) }}
+            </span>
+          </h1>
+        </div>
+        <div class="col-2 text-right mt-4">
+          <a class="selected" @click="toggleSelected(validator.stashAddress)">
+            <font-awesome-icon
+              v-if="isSelected(validator.stashAddress)"
+              icon="hand-paper"
+              class="fa-2x text-warning"
+            />
+            <font-awesome-icon
+              v-else
+              icon="hand-paper"
+              class="fa-2x text-secondary"
+            />
+          </a>
+        </div>
+      </div>
       <!-- <pre class="text-white">{{ JSON.stringify(validator, null, 2) }}</pre> -->
-      <b-tabs content-class="mt-3 pt-4">
+      <b-tabs content-class="pt-4">
         <b-tab title="Chain data" active>
-          <div class="row">
+          <div class="row pt-4">
             <div class="col-md-6 mb-5">
               <div class="row">
                 <div class="col-8">
@@ -218,7 +248,7 @@
           </div>
         </b-tab>
         <b-tab title="Additional data">
-          <p>Additional data provided by the validator</p>
+          <Additional :address="validator.stashAddress" />
         </b-tab>
       </b-tabs>
     </div>
@@ -228,12 +258,14 @@
 <script>
 import Identicon from '@polkadot/vue-identicon'
 import Loading from '../../components/Loading.vue'
+import Additional from '../../components/Additional.vue'
 import commonMixin from '../../mixins/commonMixin.js'
 
 export default {
   components: {
     Identicon,
     Loading,
+    Additional,
   },
   mixins: [commonMixin],
   data() {
