@@ -7,13 +7,7 @@
       <div class="row">
         <div class="col-10">
           <h1 class="mt-3 mb-4">
-            <Identicon
-              :key="accountId"
-              :size="64"
-              :theme="'polkadot'"
-              :value="accountId"
-              class="identicon"
-            />
+            <Identicon :address="accountId" :size="64" />
             <span v-if="validator.name">
               {{ validator.name }}
               <span v-b-tooltip.hover title="Verified identity">
@@ -277,7 +271,7 @@
 </template>
 
 <script>
-import Identicon from '@polkadot/vue-identicon'
+import Identicon from '../../../components/Identicon.vue'
 import Loading from '../../../components/Loading.vue'
 import Additional from '../../../components/Additional.vue'
 import commonMixin from '../../../mixins/commonMixin.js'

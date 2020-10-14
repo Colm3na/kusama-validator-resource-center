@@ -54,6 +54,8 @@ export default {
     '@nuxtjs/axios',
     // https://www.npmjs.com/package/cookie-universal-nuxt
     ['cookie-universal-nuxt', { alias: 'cookies' }],
+    // https://www.npmjs.com/package/nuxt-clipboard2
+    'nuxt-clipboard2',
   ],
   fontawesome: {
     icons: {

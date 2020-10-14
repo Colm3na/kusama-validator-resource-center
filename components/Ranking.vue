@@ -54,13 +54,7 @@
               </span>
             </template>
             <template v-slot:cell(name)="data">
-              <Identicon
-                :key="data.item.stashAddress"
-                :size="28"
-                :theme="'polkadot'"
-                :value="data.item.stashAddress"
-                class="identicon"
-              />
+              <Identicon :address="data.item.stashAddress" :size="28" />
               <nuxt-link :to="`/validator/${data.item.stashAddress}`">
                 <span v-if="data.item.name">
                   {{ data.item.name }}
@@ -151,9 +145,9 @@
   </div>
 </template>
 <script>
-import Identicon from '@polkadot/vue-identicon'
 import SelectedValidators from '../components/SelectedValidators.vue'
 import Loading from '../components/Loading.vue'
+import Identicon from '../components/Identicon.vue'
 import commonMixin from '../mixins/commonMixin.js'
 
 export default {

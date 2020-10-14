@@ -151,4 +151,11 @@ body {
 .close:hover {
   color: #d1ecf1;
 }
+.toast-body {
+  word-break: break-all;
+}
+pre {
+  font-size: initial;
+  color: gray;
+}
 </style>
