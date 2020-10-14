@@ -4,7 +4,7 @@
       <Loading />
     </div>
     <div v-else>
-      <b-tabs content-class="mt-3">
+      <b-tabs content-class="mt-5">
         <b-tab title="Ranking" active>
           <h5 class="text-center">Exclude:</h5>
           <div class="row pt-3">

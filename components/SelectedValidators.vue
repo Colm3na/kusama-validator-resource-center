@@ -1,8 +1,5 @@
 <template>
   <div>
-    <b-alert show dismissible variant="info" class="text-center py-3 glitch">
-      You can select up to 16 validators
-    </b-alert>
     <div class="row">
       <div class="col-md-6 mb-3">
         <h5>Selected validators:</h5>
