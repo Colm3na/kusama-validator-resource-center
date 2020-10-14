@@ -13,7 +13,7 @@
           class="d-block p-2"
         >
           <div class="row">
-            <div class="col-10">
+            <div class="col-11">
               <Identicon :address="validator.stashAddress" :size="28" />
               <span v-if="validator.name">
                 {{ validator.name }}
@@ -29,7 +29,7 @@
                 {{ shortAddress(validator.stashAddress) }}
               </span>
             </div>
-            <div class="col-2 text-right">
+            <div class="col-1 text-right">
               <a
                 v-b-tooltip.hover
                 href="#"
