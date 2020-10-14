@@ -1,8 +1,10 @@
 <template>
   <div>
-    <p>You can select up to 6 validators</p>
+    <b-alert show dismissible variant="info" class="text-center py-3 glitch">
+      You can select up to 16 validators
+    </b-alert>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-6 mb-3">
         <h5>Selected validators:</h5>
         <hr />
         <div
@@ -26,12 +28,17 @@
           </span>
         </div>
       </div>
-      <div class="col-md-6">
-        <h5>Validator addresses:</h5>
+      <div class="col-md-6 mb-3">
+        <h5>Addresses:</h5>
         <hr />
-        <pre>{{
-          list.map(({ stashAddress }) => stashAddress).join('\r\n')
-        }}</pre>
+        <pre
+          class="addresses"
+          v-clipboard:copy="addresses"
+          v-b-tooltip.hover
+          title="Click to copy to clipboard"
+          @click="showToast"
+          >{{ addresses }}</pre
+        >
       </div>
     </div>
   </div>
@@ -51,5 +58,25 @@ export default {
       default: () => [],
     },
   },
+  computed: {
+    addresses() {
+      return this.list.map(({ stashAddress }) => stashAddress).join('\r\n')
+    },
+  },
+  methods: {
+    showToast() {
+      this.$bvToast.toast(this.addresses, {
+        title: 'Addresses copied to clipboard!',
+        variant: 'secondary',
+        autoHideDelay: 5000,
+        appendToast: false,
+      })
+    },
+  },
 }
 </script>
+<style>
+.addresses {
+  cursor: pointer;
+}
+</style>
