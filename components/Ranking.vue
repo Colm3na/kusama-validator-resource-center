@@ -138,7 +138,10 @@
           </div>
         </b-tab>
         <b-tab :title="`Selected (${selectedValidators.length})`">
-          <SelectedValidators :list="selectedValidators" />
+          <SelectedValidators
+            :list="selectedValidators"
+            v-on:remove="toggleSelected"
+          />
         </b-tab>
       </b-tabs>
     </div>
@@ -186,6 +189,7 @@ export default {
         },
       ],
       selectedValidatorAddresses: [],
+      maxValidatorsReached: false,
     }
   },
   computed: {
@@ -268,8 +272,15 @@ export default {
           this.selectedValidatorAddresses.indexOf(accountId),
           1
         )
-      } else {
+      } else if (this.selectedValidatorAddresses.length < 16) {
         this.selectedValidatorAddresses.push(accountId)
+      } else {
+        this.$bvToast.toast('Please remove before selecting a new one', {
+          title: 'Select up to 16 validators',
+          variant: 'danger',
+          autoHideDelay: 5000,
+          appendToast: false,
+        })
       }
     },
     toggleExcluded(value) {
