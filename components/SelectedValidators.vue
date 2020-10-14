@@ -31,11 +31,11 @@
             </div>
             <div class="col-2 text-right">
               <a
-                href="#"
                 v-b-tooltip.hover
+                href="#"
                 title="Remove"
-                @click="$emit('remove', validator.stashAddress)"
                 class="remove"
+                @click="$emit('remove', validator.stashAddress)"
               >
                 <font-awesome-icon icon="times" />
               </a>

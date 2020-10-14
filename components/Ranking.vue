@@ -140,7 +140,7 @@
         <b-tab :title="`Selected (${selectedValidators.length})`">
           <SelectedValidators
             :list="selectedValidators"
-            v-on:remove="toggleSelected"
+            @remove="toggleSelected"
           />
         </b-tab>
       </b-tabs>
