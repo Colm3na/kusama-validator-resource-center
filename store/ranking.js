@@ -19,15 +19,33 @@ export const actions = {
     const wsProvider = new WsProvider(nodeWs)
     const api = await ApiPromise.create({ provider: wsProvider })
 
-    //
-    // validators
-    //
-
-    const [validatorAddresses, waitingInfo, nominators] = await Promise.all([
+    // number of eras to look for
+    const historySize = 5
+    const withActive = false
+    const erasHistoric = await api.derive.staking.erasHistoric(withActive)
+    const eraIndex = erasHistoric.slice(
+      Math.max(erasHistoric.length - historySize, 0)
+    )
+    // parallelize as much as possible
+    const [
+      validatorAddresses,
+      waitingInfo,
+      nominators,
+      erasPoints,
+      erasPreferences,
+      erasSlashes,
+    ] = await Promise.all([
       api.query.session.validators(),
       api.derive.staking.waitingInfo(),
       api.query.staking.nominators.entries(),
+      api.derive.staking._erasPoints(eraIndex),
+      api.derive.staking._erasPrefs(eraIndex),
+      api.derive.staking._erasSlashes(eraIndex),
     ])
+
+    //
+    // validators
+    //
     let validators = await Promise.all(
       validatorAddresses.map((authorityId) =>
         api.derive.staking.account(authorityId)
@@ -51,6 +69,13 @@ export const actions = {
         judgements.some(
           ([, judgement]) => judgement.isKnownGood || judgement.isReasonable
         ) || false
+      const slashed = erasSlashes.some(
+        ({ validators }) => validators[validator.accountId]
+      )
+      const slashes =
+        erasSlashes.filter(
+          ({ validators }) => validators[validator.accountId]
+        ) || []
       validator = JSON.parse(JSON.stringify(validator))
       return {
         active: true,
@@ -60,13 +85,14 @@ export const actions = {
         stashAddress: validator.accountId,
         nominators: validator.exposure.others.length,
         commission: (validator.validatorPrefs.commission / 10000000).toFixed(0),
+        slashed,
+        slashes,
       }
     })
 
     //
     // waiting validators
     //
-
     const nominations = nominators.map(([key, nominations]) => {
       const nominator = key.toHuman()[0]
       const targets = nominations.toHuman().targets
@@ -101,6 +127,12 @@ export const actions = {
         judgements.some(
           ([, judgement]) => judgement.isKnownGood || judgement.isReasonable
         ) || false
+      const slashed = erasSlashes.some(
+        ({ validators }) => validators[intention.accountId]
+      )
+      const slash =
+        erasSlashes.find(({ validators }) => validators[intention.accountId]) ||
+        {}
       return {
         active: false,
         name: getName(intention.identity),
@@ -109,6 +141,8 @@ export const actions = {
         stashAddress: intention.accountId,
         nominators: intention.stakers.length,
         commission: (intention.validatorPrefs.commission / 10000000).toFixed(0),
+        slashed,
+        slash,
       }
     })
     const ranking = validators.concat(intentions).map((validator, index) => {
@@ -118,7 +152,7 @@ export const actions = {
       }
     })
 
-    // console.log(JSON.parse(JSON.stringify(ranking)))
+    console.log(JSON.parse(JSON.stringify(ranking)))
     context.commit('update', ranking)
     const endTime = new Date().getTime()
     // eslint-disable-next-line
