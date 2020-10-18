@@ -119,7 +119,7 @@ export const actions = {
       return {
         active: true,
         name: getName(validator.identity),
-        hasSubidentity: hasSubidentity(validator.identity),
+        hasSubIdentity: hasSubIdentity(validator.identity),
         verifiedIdentity,
         identity: JSON.parse(JSON.stringify(validator.identity)),
         stashAddress: validator.accountId,
@@ -215,7 +215,7 @@ export const actions = {
       return {
         active: false,
         name: getName(intention.identity),
-        hasSubidentity: hasSubidentity(intention.identity),
+        hasSubIdentity: hasSubIdentity(intention.identity),
         verifiedIdentity,
         identity: JSON.parse(JSON.stringify(intention.identity)),
         stashAddress: intention.accountId,
@@ -259,7 +259,7 @@ function getName(identity) {
   }
 }
 
-function hasSubidentity(identity) {
+function hasSubIdentity(identity) {
   if (
     identity.displayParent &&
     identity.displayParent !== `` &&

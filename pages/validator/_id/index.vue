@@ -130,7 +130,7 @@
                 </div>
               </div>
               <hr />
-              <p>
+              <p v-if="typeof created_at_block === 'number'">
                 Address was created at block #{{
                   formatNumber(created_at_block)
                 }}
@@ -143,32 +143,52 @@
                 <div class="col-9">
                   <h4 class="mb-0">Slashes</h4>
                 </div>
-                <div class="col-3 text-right text-success">
-                  <font-awesome-icon
-                    icon="check"
-                    class="text-success verified"
-                  />
-                  Good
+                <div class="col-3 text-right">
+                  <span v-if="!validator.slashed">
+                    <font-awesome-icon
+                      icon="check"
+                      class="text-success verified"
+                    />
+                    Good
+                  </span>
+                  <span v-else>
+                    <font-awesome-icon
+                      icon="minus-circle"
+                      class="text-danger verified"
+                    />
+                    Bad
+                  </span>
                 </div>
               </div>
               <hr />
-              <p>Good! No slashes detected</p>
+              <p v-if="!validator.slashed">Good! No slashes detected</p>
+              <p v-else>Bad! Validator was slashed!</p>
             </div>
             <div class="col-md-6 mb-5">
               <div class="row">
                 <div class="col-9">
                   <h4 class="mb-0">Subaccounts</h4>
                 </div>
-                <div class="col-3 text-right text-success">
-                  <font-awesome-icon
-                    icon="check"
-                    class="text-success verified"
-                  />
-                  Good
+                <div class="col-3 text-right">
+                  <span v-if="validator.hasSubIdentity">
+                    <font-awesome-icon
+                      icon="check"
+                      class="text-success verified"
+                    />
+                    Good
+                  </span>
+                  <span v-else>
+                    <font-awesome-icon
+                      icon="minus-circle"
+                      class="text-danger verified"
+                    />
+                    Bad
+                  </span>
                 </div>
               </div>
               <hr />
-              <p>Good! Detected sub-identity</p>
+              <p v-if="validator.hasSubIdentity">Good! Detected sub-identity</p>
+              <p v-else>Bad! No sub-identity detected</p>
             </div>
           </div>
           <div class="row">
@@ -183,7 +203,7 @@
                 </div>
               </div>
               <hr />
-              <p>Detected {{ validator.nominators }} nominators</p>
+              <p>Detected {{ validator.nominators }} nominator/s</p>
             </div>
             <div class="col-md-6 mb-5">
               <div class="row">
@@ -354,7 +374,7 @@ export default {
         )
         .then(function ({ data }) {
           console.log(data.data.attributes.created_at_block)
-          vm.created_at_block = data.data.attributes.created_at_block
+          vm.created_at_block = parseInt(data.data.attributes.created_at_block)
         })
     },
   },
