@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="loading text-center">
-      data collection may take around 1 minute to complete, please be patient
+      data collection may take around 2 minutes to complete, please be patient
     </p>
     <text-typing
       :texts="['Fetching chain data...']"
