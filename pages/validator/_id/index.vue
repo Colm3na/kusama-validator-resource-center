@@ -130,7 +130,11 @@
                 </div>
               </div>
               <hr />
-              <p>Address was created at block #20,000 (2020-10-10 12:31:49)</p>
+              <p>
+                Address was created at block #{{
+                  formatNumber(created_at_block)
+                }}
+              </p>
             </div>
           </div>
           <div class="row">
@@ -271,6 +275,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Identicon from '../../../components/Identicon.vue'
 import Loading from '../../../components/Loading.vue'
 import Additional from '../../../components/Additional.vue'
@@ -287,6 +292,7 @@ export default {
     return {
       accountId: this.$route.params.id,
       selectedValidatorAddresses: [],
+      created_at_block: undefined,
     }
   },
   computed: {
@@ -324,6 +330,7 @@ export default {
         'selectedValidatorAddresses'
       )
     }
+    this.getAddressCreationDate()
   },
   methods: {
     isSelected(accountId) {
@@ -338,6 +345,17 @@ export default {
       } else {
         this.selectedValidatorAddresses.push(accountId)
       }
+    },
+    getAddressCreationDate() {
+      const vm = this
+      axios
+        .get(
+          `https://explorer-31.polkascan.io/kusama/api/v1/account/${this.accountId}`
+        )
+        .then(function ({ data }) {
+          console.log(data.data.attributes.created_at_block)
+          vm.created_at_block = data.data.attributes.created_at_block
+        })
     },
   },
 }
