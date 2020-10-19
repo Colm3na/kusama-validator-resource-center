@@ -12,7 +12,7 @@ export const mutations = {
   update(state, { ranking, eraHistory, blockHeight, eraPointsHistoryTotals }) {
     state.list = ranking
     state.loading = false
-    state.eraHistory = eraHistory
+    state.eraHistory = eraHistory.map((era) => parseInt(era.toString()))
     state.blockHeight = blockHeight
     state.eraPointsHistoryTotals = eraPointsHistoryTotals
   },
@@ -149,7 +149,7 @@ export const actions = {
         identityRating,
         stashAddress: validator.accountId.toHuman(),
         nominators: validator.exposure.others.length,
-        commission: (validator.validatorPrefs.commission / 10000000).toFixed(1),
+        commission: validator.validatorPrefs.commission / 10000000,
         commissionHistory,
         eraPointsHistory,
         slashed,
@@ -263,7 +263,7 @@ export const actions = {
         identityRating,
         stashAddress: intention.accountId,
         nominators: intention.stakers.length,
-        commission: (intention.validatorPrefs.commission / 10000000).toFixed(0),
+        commission: intention.validatorPrefs.commission / 10000000,
         commissionHistory,
         eraPointsHistory,
         slashed,

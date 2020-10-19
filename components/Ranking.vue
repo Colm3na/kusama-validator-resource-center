@@ -72,7 +72,7 @@
               </nuxt-link>
             </template>
             <template v-slot:cell(commission)="data">
-              {{ data.item.commission }}%
+              {{ data.item.commission.toFixed(1) }}%
             </template>
             <template v-slot:cell(selected)="data">
               <p class="text-center mb-0">

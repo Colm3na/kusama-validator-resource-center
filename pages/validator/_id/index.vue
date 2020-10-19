@@ -86,22 +86,10 @@
           </div>
           <div class="row">
             <div class="col-md-6 mb-5">
-              <div class="row">
-                <div class="col-9">
-                  <h4 class="mb-0">Commission</h4>
-                </div>
-                <div class="col-3 text-right text-success">
-                  <font-awesome-icon
-                    icon="check"
-                    class="text-success verified"
-                  />
-                  Good
-                </div>
-              </div>
-              <hr />
-              <p>
-                Very Good! commission &lt; 10% but > 5% and decreased over time
-              </p>
+              <Commission
+                :commission="validator.commission"
+                :commission-history="validator.commissionHistory"
+              />
             </div>
             <div class="col-md-6 mb-5">
               <div class="row">
