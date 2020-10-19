@@ -62,24 +62,7 @@
               />
             </div>
             <div class="col-md-6 mb-5">
-              <div class="row">
-                <div class="col-9">
-                  <h4 class="mb-0">Address creation</h4>
-                </div>
-                <div class="col-3 text-right text-success">
-                  <font-awesome-icon
-                    icon="check"
-                    class="text-success verified"
-                  />
-                  Very good
-                </div>
-              </div>
-              <hr />
-              <p v-if="typeof created_at_block === 'number'">
-                Address was created at block #{{
-                  formatNumber(created_at_block)
-                }}
-              </p>
+              <Address :accountId="validator.stashAddress" />
             </div>
           </div>
           <div class="row">
@@ -240,11 +223,11 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Identicon from '../../../components/Identicon.vue'
 import Loading from '../../../components/Loading.vue'
 import Additional from '../../../components/Additional.vue'
 import Identity from '../../../components/metrics/Identity.vue'
+import Address from '../../../components/metrics/Address.vue'
 import commonMixin from '../../../mixins/commonMixin.js'
 
 export default {
@@ -253,13 +236,13 @@ export default {
     Loading,
     Additional,
     Identity,
+    Address,
   },
   mixins: [commonMixin],
   data() {
     return {
       accountId: this.$route.params.id,
       selectedValidatorAddresses: [],
-      created_at_block: undefined,
     }
   },
   computed: {
@@ -297,7 +280,6 @@ export default {
         'selectedValidatorAddresses'
       )
     }
-    this.getAddressCreationDate()
   },
   methods: {
     isSelected(accountId) {
@@ -312,17 +294,6 @@ export default {
       } else {
         this.selectedValidatorAddresses.push(accountId)
       }
-    },
-    getAddressCreationDate() {
-      const vm = this
-      axios
-        .get(
-          `https://explorer-31.polkascan.io/kusama/api/v1/account/${this.accountId}`
-        )
-        .then(function ({ data }) {
-          console.log(data.data.attributes.created_at_block)
-          vm.created_at_block = parseInt(data.data.attributes.created_at_block)
-        })
     },
   },
 }

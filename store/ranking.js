@@ -3,14 +3,16 @@ import { ApiPromise, WsProvider } from '@polkadot/api'
 export const state = () => ({
   list: [],
   eraHistory: [],
+  blockHeight: 0,
   loading: true,
 })
 
 export const mutations = {
-  update(state, ranking, eraHistory) {
+  update(state, { ranking, eraHistory, blockHeight }) {
     state.list = ranking
     state.loading = false
     state.eraHistory = eraHistory
+    state.blockHeight = blockHeight
   },
 }
 
@@ -29,6 +31,7 @@ export const actions = {
     )
     // parallelize as much as possible
     const [
+      { block },
       validatorAddresses,
       waitingInfo,
       nominators,
@@ -37,6 +40,7 @@ export const actions = {
       erasPreferences,
       erasSlashes,
     ] = await Promise.all([
+      api.rpc.chain.getBlock(),
       api.query.session.validators(),
       api.derive.staking.waitingInfo(),
       api.query.staking.nominators.entries(),
@@ -45,6 +49,7 @@ export const actions = {
       api.derive.staking._erasPrefs(eraIndexes),
       api.derive.staking._erasSlashes(eraIndexes),
     ])
+    const blockHeight = parseInt(block.header.number.toString())
 
     //
     // validators
@@ -268,7 +273,7 @@ export const actions = {
     })
 
     console.log(JSON.parse(JSON.stringify(ranking)))
-    context.commit('update', ranking, eraIndexes)
+    context.commit('update', { ranking, eraHistory: eraIndexes, blockHeight })
     const endTime = new Date().getTime()
     // eslint-disable-next-line
     console.log(
