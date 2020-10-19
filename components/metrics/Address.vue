@@ -38,7 +38,6 @@ export default {
   },
   computed: {
     blockHeight() {
-      console.log(this.$store.state.ranking)
       return this.$store.state.ranking.blockHeight
     },
   },
@@ -61,9 +60,6 @@ export default {
           } else if (vm.createdAtBlock < (vm.blockHeight / 4) * 3) {
             vm.rating = 1
           }
-          console.log(`vm.blockHeight:`, vm.blockHeight)
-          console.log(`vm.createdAtBlock:`, vm.createdAtBlock)
-          console.log(`address creation rating:`, vm.rating)
         })
     },
   },
