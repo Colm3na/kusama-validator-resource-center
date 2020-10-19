@@ -306,10 +306,4 @@ export default {
 .validator-page .card-body {
   position: relative;
 }
-.validator-page .rating {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  color: green;
-}
 </style>
