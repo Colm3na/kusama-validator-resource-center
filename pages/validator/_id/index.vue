@@ -56,65 +56,10 @@
           </b-alert>
           <div class="row pt-4">
             <div class="col-md-6 mb-5">
-              <div class="row">
-                <div class="col-8">
-                  <h4 class="mb-0">Identity</h4>
-                </div>
-                <div class="col-4 text-right text-success">
-                  <font-awesome-icon
-                    icon="check"
-                    class="text-success verified"
-                  />
-                  Very good
-                </div>
-              </div>
-              <hr />
-              <div v-if="validator.identity.legal" class="row">
-                <div class="col-md-3">Legal name:</div>
-                <div class="col-md-9">
-                  {{ validator.identity.legal }}
-                </div>
-              </div>
-              <div v-if="validator.identity.email" class="row">
-                <div class="col-md-3">Email:</div>
-                <div class="col-md-9">
-                  <a
-                    :href="`mailto:${validator.identity.email}`"
-                    target="_blank"
-                  >
-                    {{ validator.identity.email }}
-                  </a>
-                </div>
-              </div>
-              <div v-if="validator.identity.web" class="row">
-                <div class="col-md-3">Web:</div>
-                <div class="col-md-9">
-                  <a :href="validator.identity.web" target="_blank">
-                    {{ validator.identity.web }}
-                  </a>
-                </div>
-              </div>
-              <div v-if="validator.identity.twitter" class="row">
-                <div class="col-md-3">Twitter:</div>
-                <div class="col-md-9">
-                  <a
-                    :href="`https://twitter.com/${validator.identity.twitter.substring(
-                      1
-                    )}`"
-                    target="_blank"
-                  >
-                    {{ validator.identity.twitter }}
-                  </a>
-                </div>
-              </div>
-              <div v-if="validator.identity.riot" class="row">
-                <div class="col-md-3">Element:</div>
-                <div class="col-md-9">
-                  <a href="https://app.element.io/" target="_blank">
-                    {{ validator.identity.riot }}
-                  </a>
-                </div>
-              </div>
+              <Identity
+                :identity="validator.identity"
+                :rating="validator.identityRating"
+              />
             </div>
             <div class="col-md-6 mb-5">
               <div class="row">
@@ -299,6 +244,7 @@ import axios from 'axios'
 import Identicon from '../../../components/Identicon.vue'
 import Loading from '../../../components/Loading.vue'
 import Additional from '../../../components/Additional.vue'
+import Identity from '../../../components/metrics/Identity.vue'
 import commonMixin from '../../../mixins/commonMixin.js'
 
 export default {
@@ -306,6 +252,7 @@ export default {
     Identicon,
     Loading,
     Additional,
+    Identity,
   },
   mixins: [commonMixin],
   data() {

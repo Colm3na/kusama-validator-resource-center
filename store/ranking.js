@@ -65,23 +65,34 @@ export const actions = {
       )
     )
     validators = validators.map((validator) => {
-      const judgements = validator.identity.judgements.filter(
-        ([, judgement]) => !judgement.isFeePaid
+      // identity
+      const verifiedIdentity = isVerifiedIdentity(validator.identity)
+      const hasSubIdentity = subIdentity(validator.identity)
+      const identity = JSON.parse(JSON.stringify(validator.identity))
+      const name = getName(validator.identity)
+      const hasAllFields =
+        identity.display &&
+        identity.legal &&
+        identity.web &&
+        identity.email &&
+        identity.twitter &&
+        identity.riot
+      const identityRating = getIdentityRating(
+        name,
+        verifiedIdentity,
+        hasAllFields
       )
-      const verifiedIdentity =
-        judgements.some(
-          ([, judgement]) => judgement.isKnownGood || judgement.isReasonable
-        ) || false
 
+      // slash
       const slashed = erasSlashes.some(
         ({ validators }) => validators[validator.accountId]
       )
-
       const slashes =
         erasSlashes.filter(
           ({ validators }) => validators[validator.accountId]
         ) || []
 
+      // commission
       const commissionHistory = []
       erasPreferences.forEach(({ validators }) => {
         if (validators[validator.accountId]) {
@@ -93,10 +104,12 @@ export const actions = {
         }
       })
 
+      // governance
       const councilBacking = councilVotes.some(
         (vote) => vote[0] === validator.accountId
       )
 
+      // era points
       const eraPointsHistory = []
       erasPoints.forEach(({ validators }) => {
         if (validators[validator.accountId]) {
@@ -115,14 +128,14 @@ export const actions = {
           claimedRewards.some((claimedEra) => claimedEra === eraIndex)
         ) || []
 
-      validator = JSON.parse(JSON.stringify(validator))
       return {
         active: true,
-        name: getName(validator.identity),
-        hasSubIdentity: hasSubIdentity(validator.identity),
+        name,
+        identity,
+        hasSubIdentity,
         verifiedIdentity,
-        identity: JSON.parse(JSON.stringify(validator.identity)),
-        stashAddress: validator.accountId,
+        identityRating,
+        stashAddress: validator.accountId.toHuman(),
         nominators: validator.exposure.others.length,
         commission: (validator.validatorPrefs.commission / 10000000).toFixed(1),
         commissionHistory,
@@ -157,6 +170,25 @@ export const actions = {
       )
     )
     intentions = intentions.map((intention) => {
+      // identity
+      const verifiedIdentity = isVerifiedIdentity(intention.identity)
+      const hasSubIdentity = subIdentity(intention.identity)
+      const identity = JSON.parse(JSON.stringify(intention.identity))
+      const name = getName(intention.identity)
+      const hasAllFields =
+        identity.display &&
+        identity.legal &&
+        identity.web &&
+        identity.email &&
+        identity.twitter &&
+        identity.riot
+      const identityRating = getIdentityRating(
+        name,
+        verifiedIdentity,
+        hasAllFields
+      )
+
+      // nominations
       intention.stakers = nominations
         .filter((nomination) =>
           nomination.targets.some(
@@ -164,13 +196,8 @@ export const actions = {
           )
         )
         .map((nomination) => nomination.nominator)
-      const judgements = intention.identity.judgements.filter(
-        ([, judgement]) => !judgement.isFeePaid
-      )
-      const verifiedIdentity =
-        judgements.some(
-          ([, judgement]) => judgement.isKnownGood || judgement.isReasonable
-        ) || false
+
+      // slashes
       const slashed = erasSlashes.some(
         ({ validators }) => validators[intention.accountId]
       )
@@ -179,6 +206,7 @@ export const actions = {
           ({ validators }) => validators[intention.accountId]
         ) || []
 
+      // commission
       const commissionHistory = []
       erasPreferences.forEach(({ validators }) => {
         if (validators[intention.accountId]) {
@@ -190,6 +218,7 @@ export const actions = {
         }
       })
 
+      // era points
       const eraPointsHistory = []
       erasPoints.forEach(({ validators }) => {
         if (validators[intention.accountId]) {
@@ -199,6 +228,7 @@ export const actions = {
         }
       })
 
+      // governance
       const councilBacking = councilVotes.some(
         (vote) => vote[0] === intention.accountId
       )
@@ -214,10 +244,11 @@ export const actions = {
 
       return {
         active: false,
-        name: getName(intention.identity),
-        hasSubIdentity: hasSubIdentity(intention.identity),
+        name,
+        identity,
+        hasSubIdentity,
         verifiedIdentity,
-        identity: JSON.parse(JSON.stringify(intention.identity)),
+        identityRating,
         stashAddress: intention.accountId,
         nominators: intention.stakers.length,
         commission: (intention.validatorPrefs.commission / 10000000).toFixed(0),
@@ -246,6 +277,17 @@ export const actions = {
   },
 }
 
+function isVerifiedIdentity(identity) {
+  const judgements = identity.judgements.filter(
+    ([, judgement]) => !judgement.isFeePaid
+  )
+  return (
+    judgements.some(
+      ([, judgement]) => judgement.isKnownGood || judgement.isReasonable
+    ) || false
+  )
+}
+
 function getName(identity) {
   if (
     identity.displayParent &&
@@ -259,7 +301,7 @@ function getName(identity) {
   }
 }
 
-function hasSubIdentity(identity) {
+function subIdentity(identity) {
   if (
     identity.displayParent &&
     identity.displayParent !== `` &&
@@ -269,4 +311,15 @@ function hasSubIdentity(identity) {
     return true
   }
   return false
+}
+
+function getIdentityRating(name, verifiedIdentity, hasAllFields) {
+  if (verifiedIdentity && hasAllFields) {
+    return 3
+  } else if (verifiedIdentity && !hasAllFields) {
+    return 2
+  } else if (name !== '') {
+    return 1
+  }
+  return 0
 }
