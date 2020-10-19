@@ -9,6 +9,7 @@
       </div>
     </div>
     <hr />
+    <p>Detected {{ nominators }} nominator/s</p>
   </div>
 </template>
 <script>
@@ -16,6 +17,18 @@ import Rating from '../../components/Rating.vue'
 export default {
   components: {
     Rating,
+  },
+  props: {
+    nominators: {
+      type: Number,
+      default: () => 0,
+    },
+  },
+  computed: {
+    rating() {
+      // https://github.com/paritytech/polkadot/blob/master/runtime/kusama/src/lib.rs#L330
+      return this.nominators > 0 && this.nominators < 128 ? 2 : 0
+    },
   },
 }
 </script>

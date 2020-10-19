@@ -73,45 +73,12 @@
               />
             </div>
             <div class="col-md-6 mb-5">
-              <div class="row">
-                <div class="col-9">
-                  <h4 class="mb-0">Subaccounts</h4>
-                </div>
-                <div class="col-3 text-right">
-                  <span v-if="validator.hasSubIdentity">
-                    <font-awesome-icon
-                      icon="check"
-                      class="text-success verified"
-                    />
-                    Good
-                  </span>
-                  <span v-else>
-                    <font-awesome-icon
-                      icon="minus-circle"
-                      class="text-danger verified"
-                    />
-                    Bad
-                  </span>
-                </div>
-              </div>
-              <hr />
-              <p v-if="validator.hasSubIdentity">Good! Detected sub-identity</p>
-              <p v-else>Bad! No sub-identity detected</p>
+              <Subaccounts :hasSubIdentity="validator.hasSubIdentity" />
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 mb-5">
-              <div class="row">
-                <div class="col-9">
-                  <h4 class="mb-0">Nominators</h4>
-                </div>
-                <div class="col-3 text-right text-danger">
-                  <font-awesome-icon icon="minus-circle" class="verified" />
-                  Bad
-                </div>
-              </div>
-              <hr />
-              <p>Detected {{ validator.nominators }} nominator/s</p>
+              <Nominators :nominators="validator.nominators" />
             </div>
             <div class="col-md-6 mb-5">
               <div class="row">
