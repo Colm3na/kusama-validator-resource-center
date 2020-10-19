@@ -131,7 +131,6 @@ import EraPoints from '../../../components/metrics/EraPoints.vue'
 import Commission from '../../../components/metrics/Commission.vue'
 import Payouts from '../../../components/metrics/Payouts.vue'
 import Governance from '../../../components/metrics/Governance.vue'
-
 import commonMixin from '../../../mixins/commonMixin.js'
 
 export default {
