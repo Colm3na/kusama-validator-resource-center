@@ -118,7 +118,7 @@ export const actions = {
 
       // governance
       const councilBacking = councilVotes.some(
-        (vote) => vote[0] === validator.accountId
+        (vote) => vote[0].toString() === validator.accountId.toString()
       )
 
       // era points
