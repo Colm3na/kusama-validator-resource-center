@@ -67,30 +67,10 @@
           </div>
           <div class="row">
             <div class="col-md-6 mb-5">
-              <div class="row">
-                <div class="col-9">
-                  <h4 class="mb-0">Slashes</h4>
-                </div>
-                <div class="col-3 text-right">
-                  <span v-if="!validator.slashed">
-                    <font-awesome-icon
-                      icon="check"
-                      class="text-success verified"
-                    />
-                    Good
-                  </span>
-                  <span v-else>
-                    <font-awesome-icon
-                      icon="minus-circle"
-                      class="text-danger verified"
-                    />
-                    Bad
-                  </span>
-                </div>
-              </div>
-              <hr />
-              <p v-if="!validator.slashed">Good! No slashes detected</p>
-              <p v-else>Bad! Validator was slashed!</p>
+              <Slashes
+                :slashed="validator.slashed"
+                :slashes="validator.slashes"
+              />
             </div>
             <div class="col-md-6 mb-5">
               <div class="row">
@@ -228,6 +208,14 @@ import Loading from '../../../components/Loading.vue'
 import Additional from '../../../components/Additional.vue'
 import Identity from '../../../components/metrics/Identity.vue'
 import Address from '../../../components/metrics/Address.vue'
+import Slashes from '../../../components/metrics/Slashes.vue'
+import Subaccounts from '../../../components/metrics/Subaccounts.vue'
+import Nominators from '../../../components/metrics/Nominators.vue'
+import EraPoints from '../../../components/metrics/EraPoints.vue'
+import Commission from '../../../components/metrics/Commission.vue'
+import Payouts from '../../../components/metrics/Payouts.vue'
+import Governance from '../../../components/metrics/Governance.vue'
+
 import commonMixin from '../../../mixins/commonMixin.js'
 
 export default {
@@ -237,6 +225,13 @@ export default {
     Additional,
     Identity,
     Address,
+    Slashes,
+    Subaccounts,
+    Nominators,
+    EraPoints,
+    Commission,
+    Payouts,
+    Governance,
   },
   mixins: [commonMixin],
   data() {
