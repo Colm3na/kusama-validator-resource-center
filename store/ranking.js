@@ -4,15 +4,17 @@ export const state = () => ({
   list: [],
   eraHistory: [],
   blockHeight: 0,
+  eraPointsHistoryTotals: [],
   loading: true,
 })
 
 export const mutations = {
-  update(state, { ranking, eraHistory, blockHeight }) {
+  update(state, { ranking, eraHistory, blockHeight, eraPointsHistoryTotals }) {
     state.list = ranking
     state.loading = false
     state.eraHistory = eraHistory
     state.blockHeight = blockHeight
+    state.eraPointsHistoryTotals = eraPointsHistoryTotals
   },
 }
 
@@ -50,6 +52,11 @@ export const actions = {
       api.derive.staking._erasSlashes(eraIndexes),
     ])
     const blockHeight = parseInt(block.header.number.toString())
+
+    const eraPointsHistoryTotals = []
+    erasPoints.forEach(({ eraPoints }) => {
+      eraPointsHistoryTotals.push(parseInt(eraPoints.toString()))
+    })
 
     //
     // validators
@@ -118,7 +125,7 @@ export const actions = {
       const eraPointsHistory = []
       erasPoints.forEach(({ validators }) => {
         if (validators[validator.accountId]) {
-          eraPointsHistory.push(validators[validator.accountId])
+          eraPointsHistory.push(parseInt(validators[validator.accountId]))
         } else {
           eraPointsHistory.push(null)
         }
@@ -273,7 +280,12 @@ export const actions = {
     })
 
     console.log(JSON.parse(JSON.stringify(ranking)))
-    context.commit('update', { ranking, eraHistory: eraIndexes, blockHeight })
+    context.commit('update', {
+      ranking,
+      eraHistory: eraIndexes,
+      blockHeight,
+      eraPointsHistoryTotals,
+    })
     const endTime = new Date().getTime()
     // eslint-disable-next-line
     console.log(

@@ -81,20 +81,7 @@
               <Nominators :nominators="validator.nominators" />
             </div>
             <div class="col-md-6 mb-5">
-              <div class="row">
-                <div class="col-9">
-                  <h4 class="mb-0">Era points</h4>
-                </div>
-                <div class="col-3 text-right text-success">
-                  <font-awesome-icon
-                    icon="check"
-                    class="text-success verified"
-                  />
-                  Good
-                </div>
-              </div>
-              <hr />
-              <p>On average</p>
+              <EraPoints :era-points-history="validator.eraPointsHistory" />
             </div>
           </div>
           <div class="row">
