@@ -69,6 +69,7 @@ $body-bg: #000;
 $body-color: #fff;
 $primary: #e6007a;
 $secondary: #6c757d;
+$success: #0dff7e;
 $dark: #000;
 $border-radius: 0 !default;
 $border-radius-lg: 0 !default;
@@ -156,6 +157,9 @@ body {
 }
 pre {
   font-size: initial;
+  color: gray;
+}
+.nav-tabs .nav-item a {
   color: gray;
 }
 </style>

@@ -6,25 +6,27 @@
     <div v-else>
       <b-tabs content-class="mt-5">
         <b-tab title="Ranking" active>
-          <h5 class="text-center">Exclude:</h5>
-          <div class="row pt-3">
-            <div
-              v-for="option in options"
-              :key="option.text"
-              class="col-md-3 mb-3"
-            >
-              <b-form-checkbox
-                switch
-                size="lg"
-                :checked="getExcludeState(option.value)"
-                @change="toggleExcluded(option.value)"
+          <div class="exclude mb-4">
+            <h5>Exclude from search:</h5>
+            <div class="row pt-3">
+              <div
+                v-for="option in options"
+                :key="option.text"
+                class="col-md-3 mb-3"
               >
-                {{ option.text }}
-              </b-form-checkbox>
+                <b-form-checkbox
+                  switch
+                  size="lg"
+                  :checked="getExcludeState(option.value)"
+                  @change="toggleExcluded(option.value)"
+                >
+                  {{ option.text }}
+                </b-form-checkbox>
+              </div>
             </div>
           </div>
-          <p class="text-right mb-0">
-            {{ filteredRanking.length }} / {{ ranking.length }}
+          <p class="mb-2 text-secondary">
+            Search results: {{ filteredRanking.length }} / {{ ranking.length }}
           </p>
           <b-table
             dark
@@ -44,13 +46,42 @@
                 v-b-tooltip.hover
                 title="Active validator"
               >
-                <font-awesome-icon
-                  icon="circle"
-                  class="text-success led-green"
-                />
+                <font-awesome-layers>
+                  <font-awesome-icon
+                    icon="circle"
+                    style="
+                      color: black;
+                      font-size: 1.6rem;
+                      border: 2px solid rgb(128 128 128 / 49%);
+                      border-radius: 50%;
+                    "
+                  />
+                  <font-awesome-icon
+                    icon="circle"
+                    class="text-success"
+                    style="color: green; font-size: 1rem; margin-left: 0.285rem"
+                    transform="shrink-6"
+                  />
+                </font-awesome-layers>
               </span>
               <span v-else v-b-tooltip.hover title="Inactive validator">
-                <font-awesome-icon icon="circle" class="text-danger led-red" />
+                <font-awesome-layers>
+                  <font-awesome-icon
+                    icon="circle"
+                    style="
+                      color: black;
+                      font-size: 1.6rem;
+                      border: 2px solid rgb(128 128 128 / 49%);
+                      border-radius: 50%;
+                    "
+                  />
+                  <font-awesome-icon
+                    icon="circle"
+                    class="text-danger"
+                    style="color: green; font-size: 1rem; margin-left: 0.285rem"
+                    transform="shrink-6"
+                  />
+                </font-awesome-layers>
               </span>
             </template>
             <template v-slot:cell(name)="data">
@@ -137,7 +168,12 @@
             </div>
           </div>
         </b-tab>
-        <b-tab :title="`Selected (${selectedValidators.length})`">
+        <b-tab>
+          <template #title>
+            Selected
+            <font-awesome-icon icon="hand-paper" />
+            ({{ selectedValidators.length }})
+          </template>
           <SelectedValidators
             :list="selectedValidators"
             @remove="toggleSelected"
@@ -170,8 +206,8 @@ export default {
         { key: 'rank', sortable: true },
         { key: 'active', sortable: true, class: 'text-center' },
         { key: 'name', sortable: true },
-        { key: 'nominators', sortable: true, class: 'text-right' },
-        { key: 'commission', sortable: true, class: 'text-right' },
+        { key: 'nominators', sortable: true },
+        { key: 'commission', sortable: true },
         { key: 'selected', sortable: true, class: 'text-center' },
       ],
       exclude: [],
@@ -319,5 +355,13 @@ export default {
 .custom-switch.b-custom-control-lg .custom-control-label,
 .input-group-lg .custom-switch .custom-control-label {
   font-size: 0.9rem;
+}
+.exclude {
+  padding: 1rem 1rem 0.5rem 1rem;
+  border: 1px solid #e6007a;
+}
+.exclude h5 {
+  font-size: 1rem;
+  color: gray;
 }
 </style>
