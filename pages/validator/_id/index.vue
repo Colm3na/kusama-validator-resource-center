@@ -62,7 +62,7 @@
               />
             </div>
             <div class="col-md-6 mb-5">
-              <Address :accountId="validator.stashAddress" />
+              <Address :account-id="validator.stashAddress" />
             </div>
           </div>
           <div class="row">
@@ -73,7 +73,7 @@
               />
             </div>
             <div class="col-md-6 mb-5">
-              <Subaccounts :hasSubIdentity="validator.hasSubIdentity" />
+              <Subaccounts :has-sub-identity="validator.hasSubIdentity" />
             </div>
           </div>
           <div class="row">
