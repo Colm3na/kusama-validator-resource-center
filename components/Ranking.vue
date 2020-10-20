@@ -60,6 +60,7 @@
             :filter="filter"
             :filter-included-fields="filterOn"
             @filtered="onFiltered"
+            filter-debounce="200"
           >
             <template v-slot:cell(active)="data">
               <span
