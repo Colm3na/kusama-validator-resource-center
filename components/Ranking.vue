@@ -38,13 +38,7 @@
             </div>
           </div>
           <p class="mb-2 text-secondary">
-            Search results:
-            {{
-              filteredRanking.length > rows && rows !== 0
-                ? rows
-                : filteredRanking.length
-            }}
-            / {{ ranking.length }}
+            Search results: {{ filteredRows }} / {{ ranking.length }}
           </p>
           <b-table
             dark
@@ -59,8 +53,8 @@
             :sort-desc.sync="sortDesc"
             :filter="filter"
             :filter-included-fields="filterOn"
-            @filtered="onFiltered"
             filter-debounce="200"
+            @filtered="onFiltered"
           >
             <template v-slot:cell(active)="data">
               <span
@@ -81,7 +75,7 @@
                   <font-awesome-icon
                     icon="circle"
                     class="text-success"
-                    style="color: green; font-size: 1rem; margin-left: 0.285rem"
+                    style="font-size: 1.05rem; margin-left: 0.285rem"
                     transform="shrink-6"
                   />
                 </font-awesome-layers>
@@ -100,7 +94,7 @@
                   <font-awesome-icon
                     icon="circle"
                     class="text-danger"
-                    style="color: green; font-size: 1rem; margin-left: 0.285rem"
+                    style="font-size: 1.05rem; margin-left: 0.285rem"
                     transform="shrink-6"
                   />
                 </font-awesome-layers>
@@ -181,7 +175,7 @@
             <div class="col-6">
               <b-pagination
                 v-model="currentPage"
-                :total-rows="rows"
+                :total-rows="filteredRows"
                 :per-page="perPage"
                 aria-controls="my-table"
                 variant="dark"
@@ -275,7 +269,7 @@ export default {
         ? this.ranking.filter(({ active }) => active)
         : this.ranking
       filteredRanking = this.exclude.includes('greedy')
-        ? filteredRanking.filter(({ commission }) => commission !== `100`)
+        ? filteredRanking.filter(({ commission }) => commission !== 100)
         : filteredRanking
       filteredRanking = this.exclude.includes('noIdentity')
         ? filteredRanking.filter(({ name }) => name !== '')
@@ -285,6 +279,9 @@ export default {
         : filteredRanking
       return filteredRanking
     },
+    filteredRows() {
+      return this.filter ? this.rows : this.filteredRanking.length
+    }
   },
   watch: {
     selectedValidatorAddresses(selectedValidatorAddresses) {
