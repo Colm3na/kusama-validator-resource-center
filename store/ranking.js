@@ -117,6 +117,24 @@ export const actions = {
         }
       })
 
+      // commission rating
+      const commission = validator.validatorPrefs.commission / 10000000
+      let commissionRating = 0
+      if (commission === 100 || commission === 0) {
+        commissionRating = 0
+      } else if (commission > 10) {
+        commissionRating = 1
+      } else if (commission >= 5) {
+        if (
+          commissionHistory[0] > commissionHistory[commissionHistory.length - 1]
+        ) {
+          commissionRating = 3
+        }
+        commissionRating = 2
+      } else if (commission < 5) {
+        commissionRating = 3
+      }
+
       // governance
       const councilBacking = councilVotes.some(
         (vote) => vote[0].toString() === validator.accountId.toString()
@@ -157,6 +175,7 @@ export const actions = {
         nominators: validator.exposure.others.length,
         commission: validator.validatorPrefs.commission / 10000000,
         commissionHistory,
+        commissionRating,
         eraPointsHistory,
         slashed,
         slashes,
@@ -239,6 +258,19 @@ export const actions = {
         }
       })
 
+      // commission rating
+      const commission = intention.validatorPrefs.commission / 10000000
+      let commissionRating = 0
+      if (commission === 100 || commission === 0) {
+        commissionRating = 0
+      } else if (commission > 10) {
+        commissionRating = 1
+      } else if (commission >= 5) {
+        commissionRating = 2
+      } else if (commission < 5) {
+        commissionRating = 3
+      }
+
       // era points
       const eraPointsHistory = []
       erasPoints.forEach(({ validators }) => {
@@ -277,8 +309,9 @@ export const actions = {
         identityRating,
         stashAddress: intention.accountId,
         nominators: intention.stakers.length,
-        commission: intention.validatorPrefs.commission / 10000000,
+        commission,
         commissionHistory,
+        commissionRating,
         eraPointsHistory,
         slashed,
         slashes,

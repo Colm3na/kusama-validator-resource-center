@@ -23,38 +23,9 @@ export default {
       type: Number,
       default: () => 0,
     },
-    commissionHistory: {
-      type: Array,
-      default: () => [],
-    },
-  },
-  computed: {
-    decreaseOverTime() {
-      if (
-        this.commissionHistory[0] >
-        this.commissionHistory[this.commissionHistory.length - 1]
-      ) {
-        return true
-      }
-      return false
-    },
-    eraHistory() {
-      return this.$store.state.ranking.eraHistory
-    },
-    rating() {
-      if (this.commission === 100) {
-        return 0
-      } else if (this.commission > 10) {
-        return 1
-      } else if (this.commission >= 5) {
-        if (this.decreaseOverTime) {
-          return 3
-        }
-        return 2
-      } else if (this.commission < 5) {
-        return 3
-      }
-      return 0
+    rating: {
+      type: Number,
+      default: () => 0,
     },
   },
 }

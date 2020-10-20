@@ -88,7 +88,7 @@
             <div class="col-md-6 mb-5">
               <Commission
                 :commission="validator.commission"
-                :commission-history="validator.commissionHistory"
+                :rating="validator.commissionRating"
               />
             </div>
             <div class="col-md-6 mb-5">
