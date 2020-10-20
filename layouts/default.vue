@@ -115,6 +115,7 @@ html {
 body {
   font-family: 'Space Mono', monospace;
   margin-bottom: 60px;
+  font-size: 0.9rem;
 }
 .logo {
   height: 1.65rem;

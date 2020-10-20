@@ -1,9 +1,4 @@
-import { formatBalance, isHex } from '@polkadot/util'
-formatBalance.setDefaults({
-  decimals: 12,
-  unit: 'KSM',
-})
-
+import { isHex } from '@polkadot/util'
 export default {
   methods: {
     shortAddress(address) {
@@ -21,7 +16,10 @@ export default {
       }
     },
     formatAmount(amount) {
-      return formatBalance(amount.toString(10))
+      return `${amount
+        .div(1e12)
+        .toFixed(1)
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} KSM`
     },
   },
 }

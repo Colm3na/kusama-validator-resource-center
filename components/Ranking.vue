@@ -55,6 +55,7 @@
             :filter-included-fields="filterOn"
             filter-debounce="200"
             @filtered="onFiltered"
+            :sort-compare="sortCompare"
           >
             <template v-slot:cell(active)="data">
               <span
@@ -123,10 +124,10 @@
             </template>
 
             <template v-slot:cell(selfStake)="data">
-              {{ formatAmount(data.item.selfStake.toString(10)) }}
+              {{ formatAmount(data.item.selfStake) }}
             </template>
             <template v-slot:cell(otherStake)="data">
-              {{ formatAmount(data.item.otherStake.toString(10)) }}
+              {{ formatAmount(data.item.otherStake) }}
             </template>
             <template v-slot:cell(selected)="data">
               <p class="text-center mb-0">
@@ -207,6 +208,7 @@
   </div>
 </template>
 <script>
+import { BigNumber } from 'bignumber.js'
 import SelectedValidators from '../components/SelectedValidators.vue'
 import Loading from '../components/Loading.vue'
 import Identicon from '../components/Identicon.vue'
@@ -226,14 +228,24 @@ export default {
       sortBy: 'rank',
       sortDesc: false,
       fields: [
-        { key: 'rank', sortable: true },
-        { key: 'active', sortable: true, class: 'text-center' },
+        // { key: 'rank', label: '#', sortable: true },
+        {
+          key: 'active',
+          label: 'Status',
+          sortable: true,
+          class: 'text-center',
+        },
         { key: 'name', sortable: true },
         { key: 'nominators', sortable: true },
         { key: 'commission', sortable: true },
         { key: 'selfStake', sortable: true },
         { key: 'otherStake', sortable: true },
-        { key: 'selected', sortable: true, class: 'text-center' },
+        {
+          key: 'selected',
+          label: 'Select',
+          sortable: true,
+          class: 'text-center',
+        },
       ],
       exclude: [],
       options: [
@@ -363,6 +375,16 @@ export default {
     onFiltered(filteredItems) {
       this.rows = filteredItems.length
       this.currentPage = 1
+    },
+    sortCompare(aRow, bRow, key) {
+      const a = aRow[key]
+      const b = bRow[key]
+      if (a instanceof BigNumber && b instanceof BigNumber) {
+        return a.lt(b) ? -1 : 1
+      } else if (typeof a === 'number' && typeof b === 'number') {
+        return a < b ? -1 : 1
+      }
+      return a.toString().localeCompare(b.toString())
     },
   },
 }
