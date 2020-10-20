@@ -54,8 +54,8 @@
             :filter="filter"
             :filter-included-fields="filterOn"
             filter-debounce="200"
-            @filtered="onFiltered"
             :sort-compare="sortCompare"
+            @filtered="onFiltered"
           >
             <template v-slot:cell(active)="data">
               <span
