@@ -76,7 +76,7 @@
                   <font-awesome-icon
                     icon="circle"
                     class="text-success"
-                    style="font-size: 1.05rem; margin-left: 0.285rem"
+                    style="font-size: 1.05rem; margin-left: 0.266rem"
                     transform="shrink-6"
                   />
                 </font-awesome-layers>
@@ -95,7 +95,7 @@
                   <font-awesome-icon
                     icon="circle"
                     class="text-danger"
-                    style="font-size: 1.05rem; margin-left: 0.285rem"
+                    style="font-size: 1.05rem; margin-left: 0.266rem"
                     transform="shrink-6"
                   />
                 </font-awesome-layers>
