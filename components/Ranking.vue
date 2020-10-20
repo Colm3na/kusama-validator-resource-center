@@ -281,7 +281,7 @@ export default {
     },
     filteredRows() {
       return this.filter ? this.rows : this.filteredRanking.length
-    }
+    },
   },
   watch: {
     selectedValidatorAddresses(selectedValidatorAddresses) {
