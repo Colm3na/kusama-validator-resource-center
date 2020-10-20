@@ -1,4 +1,5 @@
 import { ApiPromise, WsProvider } from '@polkadot/api'
+import { BigNumber } from 'bignumber.js'
 
 export const state = () => ({
   list: [],
@@ -140,6 +141,11 @@ export const actions = {
           claimedRewards.some((claimedEra) => claimedEra === eraIndex)
         ) || []
 
+      // stake
+      const selfStake = new BigNumber(validator.exposure.own)
+      const totalStake = new BigNumber(validator.exposure.total)
+      const otherStake = totalStake.minus(selfStake)
+
       return {
         active: true,
         name,
@@ -156,6 +162,9 @@ export const actions = {
         slashes,
         councilBacking,
         payoutHistory,
+        selfStake,
+        otherStake,
+        totalStake,
       }
     })
 
@@ -254,6 +263,11 @@ export const actions = {
           claimedRewards.some((claimedEra) => claimedEra === eraIndex)
         ) || []
 
+      // stake
+      const selfStake = new BigNumber(0)
+      const totalStake = new BigNumber(0)
+      const otherStake = totalStake.minus(selfStake)
+
       return {
         active: false,
         name,
@@ -270,6 +284,9 @@ export const actions = {
         slashes,
         councilBacking,
         payoutHistory,
+        selfStake,
+        otherStake,
+        totalStake,
       }
     })
     const ranking = validators.concat(intentions).map((validator, index) => {

@@ -121,6 +121,13 @@
             <template v-slot:cell(commission)="data">
               {{ data.item.commission.toFixed(1) }}%
             </template>
+
+            <template v-slot:cell(selfStake)="data">
+              {{ formatAmount(data.item.selfStake.toString(10)) }}
+            </template>
+            <template v-slot:cell(otherStake)="data">
+              {{ formatAmount(data.item.otherStake.toString(10)) }}
+            </template>
             <template v-slot:cell(selected)="data">
               <p class="text-center mb-0">
                 <a
@@ -224,6 +231,8 @@ export default {
         { key: 'name', sortable: true },
         { key: 'nominators', sortable: true },
         { key: 'commission', sortable: true },
+        { key: 'selfStake', sortable: true },
+        { key: 'otherStake', sortable: true },
         { key: 'selected', sortable: true, class: 'text-center' },
       ],
       exclude: [],
