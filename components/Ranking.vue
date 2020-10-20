@@ -6,6 +6,18 @@
     <div v-else>
       <b-tabs content-class="mt-5">
         <b-tab title="Ranking" active>
+          <!-- Filter -->
+          <b-row style="margin-bottom: 1rem">
+            <b-col cols="12">
+              <b-form-input
+                id="filterInput"
+                v-model="filter"
+                type="search"
+                placeholder="Search validator by address or name"
+              />
+            </b-col>
+          </b-row>
+          <!-- Exclude -->
           <div class="exclude mb-4">
             <h5>Exclude from search:</h5>
             <div class="row pt-3">
@@ -26,7 +38,13 @@
             </div>
           </div>
           <p class="mb-2 text-secondary">
-            Search results: {{ filteredRanking.length }} / {{ ranking.length }}
+            Search results:
+            {{
+              filteredRanking.length > rows && rows !== 0
+                ? rows
+                : filteredRanking.length
+            }}
+            / {{ ranking.length }}
           </p>
           <b-table
             dark
@@ -39,6 +57,9 @@
             :current-page="currentPage"
             :sort-by.sync="sortBy"
             :sort-desc.sync="sortDesc"
+            :filter="filter"
+            :filter-included-fields="filterOn"
+            @filtered="onFiltered"
           >
             <template v-slot:cell(active)="data">
               <span
@@ -224,6 +245,9 @@ export default {
           value: 'noParticipateGovernance',
         },
       ],
+      filter: null,
+      filterOn: [],
+      rows: 0,
       selectedValidatorAddresses: [],
       maxValidatorsReached: false,
     }
@@ -259,9 +283,6 @@ export default {
         ? filteredRanking.filter(({ verifiedIdentity }) => verifiedIdentity)
         : filteredRanking
       return filteredRanking
-    },
-    rows() {
-      return this.filteredRanking.length
     },
   },
   watch: {
@@ -331,6 +352,10 @@ export default {
         return true
       }
       return false
+    },
+    onFiltered(filteredItems) {
+      this.rows = filteredItems.length
+      this.currentPage = 1
     },
   },
 }
