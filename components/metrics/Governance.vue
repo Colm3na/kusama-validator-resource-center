@@ -27,7 +27,7 @@ export default {
       default: () => false,
     },
     rating: {
-      type: Boolean,
+      type: Number,
       default: () => 0,
     },
   },
