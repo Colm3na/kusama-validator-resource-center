@@ -100,11 +100,20 @@ export const actions = {
         hasAllFields
       )
 
+      // sub-accounts
+      const clusterMembers = hasSubIdentity
+        ? validators.filter(
+            ({ identity }) =>
+              identity.displayParent === validator.identity.displayParent
+          ).length
+        : 0
+      const partOfCluster = clusterMembers > 0
+
       // nominators
       const nominators = validator.exposure.others.length
       const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
 
-      // slash
+      // slashes
       const slashed = erasSlashes.some(
         ({ validators }) => validators[validator.accountId]
       )
@@ -112,6 +121,9 @@ export const actions = {
         erasSlashes.filter(
           ({ validators }) => validators[validator.accountId]
         ) || []
+
+      // slashes rating
+      const slashRating = slashed ? 0 : 2
 
       // commission
       const commissionHistory = []
@@ -206,6 +218,8 @@ export const actions = {
         verifiedIdentity,
         identityRating,
         stashAddress: validator.accountId.toHuman(),
+        partOfCluster,
+        clusterMembers,
         nominators,
         nominatorsRating,
         commission: validator.validatorPrefs.commission / 10000000,
@@ -215,6 +229,7 @@ export const actions = {
         eraPointsPercent,
         eraPointsRating,
         slashed,
+        slashRating,
         slashes,
         councilBacking,
         governanceRating,
@@ -267,6 +282,15 @@ export const actions = {
         hasAllFields
       )
 
+      // sub-accounts
+      const clusterMembers = hasSubIdentity
+        ? validators.filter(
+            ({ identity }) =>
+              identity.displayParent === intention.identity.displayParent
+          ).length
+        : 0
+      const partOfCluster = clusterMembers > 0
+
       // nominators
       const nominators = nominations
         .filter((nomination) =>
@@ -285,6 +309,8 @@ export const actions = {
         erasSlashes.filter(
           ({ validators }) => validators[intention.accountId]
         ) || []
+      // slashes rating
+      const slashRating = slashed ? 0 : 2
 
       // commission
       const commissionHistory = []
@@ -374,6 +400,8 @@ export const actions = {
         verifiedIdentity,
         identityRating,
         stashAddress: intention.accountId,
+        partOfCluster,
+        clusterMembers,
         nominators,
         nominatorsRating,
         commission,
@@ -383,6 +411,7 @@ export const actions = {
         eraPointsPercent,
         eraPointsRating,
         slashed,
+        slashRating,
         slashes,
         councilBacking,
         governanceRating,
@@ -416,9 +445,13 @@ export const actions = {
 }
 
 function isVerifiedIdentity(identity) {
+  if (identity.judgements.length === 0) {
+    return false
+  }
   const judgements = identity.judgements.filter(
     ([, judgement]) => !judgement.isFeePaid
   )
+  // console.log(`judgements:`, JSON.stringify(judgements, null, 2))
   return (
     judgements.some(
       ([, judgement]) => judgement.isKnownGood || judgement.isReasonable

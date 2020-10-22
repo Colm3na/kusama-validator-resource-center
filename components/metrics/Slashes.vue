@@ -20,18 +20,13 @@ export default {
     Rating,
   },
   props: {
-    slashed: {
-      type: Boolean,
-      default: () => false,
-    },
     slashes: {
       type: Array,
       default: () => [],
     },
-  },
-  computed: {
-    rating() {
-      return this.slashed ? 0 : 2
+    rating: {
+      type: Number,
+      default: () => 0,
     },
   },
 }

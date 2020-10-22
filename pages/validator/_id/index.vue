@@ -68,8 +68,8 @@
           <div class="row">
             <div class="col-md-6 mb-5">
               <Slashes
-                :slashed="validator.slashed"
                 :slashes="validator.slashes"
+                :rating="validator.slashRating"
               />
             </div>
             <div class="col-md-6 mb-5">
