@@ -26,10 +26,9 @@ export default {
       type: Boolean,
       default: () => false,
     },
-  },
-  computed: {
-    rating() {
-      return this.councilBacking ? 2 : 0
+    rating: {
+      type: Boolean,
+      default: () => 0,
     },
   },
 }

@@ -100,6 +100,10 @@ export const actions = {
         hasAllFields
       )
 
+      // nominators
+      const nominators = validator.exposure.others.length
+      const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
+
       // slash
       const slashed = erasSlashes.some(
         ({ validators }) => validators[validator.accountId]
@@ -144,6 +148,9 @@ export const actions = {
         (vote) => vote[0].toString() === validator.accountId.toString()
       )
 
+      // governance rating
+      const governanceRating = councilBacking ? 2 : 0
+
       // era points
       const eraPointsHistory = []
       erasPoints.forEach(({ validators }) => {
@@ -175,6 +182,17 @@ export const actions = {
           claimedRewards.some((claimedEra) => claimedEra === eraIndex)
         ) || []
 
+      // payout rating
+      let payoutRating = 0
+      const pendingEras = payoutHistory.filter((era) => !era).length
+      if (pendingEras <= 4) {
+        payoutRating = 3
+      } else if (pendingEras <= 12) {
+        payoutRating = 2
+      } else if (pendingEras < 28) {
+        payoutRating = 1
+      }
+
       // stake
       const selfStake = new BigNumber(validator.exposure.own)
       const totalStake = new BigNumber(validator.exposure.total)
@@ -188,7 +206,8 @@ export const actions = {
         verifiedIdentity,
         identityRating,
         stashAddress: validator.accountId.toHuman(),
-        nominators: validator.exposure.others.length,
+        nominators,
+        nominatorsRating,
         commission: validator.validatorPrefs.commission / 10000000,
         commissionHistory,
         commissionRating,
@@ -198,7 +217,9 @@ export const actions = {
         slashed,
         slashes,
         councilBacking,
+        governanceRating,
         payoutHistory,
+        payoutRating,
         selfStake,
         otherStake,
         totalStake,
@@ -246,14 +267,15 @@ export const actions = {
         hasAllFields
       )
 
-      // nominations
-      intention.stakers = nominations
+      // nominators
+      const nominators = nominations
         .filter((nomination) =>
           nomination.targets.some(
             (target) => target === intention.accountId.toString()
           )
         )
-        .map((nomination) => nomination.nominator)
+        .map((nomination) => nomination.nominator).length
+      const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
 
       // slashes
       const slashed = erasSlashes.some(
@@ -316,6 +338,9 @@ export const actions = {
         (vote) => vote[0] === intention.accountId
       )
 
+      // governance rating
+      const governanceRating = councilBacking ? 2 : 0
+
       // frecuency of payouts
       const claimedRewards = JSON.parse(
         JSON.stringify(intention.stakingLedger.claimedRewards)
@@ -324,6 +349,17 @@ export const actions = {
         eraIndexes.map((eraIndex) =>
           claimedRewards.some((claimedEra) => claimedEra === eraIndex)
         ) || []
+
+      // payout rating
+      let payoutRating = 0
+      const pendingEras = payoutHistory.filter((era) => !era).length
+      if (pendingEras <= 4) {
+        payoutRating = 3
+      } else if (pendingEras <= 12) {
+        payoutRating = 2
+      } else if (pendingEras < 28) {
+        payoutRating = 1
+      }
 
       // stake
       const selfStake = new BigNumber(0)
@@ -338,7 +374,8 @@ export const actions = {
         verifiedIdentity,
         identityRating,
         stashAddress: intention.accountId,
-        nominators: intention.stakers.length,
+        nominators,
+        nominatorsRating,
         commission,
         commissionHistory,
         commissionRating,
@@ -348,7 +385,9 @@ export const actions = {
         slashed,
         slashes,
         councilBacking,
+        governanceRating,
         payoutHistory,
+        payoutRating,
         selfStake,
         otherStake,
         totalStake,

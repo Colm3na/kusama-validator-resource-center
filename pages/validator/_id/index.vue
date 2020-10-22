@@ -78,7 +78,10 @@
           </div>
           <div class="row">
             <div class="col-md-6 mb-5">
-              <Nominators :nominators="validator.nominators" />
+              <Nominators
+                :nominators="validator.nominators"
+                :rating="validator.nominatorsRating"
+              />
             </div>
             <div class="col-md-6 mb-5">
               <EraPoints
@@ -95,12 +98,18 @@
               />
             </div>
             <div class="col-md-6 mb-5">
-              <Payouts :payout-history="validator.payoutHistory" />
+              <Payouts
+                :payout-history="validator.payoutHistory"
+                :rating="validator.payoutsRating"
+              />
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 mb-5">
-              <Governance :council-backing="validator.councilBacking" />
+              <Governance
+                :council-backing="validator.councilBacking"
+                :rating="validator.governanceRating"
+              />
             </div>
             <div class="col-md-6 mb-5"></div>
           </div>

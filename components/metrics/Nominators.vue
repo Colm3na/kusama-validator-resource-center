@@ -23,11 +23,9 @@ export default {
       type: Number,
       default: () => 0,
     },
-  },
-  computed: {
-    rating() {
-      // https://github.com/paritytech/polkadot/blob/master/runtime/kusama/src/lib.rs#L330
-      return this.nominators > 0 && this.nominators < 128 ? 2 : 0
+    rating: {
+      type: Number,
+      default: () => 0,
     },
   },
 }
