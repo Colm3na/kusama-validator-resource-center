@@ -81,9 +81,7 @@ export const actions = {
     allValidators = await Promise.all(
       allValidators.map((validator) =>
         api.derive.accounts.info(validator.accountId).then(({ identity }) => {
-          const active = validatorAddresses.some(
-            ({ accountId }) => accountId === validator.accountId.toString()
-          )
+          const active = validatorAddresses.includes(validator.accountId)
           return {
             ...validator,
             identity,
@@ -113,13 +111,12 @@ export const actions = {
       )
 
       // sub-accounts
-      // const clusterMembers = hasSubIdentity
-      //   ? allValidators.filter(
-      //       ({ identity }) =>
-      //         identity.displayParent === validator.identity.displayParent
-      //     ).length
-      //   : 0
-      const clusterMembers = 0
+      const clusterMembers = hasSubIdentity
+        ? allValidators.filter(
+            ({ identity }) =>
+              identity.displayParent === validator.identity.displayParent
+          ).length
+        : 0
       const partOfCluster = clusterMembers > 0
 
       // nominators
