@@ -58,6 +58,10 @@ export const actions = {
     erasPoints.forEach(({ eraPoints }) => {
       eraPointsHistoryTotals.push(parseInt(eraPoints.toString()))
     })
+    const eraPointsHistoryTotalsSum = eraPointsHistoryTotals.reduce(
+      (total, num) => total + num,
+      0
+    )
 
     //
     // validators
@@ -150,6 +154,18 @@ export const actions = {
         }
       })
 
+      // era points rating
+      const eraPointsHistoryValidator = eraPointsHistory.reduce(
+        (total, num) => total + num,
+        0
+      )
+      const numActiveValidators = validatorAddresses.length
+      const eraPointsPercent =
+        (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum
+      const eraPointsAverage = eraPointsHistoryTotalsSum / numActiveValidators
+      const eraPointsRating =
+        eraPointsHistoryValidator > eraPointsAverage ? 2 : 0
+
       // frecuency of payouts
       const claimedRewards = JSON.parse(
         JSON.stringify(validator.stakingLedger.claimedRewards)
@@ -177,6 +193,8 @@ export const actions = {
         commissionHistory,
         commissionRating,
         eraPointsHistory,
+        eraPointsPercent,
+        eraPointsRating,
         slashed,
         slashes,
         councilBacking,
@@ -281,6 +299,18 @@ export const actions = {
         }
       })
 
+      // era points rating
+      const eraPointsHistoryValidator = eraPointsHistory.reduce(
+        (total, num) => total + num,
+        0
+      )
+      const numActiveValidators = validatorAddresses.length
+      const eraPointsPercent =
+        (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum
+      const eraPointsAverage = eraPointsHistoryTotalsSum / numActiveValidators
+      const eraPointsRating =
+        eraPointsHistoryValidator > eraPointsAverage ? 2 : 0
+
       // governance
       const councilBacking = councilVotes.some(
         (vote) => vote[0] === intention.accountId
@@ -313,6 +343,8 @@ export const actions = {
         commissionHistory,
         commissionRating,
         eraPointsHistory,
+        eraPointsPercent,
+        eraPointsRating,
         slashed,
         slashes,
         councilBacking,

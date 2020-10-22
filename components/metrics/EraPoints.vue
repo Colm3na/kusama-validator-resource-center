@@ -24,37 +24,13 @@ export default {
     Rating,
   },
   props: {
-    eraPointsHistory: {
-      type: Array,
-      default: () => [],
+    rating: {
+      type: Number,
+      default: () => 0,
     },
-  },
-  computed: {
-    eraPointsHistoryTotals() {
-      return this.$store.state.ranking.eraPointsHistoryTotals.reduce(
-        (total, num) => total + num,
-        0
-      )
-    },
-    eraPointsHistoryValidator() {
-      return this.eraPointsHistory.reduce((total, num) => total + num, 0)
-    },
-    numActiveValidators() {
-      return (
-        this.$store.state.ranking.list.filter(({ active }) => active).length ||
-        0
-      )
-    },
-    average() {
-      return this.eraPointsHistoryTotals / this.numActiveValidators
-    },
-    percent() {
-      return (
-        (this.eraPointsHistoryValidator * 100) / this.eraPointsHistoryTotals
-      )
-    },
-    rating() {
-      return this.eraPointsHistoryValidator > this.average ? 2 : 0
+    percent: {
+      type: Number,
+      default: () => 0,
     },
   },
 }

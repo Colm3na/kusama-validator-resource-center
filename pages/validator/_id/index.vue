@@ -81,7 +81,10 @@
               <Nominators :nominators="validator.nominators" />
             </div>
             <div class="col-md-6 mb-5">
-              <EraPoints :era-points-history="validator.eraPointsHistory" />
+              <EraPoints
+                :percent="validator.eraPointsPercent"
+                :rating="validator.eraPointsRating"
+              />
             </div>
           </div>
           <div class="row">
