@@ -36,7 +36,7 @@ export const actions = {
     const [
       { block },
       validatorAddresses,
-      waitingInfo,
+      allStashAddresses,
       nominators,
       councilVotes,
       erasPoints,
@@ -45,7 +45,7 @@ export const actions = {
     ] = await Promise.all([
       api.rpc.chain.getBlock(),
       api.query.session.validators(),
-      api.derive.staking.waitingInfo(),
+      api.derive.staking.stashes(),
       api.query.staking.nominators.entries(),
       api.derive.council.votes(),
       api.derive.staking._erasPoints(eraIndexes),
@@ -63,25 +63,37 @@ export const actions = {
       0
     )
 
-    //
-    // validators
-    //
-    let validators = await Promise.all(
-      validatorAddresses.map((authorityId) =>
+    const nominations = nominators.map(([key, nominations]) => {
+      const nominator = key.toHuman()[0]
+      const targets = nominations.toHuman().targets
+      return {
+        nominator,
+        targets,
+      }
+    })
+
+    // refactor
+    let allValidators = await Promise.all(
+      allStashAddresses.map((authorityId) =>
         api.derive.staking.account(authorityId)
       )
     )
-    validators = await Promise.all(
-      validators.map((validator) =>
+    allValidators = await Promise.all(
+      allValidators.map((validator) =>
         api.derive.accounts.info(validator.accountId).then(({ identity }) => {
+          const active = validatorAddresses.some(
+            ({ accountId }) => accountId === validator.accountId.toString()
+          )
           return {
             ...validator,
             identity,
+            active,
           }
         })
       )
     )
-    validators = validators.map((validator) => {
+
+    allValidators = allValidators.map((validator, index) => {
       // identity
       const verifiedIdentity = isVerifiedIdentity(validator.identity)
       const hasSubIdentity = subIdentity(validator.identity)
@@ -101,16 +113,25 @@ export const actions = {
       )
 
       // sub-accounts
-      const clusterMembers = hasSubIdentity
-        ? validators.filter(
-            ({ identity }) =>
-              identity.displayParent === validator.identity.displayParent
-          ).length
-        : 0
+      // const clusterMembers = hasSubIdentity
+      //   ? allValidators.filter(
+      //       ({ identity }) =>
+      //         identity.displayParent === validator.identity.displayParent
+      //     ).length
+      //   : 0
+      const clusterMembers = 0
       const partOfCluster = clusterMembers > 0
 
       // nominators
-      const nominators = validator.exposure.others.length
+      const nominators = validator.active
+        ? validator.exposure.others.length
+        : nominations
+            .filter((nomination) =>
+              nomination.targets.some(
+                (target) => target === validator.accountId.toString()
+              )
+            )
+            .map((nomination) => nomination.nominator).length
       const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
 
       // slashes
@@ -206,12 +227,17 @@ export const actions = {
       }
 
       // stake
-      const selfStake = new BigNumber(validator.exposure.own)
-      const totalStake = new BigNumber(validator.exposure.total)
+      const selfStake = validator.active
+        ? new BigNumber(validator.exposure.own)
+        : new BigNumber(0)
+      const totalStake = validator.active
+        ? new BigNumber(validator.exposure.total)
+        : new BigNumber(0)
       const otherStake = totalStake.minus(selfStake)
 
       return {
-        active: true,
+        rank: index + 1,
+        active: validator.active,
         name,
         identity,
         hasSubIdentity,
@@ -241,197 +267,9 @@ export const actions = {
       }
     })
 
-    //
-    // waiting validators
-    //
-    const nominations = nominators.map(([key, nominations]) => {
-      const nominator = key.toHuman()[0]
-      const targets = nominations.toHuman().targets
-      return {
-        nominator,
-        targets,
-      }
-    })
-    let intentions = JSON.parse(JSON.stringify(waitingInfo.info))
-    intentions = await Promise.all(
-      intentions.map((intention) =>
-        api.derive.accounts.info(intention.accountId).then(({ identity }) => {
-          return {
-            ...intention,
-            identity,
-          }
-        })
-      )
-    )
-    intentions = intentions.map((intention) => {
-      // identity
-      const verifiedIdentity = isVerifiedIdentity(intention.identity)
-      const hasSubIdentity = subIdentity(intention.identity)
-      const identity = JSON.parse(JSON.stringify(intention.identity))
-      const name = getName(intention.identity)
-      const hasAllFields =
-        identity.display &&
-        identity.legal &&
-        identity.web &&
-        identity.email &&
-        identity.twitter &&
-        identity.riot
-      const identityRating = getIdentityRating(
-        name,
-        verifiedIdentity,
-        hasAllFields
-      )
-
-      // sub-accounts
-      const clusterMembers = hasSubIdentity
-        ? validators.filter(
-            ({ identity }) =>
-              identity.displayParent === intention.identity.displayParent
-          ).length
-        : 0
-      const partOfCluster = clusterMembers > 0
-
-      // nominators
-      const nominators = nominations
-        .filter((nomination) =>
-          nomination.targets.some(
-            (target) => target === intention.accountId.toString()
-          )
-        )
-        .map((nomination) => nomination.nominator).length
-      const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
-
-      // slashes
-      const slashed = erasSlashes.some(
-        ({ validators }) => validators[intention.accountId]
-      )
-      const slashes =
-        erasSlashes.filter(
-          ({ validators }) => validators[intention.accountId]
-        ) || []
-      // slashes rating
-      const slashRating = slashed ? 0 : 2
-
-      // commission
-      const commissionHistory = []
-      erasPreferences.forEach(({ validators }) => {
-        if (validators[intention.accountId]) {
-          commissionHistory.push(
-            (validators[intention.accountId].commission / 10000000).toFixed(2)
-          )
-        } else {
-          commissionHistory.push(null)
-        }
-      })
-
-      // commission rating
-      const commission = intention.validatorPrefs.commission / 10000000
-      let commissionRating = 0
-      if (commission === 100 || commission === 0) {
-        commissionRating = 0
-      } else if (commission > 10) {
-        commissionRating = 1
-      } else if (commission >= 5) {
-        commissionRating = 2
-      } else if (commission < 5) {
-        commissionRating = 3
-      }
-
-      // era points
-      const eraPointsHistory = []
-      erasPoints.forEach(({ validators }) => {
-        if (validators[intention.accountId]) {
-          eraPointsHistory.push(validators[intention.accountId])
-        } else {
-          eraPointsHistory.push(null)
-        }
-      })
-
-      // era points rating
-      const eraPointsHistoryValidator = eraPointsHistory.reduce(
-        (total, num) => total + num,
-        0
-      )
-      const numActiveValidators = validatorAddresses.length
-      const eraPointsPercent =
-        (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum
-      const eraPointsAverage = eraPointsHistoryTotalsSum / numActiveValidators
-      const eraPointsRating =
-        eraPointsHistoryValidator > eraPointsAverage ? 2 : 0
-
-      // governance
-      const councilBacking = councilVotes.some(
-        (vote) => vote[0] === intention.accountId
-      )
-
-      // governance rating
-      const governanceRating = councilBacking ? 2 : 0
-
-      // frecuency of payouts
-      const claimedRewards = JSON.parse(
-        JSON.stringify(intention.stakingLedger.claimedRewards)
-      )
-      const payoutHistory =
-        eraIndexes.map((eraIndex) =>
-          claimedRewards.some((claimedEra) => claimedEra === eraIndex)
-        ) || []
-
-      // payout rating
-      let payoutRating = 0
-      const pendingEras = payoutHistory.filter((era) => !era).length
-      if (pendingEras <= 4) {
-        payoutRating = 3
-      } else if (pendingEras <= 12) {
-        payoutRating = 2
-      } else if (pendingEras < 28) {
-        payoutRating = 1
-      }
-
-      // stake
-      const selfStake = new BigNumber(0)
-      const totalStake = new BigNumber(0)
-      const otherStake = totalStake.minus(selfStake)
-
-      return {
-        active: false,
-        name,
-        identity,
-        hasSubIdentity,
-        verifiedIdentity,
-        identityRating,
-        stashAddress: intention.accountId,
-        partOfCluster,
-        clusterMembers,
-        nominators,
-        nominatorsRating,
-        commission,
-        commissionHistory,
-        commissionRating,
-        eraPointsHistory,
-        eraPointsPercent,
-        eraPointsRating,
-        slashed,
-        slashRating,
-        slashes,
-        councilBacking,
-        governanceRating,
-        payoutHistory,
-        payoutRating,
-        selfStake,
-        otherStake,
-        totalStake,
-      }
-    })
-    const ranking = validators.concat(intentions).map((validator, index) => {
-      return {
-        rank: index + 1,
-        ...validator,
-      }
-    })
-
-    console.log(JSON.parse(JSON.stringify(ranking)))
+    console.log(JSON.parse(JSON.stringify(allValidators)))
     context.commit('update', {
-      ranking,
+      ranking: allValidators,
       eraHistory: eraIndexes,
       blockHeight,
       eraPointsHistoryTotals,
