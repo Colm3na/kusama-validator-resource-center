@@ -95,17 +95,18 @@ export const actions = {
       (total, num) => total + num,
       0
     )
-    const nominations = nominators.map(([key, nominations]) => {
-      const nominator = key.toHuman()[0]
-      const targets = nominations.toHuman().targets
-      return {
-        nominator,
-        targets,
-      }
+    let nominatorTargets = []
+    nominators.forEach(([, nominations]) => {
+      nominatorTargets = nominatorTargets.concat(nominations.toHuman().targets)
     })
+    const validatorAddressesJSON = JSON.parse(
+      JSON.stringify(validatorAddresses)
+    )
+    nominatorTargets = nominatorTargets.filter(
+      (target) => !validatorAddressesJSON.includes(target)
+    )
 
     allValidators = allValidators.map((validator, index) => {
-      // const startTime = new Date().getTime()
       // identity
       const verifiedIdentity = isVerifiedIdentity(validator.identity)
       const hasSubIdentity = subIdentity(validator.identity)
@@ -131,26 +132,16 @@ export const actions = {
               identity.displayParent === validator.identity.displayParent
           ).length
         : 0
-      // const clusterMembers = 0
       const partOfCluster = clusterMembers > 0
 
       // nominators
-      // const startTime = new Date().getTime()
-
       const nominators = validator.active
         ? validator.exposure.others.length
-        : nominations.filter((nomination) =>
-            nomination.targets.includes(validator.accountId.toString())
+        : nominatorTargets.filter(
+            (target) => target === validator.accountId.toString()
           ).length
-      // const nominators = 0
-      const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
 
-      // const endTime = new Date().getTime()
-      // console.log(
-      //   `nominators processing time: ${((endTime - startTime) / 1000).toFixed(
-      //     6
-      //   )}s`
-      // )
+      const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
 
       // slashes
       const slashes =
@@ -252,11 +243,6 @@ export const actions = {
         ? totalStake.minus(selfStake)
         : new BigNumber(0)
 
-      // const endTime = new Date().getTime()
-      // console.log(
-      //   `loop ${index + 1} time: ${((endTime - startTime) / 1000).toFixed(3)}s`
-      // )
-
       return {
         rank: index + 1,
         active: validator.active,
@@ -265,7 +251,7 @@ export const actions = {
         hasSubIdentity,
         verifiedIdentity,
         identityRating,
-        stashAddress: validator.accountId.toHuman(),
+        stashAddress: validator.accountId.toString(),
         partOfCluster,
         clusterMembers,
         nominators,
@@ -289,7 +275,7 @@ export const actions = {
       }
     })
 
-    console.log(JSON.parse(JSON.stringify(allValidators)))
+    // console.log(JSON.parse(JSON.stringify(allValidators)))
     context.commit('update', {
       ranking: allValidators,
       eraHistory: eraIndexes,
@@ -316,7 +302,6 @@ function isVerifiedIdentity(identity) {
   const judgements = identity.judgements.filter(
     ([, judgement]) => !judgement.isFeePaid
   )
-  // console.log(`judgements:`, JSON.stringify(judgements, null, 2))
   return (
     judgements.some(
       ([, judgement]) => judgement.isKnownGood || judgement.isReasonable
