@@ -14,6 +14,7 @@
                 v-model="filter"
                 type="search"
                 placeholder="Search validator by address or name"
+                debounce="500"
               />
             </b-col>
           </b-row>
@@ -53,7 +54,6 @@
             :sort-desc.sync="sortDesc"
             :filter="filter"
             :filter-included-fields="filterOn"
-            filter-debounce="200"
             :sort-compare="sortCompare"
             @filtered="onFiltered"
           >
