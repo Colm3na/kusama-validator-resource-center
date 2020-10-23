@@ -22,17 +22,21 @@ export const mutations = {
 export const actions = {
   async update(context) {
     const startTime = new Date().getTime()
+
     const nodeWs = 'wss://kusama-rpc.polkadot.io'
     const wsProvider = new WsProvider(nodeWs)
     const api = await ApiPromise.create({ provider: wsProvider })
 
     const historySize = 28 // 1 week
     const withActive = false
+
+    //
+    // data collection
+    //
     const erasHistoric = await api.derive.staking.erasHistoric(withActive)
     const eraIndexes = erasHistoric.slice(
       Math.max(erasHistoric.length - historySize, 0)
     )
-    // parallelize as much as possible
     const [
       { block },
       validatorAddresses,
@@ -52,27 +56,6 @@ export const actions = {
       api.derive.staking._erasPrefs(eraIndexes),
       api.derive.staking._erasSlashes(eraIndexes),
     ])
-    const blockHeight = parseInt(block.header.number.toString())
-
-    const eraPointsHistoryTotals = []
-    erasPoints.forEach(({ eraPoints }) => {
-      eraPointsHistoryTotals.push(parseInt(eraPoints.toString()))
-    })
-    const eraPointsHistoryTotalsSum = eraPointsHistoryTotals.reduce(
-      (total, num) => total + num,
-      0
-    )
-
-    const nominations = nominators.map(([key, nominations]) => {
-      const nominator = key.toHuman()[0]
-      const targets = nominations.toHuman().targets
-      return {
-        nominator,
-        targets,
-      }
-    })
-
-    // refactor
     let allValidators = await Promise.all(
       validatorAddresses.map((authorityId) =>
         api.derive.staking.account(authorityId)
@@ -93,16 +76,36 @@ export const actions = {
     )
 
     const dataCollectionEndTime = new Date().getTime()
+    const dataCollectionTime = dataCollectionEndTime - startTime
     // eslint-disable-next-line
     console.log(
-      `data collection time: ${(
-        (dataCollectionEndTime - startTime) /
-        1000
-      ).toFixed(2)}s`
+      `data collection time: ${(dataCollectionTime / 1000).toFixed(3)}s`
     )
 
+    //
+    // data processing
+    //
+    const numActiveValidators = validatorAddresses.length
+    const blockHeight = parseInt(block.header.number.toString())
+    const eraPointsHistoryTotals = []
+    erasPoints.forEach(({ eraPoints }) => {
+      eraPointsHistoryTotals.push(parseInt(eraPoints.toString()))
+    })
+    const eraPointsHistoryTotalsSum = eraPointsHistoryTotals.reduce(
+      (total, num) => total + num,
+      0
+    )
+    const nominations = nominators.map(([key, nominations]) => {
+      const nominator = key.toHuman()[0]
+      const targets = nominations.toHuman().targets
+      return {
+        nominator,
+        targets,
+      }
+    })
+
     allValidators = allValidators.map((validator, index) => {
-      const startTime = new Date().getTime()
+      // const startTime = new Date().getTime()
       // identity
       const verifiedIdentity = isVerifiedIdentity(validator.identity)
       const hasSubIdentity = subIdentity(validator.identity)
@@ -128,18 +131,16 @@ export const actions = {
               identity.displayParent === validator.identity.displayParent
           ).length
         : 0
+      // const clusterMembers = 0
       const partOfCluster = clusterMembers > 0
 
       // nominators
       const nominators = validator.active
         ? validator.exposure.others.length
-        : nominations
-            .filter((nomination) =>
-              nomination.targets.some(
-                (target) => target === validator.accountId.toString()
-              )
-            )
-            .map((nomination) => nomination.nominator).length
+        : nominations.filter((nomination) =>
+            nomination.targets.includes(validator.accountId.toString())
+          ).length
+      // const nominators = 0
       const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
 
       // slashes
@@ -207,7 +208,6 @@ export const actions = {
         (total, num) => total + num,
         0
       )
-      const numActiveValidators = validatorAddresses.length
       const eraPointsPercent =
         (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum
       const eraPointsAverage = eraPointsHistoryTotalsSum / numActiveValidators
@@ -243,10 +243,10 @@ export const actions = {
         : new BigNumber(0)
       const otherStake = totalStake.minus(selfStake)
 
-      const endTime = new Date().getTime()
-      console.log(
-        `loop ${index + 1} time: ${((endTime - startTime) / 1000).toFixed(3)}s`
-      )
+      // const endTime = new Date().getTime()
+      // console.log(
+      //   `loop ${index + 1} time: ${((endTime - startTime) / 1000).toFixed(3)}s`
+      // )
 
       return {
         rank: index + 1,
@@ -288,12 +288,14 @@ export const actions = {
       eraPointsHistoryTotals,
     })
     const endTime = new Date().getTime()
+    const dataProcessingTime = endTime - dataCollectionEndTime
     // eslint-disable-next-line
     console.log(
-      `data processing time: ${(
-        (endTime - dataCollectionEndTime) /
-        1000
-      ).toFixed(2)}s`
+      `data processing time: ${(dataProcessingTime / 1000).toFixed(3)}s`
+    )
+    // eslint-disable-next-line
+    console.log(
+      `total: ${((dataCollectionTime + dataProcessingTime) / 1000).toFixed(3)}s`
     )
   },
 }
