@@ -135,6 +135,8 @@ export const actions = {
       const partOfCluster = clusterMembers > 0
 
       // nominators
+      // const startTime = new Date().getTime()
+
       const nominators = validator.active
         ? validator.exposure.others.length
         : nominations.filter((nomination) =>
@@ -143,14 +145,19 @@ export const actions = {
       // const nominators = 0
       const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
 
+      // const endTime = new Date().getTime()
+      // console.log(
+      //   `nominators processing time: ${((endTime - startTime) / 1000).toFixed(
+      //     6
+      //   )}s`
+      // )
+
       // slashes
-      const slashed = erasSlashes.some(
-        ({ validators }) => validators[validator.accountId]
-      )
       const slashes =
         erasSlashes.filter(
           ({ validators }) => validators[validator.accountId]
         ) || []
+      const slashed = erasSlashes.length === 0
 
       // slashes rating
       const slashRating = slashed ? 0 : 2
@@ -199,7 +206,7 @@ export const actions = {
         if (validators[validator.accountId]) {
           eraPointsHistory.push(parseInt(validators[validator.accountId]))
         } else {
-          eraPointsHistory.push(null)
+          eraPointsHistory.push(0)
         }
       })
 
@@ -237,11 +244,13 @@ export const actions = {
       // stake
       const selfStake = validator.active
         ? new BigNumber(validator.exposure.own)
-        : new BigNumber(0)
+        : new BigNumber(validator.stakingLedger.total)
       const totalStake = validator.active
         ? new BigNumber(validator.exposure.total)
         : new BigNumber(0)
-      const otherStake = totalStake.minus(selfStake)
+      const otherStake = validator.active
+        ? totalStake.minus(selfStake)
+        : new BigNumber(0)
 
       // const endTime = new Date().getTime()
       // console.log(
