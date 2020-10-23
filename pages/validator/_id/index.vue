@@ -73,7 +73,7 @@
               />
             </div>
             <div class="col-md-6 mb-5">
-              <Subaccounts :has-sub-identity="validator.hasSubIdentity" />
+              <Subaccounts :rating="validator.subAccountsRating" />
             </div>
           </div>
           <div class="row">

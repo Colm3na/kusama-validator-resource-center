@@ -9,7 +9,7 @@
       </div>
     </div>
     <hr />
-    <p v-if="hasSubIdentity">Good! Detected sub-identity</p>
+    <p v-if="rating > 0">Good! Detected sub-identity</p>
     <p v-else>Bad! No sub-identity detected</p>
   </div>
 </template>
@@ -20,14 +20,9 @@ export default {
     Rating,
   },
   props: {
-    hasSubIdentity: {
-      type: Boolean,
-      default: () => false,
-    },
-  },
-  computed: {
-    rating() {
-      return this.hasSubIdentity ? 2 : 0
+    rating: {
+      type: Number,
+      default: () => 0,
     },
   },
 }

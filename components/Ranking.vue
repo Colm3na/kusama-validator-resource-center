@@ -257,6 +257,10 @@ export default {
         { text: 'No verified identity', value: 'noVerifiedIdentity' },
         { text: 'No auto-payout', value: 'noAutoPayout' },
         {
+          text: 'Not part of a cluster',
+          value: 'notPartOfCluster',
+        },
+        {
           text: 'No participation in governance',
           value: 'noParticipateGovernance',
         },
@@ -297,6 +301,17 @@ export default {
         : filteredRanking
       filteredRanking = this.exclude.includes('noVerifiedIdentity')
         ? filteredRanking.filter(({ verifiedIdentity }) => verifiedIdentity)
+        : filteredRanking
+      filteredRanking = this.exclude.includes('noAutoPayout')
+        ? filteredRanking.filter(({ payoutRating }) => payoutRating === 3)
+        : filteredRanking
+      filteredRanking = this.exclude.includes('noParticipateGovernance')
+        ? filteredRanking.filter(
+            ({ governanceRating }) => governanceRating === 2
+          )
+        : filteredRanking
+      filteredRanking = this.exclude.includes('notPartOfCluster')
+        ? filteredRanking.filter(({ partOfCluster }) => !partOfCluster)
         : filteredRanking
       return filteredRanking
     },

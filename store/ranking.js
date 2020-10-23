@@ -139,6 +139,7 @@ export const actions = {
             ).length
         : 0
       const partOfCluster = clusterMembers > 0
+      const subAccountsRating = hasSubIdentity ? 2 : 0
 
       // nominators
       const nominators = validator.exposure.others.length
@@ -235,6 +236,7 @@ export const actions = {
       // total rating
       const totalRating =
         identityRating +
+        subAccountsRating +
         nominatorsRating +
         commissionRating +
         eraPointsRating +
@@ -247,6 +249,7 @@ export const actions = {
         name,
         identity,
         hasSubIdentity,
+        subAccountsRating,
         verifiedIdentity,
         identityRating,
         stashAddress: validator.accountId.toHuman(),
@@ -297,6 +300,7 @@ export const actions = {
             ).length
         : 0
       const partOfCluster = clusterMembers > 0
+      const subAccountsRating = hasSubIdentity ? 2 : 0
 
       // nominators
       const nominators = nominations.filter((nomination) =>
@@ -392,6 +396,7 @@ export const actions = {
       // total rating
       const totalRating =
         identityRating +
+        subAccountsRating +
         nominatorsRating +
         commissionRating +
         eraPointsRating +
@@ -404,6 +409,7 @@ export const actions = {
         name,
         identity,
         hasSubIdentity,
+        subAccountsRating,
         verifiedIdentity,
         identityRating,
         stashAddress: intention.accountId,
@@ -464,14 +470,9 @@ function isVerifiedIdentity(identity) {
   if (identity.judgements.length === 0) {
     return false
   }
-  const judgements = identity.judgements.filter(
-    ([, judgement]) => !judgement.isFeePaid
-  )
-  return (
-    judgements.some(
-      ([, judgement]) => judgement.isKnownGood || judgement.isReasonable
-    ) || false
-  )
+  return identity.judgements
+    .filter(([, judgement]) => !judgement.isFeePaid)
+    .some(([, judgement]) => judgement.isKnownGood || judgement.isReasonable)
 }
 
 function getName(identity) {
