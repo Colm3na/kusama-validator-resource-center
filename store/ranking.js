@@ -232,6 +232,16 @@ export const actions = {
       const totalStake = new BigNumber(validator.exposure.total)
       const otherStake = totalStake.minus(selfStake)
 
+      // total rating
+      const totalRating =
+        identityRating +
+        nominatorsRating +
+        commissionRating +
+        eraPointsRating +
+        slashRating +
+        governanceRating +
+        payoutRating
+
       return {
         active: true,
         name,
@@ -260,6 +270,7 @@ export const actions = {
         selfStake,
         otherStake,
         totalStake,
+        totalRating,
       }
     })
 
@@ -378,6 +389,16 @@ export const actions = {
       const totalStake = selfStake
       const otherStake = new BigNumber(0)
 
+      // total rating
+      const totalRating =
+        identityRating +
+        nominatorsRating +
+        commissionRating +
+        eraPointsRating +
+        slashRating +
+        governanceRating +
+        payoutRating
+
       return {
         active: false,
         name,
@@ -406,14 +427,18 @@ export const actions = {
         selfStake,
         otherStake,
         totalStake,
+        totalRating,
       }
     })
-    const ranking = validators.concat(intentions).map((validator, index) => {
-      return {
-        rank: index + 1,
-        ...validator,
-      }
-    })
+    const ranking = validators
+      .concat(intentions)
+      .sort((a, b) => (a.totalRating < b.totalRating ? 1 : -1))
+      .map((validator, rank) => {
+        return {
+          rank: rank + 1,
+          ...validator,
+        }
+      })
 
     console.log(JSON.parse(JSON.stringify(ranking)))
     context.commit('update', {
