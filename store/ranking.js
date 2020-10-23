@@ -36,7 +36,7 @@ export const actions = {
     const [
       { block },
       validatorAddresses,
-      allStashAddresses,
+      waitingValidators,
       nominators,
       councilVotes,
       erasPoints,
@@ -45,7 +45,7 @@ export const actions = {
     ] = await Promise.all([
       api.rpc.chain.getBlock(),
       api.query.session.validators(),
-      api.derive.staking.stashes(),
+      api.derive.staking.waitingInfo(),
       api.query.staking.nominators.entries(),
       api.derive.council.votes(),
       api.derive.staking._erasPoints(eraIndexes),
@@ -74,10 +74,11 @@ export const actions = {
 
     // refactor
     let allValidators = await Promise.all(
-      allStashAddresses.map((authorityId) =>
+      validatorAddresses.map((authorityId) =>
         api.derive.staking.account(authorityId)
       )
     )
+    allValidators = allValidators.concat(waitingValidators.info)
     allValidators = await Promise.all(
       allValidators.map((validator) =>
         api.derive.accounts.info(validator.accountId).then(({ identity }) => {
@@ -101,6 +102,7 @@ export const actions = {
     )
 
     allValidators = allValidators.map((validator, index) => {
+      const startTime = new Date().getTime()
       // identity
       const verifiedIdentity = isVerifiedIdentity(validator.identity)
       const hasSubIdentity = subIdentity(validator.identity)
@@ -240,6 +242,11 @@ export const actions = {
         ? new BigNumber(validator.exposure.total)
         : new BigNumber(0)
       const otherStake = totalStake.minus(selfStake)
+
+      const endTime = new Date().getTime()
+      console.log(
+        `loop ${index + 1} time: ${((endTime - startTime) / 1000).toFixed(3)}s`
+      )
 
       return {
         rank: index + 1,
