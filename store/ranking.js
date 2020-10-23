@@ -91,6 +91,15 @@ export const actions = {
       )
     )
 
+    const dataCollectionEndTime = new Date().getTime()
+    // eslint-disable-next-line
+    console.log(
+      `data collection time: ${(
+        (dataCollectionEndTime - startTime) /
+        1000
+      ).toFixed(2)}s`
+    )
+
     allValidators = allValidators.map((validator, index) => {
       // identity
       const verifiedIdentity = isVerifiedIdentity(validator.identity)
@@ -274,7 +283,10 @@ export const actions = {
     const endTime = new Date().getTime()
     // eslint-disable-next-line
     console.log(
-      `data collection time: ${((endTime - startTime) / 1000).toFixed(2)}s`
+      `data processing time: ${(
+        (endTime - dataCollectionEndTime) /
+        1000
+      ).toFixed(2)}s`
     )
   },
 }
