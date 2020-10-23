@@ -98,6 +98,7 @@ export const actions = {
         })
       )
     )
+    api.disconnect()
 
     const dataCollectionEndTime = new Date().getTime()
     const dataCollectionTime = dataCollectionEndTime - startTime
