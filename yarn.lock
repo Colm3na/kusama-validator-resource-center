@@ -1670,10 +1670,10 @@
     "@fortawesome/fontawesome-svg-core" "^1.2.27"
     "@fortawesome/vue-fontawesome" "^0.1.9"
 
-"@nuxtjs/google-fonts@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/google-fonts/-/google-fonts-1.1.2.tgz#ab96f0ceb4d80ec3534797cda2f3715e32d9f625"
-  integrity sha512-AY6uIb3DamcmPOHGdeMu5VJ6cV6l6Lj5wKFu7gXLtTig88qN76fU3At0lt50fe3l09JlredKj6lrzLwoniiXlg==
+"@nuxtjs/google-fonts@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/google-fonts/-/google-fonts-1.1.3.tgz#f6a9d56cbf11d26df37530546957bbab7c65afca"
+  integrity sha512-z5kat34lF2DasOtXTej4oMznEy22n8DoXVSw/rM69OBY1O+6ntnMKiAVjxpB50H03Ihmd+AX7uQQe32MyH6VDw==
   dependencies:
     consola "^2.15.0"
     google-fonts-helper "^1.0.5"
