@@ -22,12 +22,17 @@ export const mutations = {
 export const actions = {
   async update(context) {
     const startTime = new Date().getTime()
+
+    const historySize = 28 // 1 week
+    const withActive = false
+
+    //
+    // data collection
+    //
     const nodeWs = 'wss://kusama-rpc.polkadot.io'
     const wsProvider = new WsProvider(nodeWs)
     const api = await ApiPromise.create({ provider: wsProvider })
 
-    const historySize = 28 // 1 week
-    const withActive = false
     const erasHistoric = await api.derive.staking.erasHistoric(withActive)
     const eraIndexes = erasHistoric.slice(
       Math.max(erasHistoric.length - historySize, 0)
@@ -81,6 +86,29 @@ export const actions = {
         })
       )
     )
+
+    let intentions = JSON.parse(JSON.stringify(waitingInfo.info))
+    intentions = await Promise.all(
+      intentions.map((intention) =>
+        api.derive.accounts.info(intention.accountId).then(({ identity }) => {
+          return {
+            ...intention,
+            identity,
+          }
+        })
+      )
+    )
+
+    const dataCollectionEndTime = new Date().getTime()
+    const dataCollectionTime = dataCollectionEndTime - startTime
+    // eslint-disable-next-line
+    console.log(
+      `data collection time: ${(dataCollectionTime / 1000).toFixed(3)}s`
+    )
+
+    //
+    // data processing
+    //
     validators = validators.map((validator) => {
       // identity
       const verifiedIdentity = isVerifiedIdentity(validator.identity)
@@ -102,10 +130,12 @@ export const actions = {
 
       // sub-accounts
       const clusterMembers = hasSubIdentity
-        ? validators.filter(
-            ({ identity }) =>
-              identity.displayParent === validator.identity.displayParent
-          ).length
+        ? validators
+            .concat(intentions)
+            .filter(
+              ({ identity }) =>
+                identity.displayParent === validator.identity.displayParent
+            ).length
         : 0
       const partOfCluster = clusterMembers > 0
 
@@ -169,7 +199,7 @@ export const actions = {
         if (validators[validator.accountId]) {
           eraPointsHistory.push(parseInt(validators[validator.accountId]))
         } else {
-          eraPointsHistory.push(null)
+          eraPointsHistory.push(0)
         }
       })
 
@@ -252,17 +282,6 @@ export const actions = {
         targets,
       }
     })
-    let intentions = JSON.parse(JSON.stringify(waitingInfo.info))
-    intentions = await Promise.all(
-      intentions.map((intention) =>
-        api.derive.accounts.info(intention.accountId).then(({ identity }) => {
-          return {
-            ...intention,
-            identity,
-          }
-        })
-      )
-    )
     intentions = intentions.map((intention) => {
       // identity
       const verifiedIdentity = isVerifiedIdentity(intention.identity)
@@ -284,21 +303,21 @@ export const actions = {
 
       // sub-accounts
       const clusterMembers = hasSubIdentity
-        ? validators.filter(
-            ({ identity }) =>
-              identity.displayParent === intention.identity.displayParent
-          ).length
+        ? validators
+            .concat(intentions)
+            .filter(
+              ({ identity }) =>
+                identity.displayParent === intention.identity.displayParent
+            ).length
         : 0
       const partOfCluster = clusterMembers > 0
 
       // nominators
-      const nominators = nominations
-        .filter((nomination) =>
-          nomination.targets.some(
-            (target) => target === intention.accountId.toString()
-          )
+      const nominators = nominations.filter((nomination) =>
+        nomination.targets.some(
+          (target) => target === intention.accountId.toString()
         )
-        .map((nomination) => nomination.nominator).length
+      ).length
       const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
 
       // slashes
@@ -309,6 +328,7 @@ export const actions = {
         erasSlashes.filter(
           ({ validators }) => validators[intention.accountId]
         ) || []
+
       // slashes rating
       const slashRating = slashed ? 0 : 2
 
@@ -343,7 +363,7 @@ export const actions = {
         if (validators[intention.accountId]) {
           eraPointsHistory.push(validators[intention.accountId])
         } else {
-          eraPointsHistory.push(null)
+          eraPointsHistory.push(0)
         }
       })
 
@@ -388,9 +408,9 @@ export const actions = {
       }
 
       // stake
-      const selfStake = new BigNumber(0)
-      const totalStake = new BigNumber(0)
-      const otherStake = totalStake.minus(selfStake)
+      const selfStake = new BigNumber(intention.stakingLedger.total)
+      const totalStake = selfStake
+      const otherStake = new BigNumber(0)
 
       return {
         active: false,
@@ -437,9 +457,14 @@ export const actions = {
       eraPointsHistoryTotals,
     })
     const endTime = new Date().getTime()
+    const dataProcessingTime = endTime - dataCollectionEndTime
     // eslint-disable-next-line
     console.log(
-      `data collection time: ${((endTime - startTime) / 1000).toFixed(2)}s`
+      `data processing time: ${(dataProcessingTime / 1000).toFixed(3)}s`
+    )
+    // eslint-disable-next-line
+    console.log(
+      `total: ${((dataCollectionTime + dataProcessingTime) / 1000).toFixed(3)}s`
     )
   },
 }
@@ -451,7 +476,6 @@ function isVerifiedIdentity(identity) {
   const judgements = identity.judgements.filter(
     ([, judgement]) => !judgement.isFeePaid
   )
-  // console.log(`judgements:`, JSON.stringify(judgements, null, 2))
   return (
     judgements.some(
       ([, judgement]) => judgement.isKnownGood || judgement.isReasonable
