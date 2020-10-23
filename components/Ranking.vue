@@ -257,12 +257,12 @@ export default {
         { text: 'No verified identity', value: 'noVerifiedIdentity' },
         { text: 'No auto-payout', value: 'noAutoPayout' },
         {
-          text: 'Below average era points',
-          value: 'belowAverageEraPoints',
-        },
-        {
           text: 'Cluster members',
           value: 'partOfCluster',
+        },
+        {
+          text: 'Below average era points',
+          value: 'belowAverageEraPoints',
         },
         {
           text: 'No participation in governance',
