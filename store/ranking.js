@@ -58,6 +58,7 @@ export const actions = {
       api.derive.staking._erasSlashes(eraIndexes),
     ])
     const blockHeight = parseInt(block.header.number.toString())
+    const numActiveValidators = validatorAddresses.length
 
     const eraPointsHistoryTotals = []
     erasPoints.forEach(({ eraPoints }) => {
@@ -110,24 +111,23 @@ export const actions = {
     //
     // data processing
     //
+    const nominations = nominators.map(([key, nominations]) => {
+      const nominator = key.toHuman()[0]
+      const targets = nominations.toHuman().targets
+      return {
+        nominator,
+        targets,
+      }
+    })
     validators = validators.map((validator) => {
       // identity
-      const verifiedIdentity = isVerifiedIdentity(validator.identity)
-      const hasSubIdentity = subIdentity(validator.identity)
-      const identity = JSON.parse(JSON.stringify(validator.identity))
-      const name = getName(validator.identity)
-      const hasAllFields =
-        identity.display &&
-        identity.legal &&
-        identity.web &&
-        identity.email &&
-        identity.twitter &&
-        identity.riot
-      const identityRating = getIdentityRating(
-        name,
+      const {
         verifiedIdentity,
-        hasAllFields
-      )
+        hasSubIdentity,
+        name,
+        identityRating,
+      } = parseIdentity(validator.identity)
+      const identity = JSON.parse(JSON.stringify(validator.identity))
 
       // sub-accounts
       const clusterMembers = hasSubIdentity
@@ -145,28 +145,20 @@ export const actions = {
       const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
 
       // slashes
-      const slashed = erasSlashes.some(
-        ({ validators }) => validators[validator.accountId]
-      )
       const slashes =
         erasSlashes.filter(
           ({ validators }) => validators[validator.accountId]
         ) || []
+      const slashed = slashes.length > 0
 
       // slashes rating
       const slashRating = slashed ? 0 : 2
 
       // commission
-      const commissionHistory = []
-      erasPreferences.forEach(({ validators }) => {
-        if (validators[validator.accountId]) {
-          commissionHistory.push(
-            (validators[validator.accountId].commission / 10000000).toFixed(2)
-          )
-        } else {
-          commissionHistory.push(null)
-        }
-      })
+      const commissionHistory = getCommissionHistory(
+        validator.accountId,
+        erasPreferences
+      )
 
       // commission rating
       const commission = validator.validatorPrefs.commission / 10000000
@@ -209,7 +201,6 @@ export const actions = {
         (total, num) => total + num,
         0
       )
-      const numActiveValidators = validatorAddresses.length
       const eraPointsPercent =
         (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum
       const eraPointsAverage = eraPointsHistoryTotalsSum / numActiveValidators
@@ -275,32 +266,15 @@ export const actions = {
     //
     // waiting validators
     //
-    const nominations = nominators.map(([key, nominations]) => {
-      const nominator = key.toHuman()[0]
-      const targets = nominations.toHuman().targets
-      return {
-        nominator,
-        targets,
-      }
-    })
     intentions = intentions.map((intention) => {
       // identity
-      const verifiedIdentity = isVerifiedIdentity(intention.identity)
-      const hasSubIdentity = subIdentity(intention.identity)
-      const identity = JSON.parse(JSON.stringify(intention.identity))
-      const name = getName(intention.identity)
-      const hasAllFields =
-        identity.display &&
-        identity.legal &&
-        identity.web &&
-        identity.email &&
-        identity.twitter &&
-        identity.riot
-      const identityRating = getIdentityRating(
-        name,
+      const {
         verifiedIdentity,
-        hasAllFields
-      )
+        hasSubIdentity,
+        name,
+        identityRating,
+      } = parseIdentity(intention.identity)
+      const identity = JSON.parse(JSON.stringify(intention.identity))
 
       // sub-accounts
       const clusterMembers = hasSubIdentity
@@ -322,28 +296,20 @@ export const actions = {
       const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
 
       // slashes
-      const slashed = erasSlashes.some(
-        ({ validators }) => validators[intention.accountId]
-      )
       const slashes =
         erasSlashes.filter(
           ({ validators }) => validators[intention.accountId]
         ) || []
+      const slashed = slashes.length > 0
 
       // slashes rating
       const slashRating = slashed ? 0 : 2
 
       // commission
-      const commissionHistory = []
-      erasPreferences.forEach(({ validators }) => {
-        if (validators[intention.accountId]) {
-          commissionHistory.push(
-            (validators[intention.accountId].commission / 10000000).toFixed(2)
-          )
-        } else {
-          commissionHistory.push(null)
-        }
-      })
+      const commissionHistory = getCommissionHistory(
+        intention.accountId,
+        erasPreferences
+      )
 
       // commission rating
       const commission = intention.validatorPrefs.commission / 10000000
@@ -357,6 +323,14 @@ export const actions = {
       } else if (commission < 5) {
         commissionRating = 3
       }
+
+      // governance
+      const councilBacking = councilVotes.some(
+        (vote) => vote[0] === intention.accountId
+      )
+
+      // governance rating
+      const governanceRating = councilBacking ? 2 : 0
 
       // era points
       const eraPointsHistory = []
@@ -373,27 +347,18 @@ export const actions = {
         (total, num) => total + num,
         0
       )
-      const numActiveValidators = validatorAddresses.length
       const eraPointsPercent =
         (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum
       const eraPointsAverage = eraPointsHistoryTotalsSum / numActiveValidators
       const eraPointsRating =
         eraPointsHistoryValidator > eraPointsAverage ? 2 : 0
 
-      // governance
-      const councilBacking = councilVotes.some(
-        (vote) => vote[0] === intention.accountId
-      )
-
-      // governance rating
-      const governanceRating = councilBacking ? 2 : 0
-
       // frecuency of payouts
       const claimedRewards = JSON.parse(
         JSON.stringify(intention.stakingLedger.claimedRewards)
       )
       const payoutHistory =
-        eraIndexes.map((eraIndex) =>
+        JSON.parse(JSON.stringify(eraIndexes)).map((eraIndex) =>
           claimedRewards.some((claimedEra) => claimedEra === eraIndex)
         ) || []
 
@@ -518,4 +483,38 @@ function getIdentityRating(name, verifiedIdentity, hasAllFields) {
     return 1
   }
   return 0
+}
+
+function parseIdentity(identity) {
+  const verifiedIdentity = isVerifiedIdentity(identity)
+  const hasSubIdentity = subIdentity(identity)
+  const name = getName(identity)
+  const hasAllFields =
+    identity.display &&
+    identity.legal &&
+    identity.web &&
+    identity.email &&
+    identity.twitter &&
+    identity.riot
+  const identityRating = getIdentityRating(name, verifiedIdentity, hasAllFields)
+  return {
+    verifiedIdentity,
+    hasSubIdentity,
+    name,
+    identityRating,
+  }
+}
+
+function getCommissionHistory(accountId, erasPreferences) {
+  const commissionHistory = []
+  erasPreferences.forEach(({ validators }) => {
+    if (validators[accountId]) {
+      commissionHistory.push(
+        (validators[accountId].commission / 10000000).toFixed(2)
+      )
+    } else {
+      commissionHistory.push(null)
+    }
+  })
+  return commissionHistory
 }
