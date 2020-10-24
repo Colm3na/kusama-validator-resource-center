@@ -418,7 +418,9 @@ export const actions = {
     )
     // eslint-disable-next-line
     console.log(
-      `total time: ${((dataCollectionTime + dataProcessingTime) / 1000).toFixed(3)}s`
+      `total time: ${((dataCollectionTime + dataProcessingTime) / 1000).toFixed(
+        3
+      )}s`
     )
   },
 }

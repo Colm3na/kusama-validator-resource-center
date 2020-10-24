@@ -10,10 +10,12 @@
     </div>
     <div class="description">
       <p v-if="rating === 2">
-        Above average! {{ percent.toFixed(2) }}% of era points in the last week<br />
+        Above average! {{ percent.toFixed(2) }}% of era points in the last
+        week<br />
       </p>
       <p v-else>
-        Below average! {{ percent.toFixed(2) }}% of era points in the last week<br />
+        Below average! {{ percent.toFixed(2) }}% of era points in the last
+        week<br />
       </p>
     </div>
   </div>

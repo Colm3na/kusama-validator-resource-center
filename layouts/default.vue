@@ -93,7 +93,7 @@ $cyan: #17a2b8 !default;
 $body-bg: #000;
 $body-color: #fff;
 $primary: #fff;
-$secondary:#aaafb3;
+$secondary: #aaafb3;
 $success: #0dff7e;
 $kusama: #e6007a;
 $info: $cyan !default;
