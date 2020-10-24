@@ -117,7 +117,7 @@ export const actions = {
     })
     validators = validators.map((validator) => {
       // stash
-      const stashAddress = validator.stashId
+      const stashAddress = validator.stashId.toString()
 
       // identity
       const {
@@ -150,18 +150,14 @@ export const actions = {
           ({ validators }) => validators[validator.accountId]
         ) || []
       const slashed = slashes.length > 0
-
-      // slashes rating
       const slashRating = slashed ? 0 : 2
 
       // commission
+      const commission = validator.validatorPrefs.commission / 10000000
       const commissionHistory = getCommissionHistory(
         validator.accountId,
         erasPreferences
       )
-
-      // commission rating
-      const commission = validator.validatorPrefs.commission / 10000000
       const commissionRating = getCommissionRating(
         commission,
         commissionHistory
@@ -171,8 +167,6 @@ export const actions = {
       const councilBacking = councilVotes.some(
         (vote) => vote[0].toString() === validator.accountId.toString()
       )
-
-      // governance rating
       const governanceRating = councilBacking ? 2 : 0
 
       // era points
@@ -184,8 +178,6 @@ export const actions = {
           eraPointsHistory.push(0)
         }
       })
-
-      // era points rating
       const eraPointsHistoryValidator = eraPointsHistory.reduce(
         (total, num) => total + num,
         0
@@ -203,17 +195,7 @@ export const actions = {
         JSON.parse(JSON.stringify(eraIndexes)).map((eraIndex) =>
           claimedRewards.some((claimedEra) => claimedEra === eraIndex)
         ) || []
-
-      // payout rating
-      let payoutRating = 0
-      const pendingEras = payoutHistory.filter((era) => !era).length
-      if (pendingEras <= 4) {
-        payoutRating = 3
-      } else if (pendingEras <= 12) {
-        payoutRating = 2
-      } else if (pendingEras < 28) {
-        payoutRating = 1
-      }
+      const payoutRating = getPayoutRating(payoutHistory)
 
       // stake
       const selfStake = new BigNumber(validator.exposure.own)
@@ -269,7 +251,7 @@ export const actions = {
     //
     intentions = intentions.map((intention) => {
       // stash
-      const stashAddress = intention.stashId
+      const stashAddress = intention.stashId.toString()
 
       // identity
       const {
@@ -359,17 +341,7 @@ export const actions = {
         JSON.parse(JSON.stringify(eraIndexes)).map((eraIndex) =>
           claimedRewards.some((claimedEra) => claimedEra === eraIndex)
         ) || []
-
-      // payout rating
-      let payoutRating = 0
-      const pendingEras = payoutHistory.filter((era) => !era).length
-      if (pendingEras <= 4) {
-        payoutRating = 3
-      } else if (pendingEras <= 12) {
-        payoutRating = 2
-      } else if (pendingEras < 28) {
-        payoutRating = 1
-      }
+      const payoutRating = getPayoutRating(payoutHistory)
 
       // stake
       const selfStake = new BigNumber(intention.stakingLedger.total)
@@ -543,5 +515,16 @@ function getCommissionRating(commission, commissionHistory) {
     return 2
   } else if (commission < 5) {
     return 3
+  }
+}
+
+function getPayoutRating(payoutHistory) {
+  const pendingEras = payoutHistory.filter((era) => !era).length
+  if (pendingEras <= 4) {
+    return 3
+  } else if (pendingEras <= 12) {
+    return 2
+  } else if (pendingEras < 28) {
+    return 1
   }
 }
