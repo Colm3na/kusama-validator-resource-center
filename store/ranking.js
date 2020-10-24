@@ -118,7 +118,7 @@ export const actions = {
     validators = validators.map((validator) => {
       // active
       const active = true
-      const activeRating = 0
+      const activeRating = active ? 2 : 0
 
       // stash
       const stashAddress = validator.stashId.toString()
@@ -255,7 +255,7 @@ export const actions = {
     intentions = intentions.map((intention) => {
       // active
       const active = false
-      const activeRating = 0
+      const activeRating = active ? 2 : 0
 
       // stash
       const stashAddress = intention.stashId.toString()
@@ -292,8 +292,6 @@ export const actions = {
           ({ validators }) => validators[intention.accountId]
         ) || []
       const slashed = slashes.length > 0
-
-      // slashes rating
       const slashRating = slashed ? 0 : 2
 
       // commission
@@ -301,8 +299,6 @@ export const actions = {
         intention.accountId,
         erasPreferences
       )
-
-      // commission rating
       const commission = intention.validatorPrefs.commission / 10000000
       const commissionRating = getCommissionRating(
         commission,
@@ -313,8 +309,6 @@ export const actions = {
       const councilBacking = councilVotes.some(
         (vote) => vote[0] === intention.accountId
       )
-
-      // governance rating
       const governanceRating = councilBacking ? 2 : 0
 
       // era points
@@ -326,8 +320,6 @@ export const actions = {
           eraPointsHistory.push(0)
         }
       })
-
-      // era points rating
       const eraPointsHistoryValidator = eraPointsHistory.reduce(
         (total, num) => total + num,
         0
