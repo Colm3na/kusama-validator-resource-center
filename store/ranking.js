@@ -37,7 +37,10 @@ export const actions = {
     const eraIndexes = erasHistoric.slice(
       Math.max(erasHistoric.length - historySize, 0)
     )
-    // parallelize as much as possible
+
+    let validators = []
+    let intentions = []
+
     const [
       { block },
       validatorAddresses,
@@ -57,22 +60,7 @@ export const actions = {
       api.derive.staking._erasPrefs(eraIndexes),
       api.derive.staking._erasSlashes(eraIndexes),
     ])
-    const blockHeight = parseInt(block.header.number.toString())
-    const numActiveValidators = validatorAddresses.length
-
-    const eraPointsHistoryTotals = []
-    erasPoints.forEach(({ eraPoints }) => {
-      eraPointsHistoryTotals.push(parseInt(eraPoints.toString()))
-    })
-    const eraPointsHistoryTotalsSum = eraPointsHistoryTotals.reduce(
-      (total, num) => total + num,
-      0
-    )
-
-    //
-    // validators
-    //
-    let validators = await Promise.all(
+    validators = await Promise.all(
       validatorAddresses.map((authorityId) =>
         api.derive.staking.account(authorityId)
       )
@@ -87,10 +75,8 @@ export const actions = {
         })
       )
     )
-
-    let intentions = JSON.parse(JSON.stringify(waitingInfo.info))
     intentions = await Promise.all(
-      intentions.map((intention) =>
+      JSON.parse(JSON.stringify(waitingInfo.info)).map((intention) =>
         api.derive.accounts.info(intention.accountId).then(({ identity }) => {
           return {
             ...intention,
@@ -100,7 +86,6 @@ export const actions = {
       )
     )
     api.disconnect()
-
     const dataCollectionEndTime = new Date().getTime()
     const dataCollectionTime = dataCollectionEndTime - startTime
     // eslint-disable-next-line
@@ -111,6 +96,16 @@ export const actions = {
     //
     // data processing
     //
+    const blockHeight = parseInt(block.header.number.toString())
+    const numActiveValidators = validatorAddresses.length
+    const eraPointsHistoryTotals = []
+    erasPoints.forEach(({ eraPoints }) => {
+      eraPointsHistoryTotals.push(parseInt(eraPoints.toString()))
+    })
+    const eraPointsHistoryTotalsSum = eraPointsHistoryTotals.reduce(
+      (total, num) => total + num,
+      0
+    )
     const nominations = nominators.map(([key, nominations]) => {
       const nominator = key.toHuman()[0]
       const targets = nominations.toHuman().targets
