@@ -10,13 +10,7 @@
             <Identicon :address="accountId" :size="64" />
             <span v-if="validator.name">
               {{ validator.name }}
-              <span v-b-tooltip.hover title="Verified identity">
-                <font-awesome-icon
-                  v-if="validator.verifiedIdentity"
-                  icon="check"
-                  class="text-success"
-                />
-              </span>
+              <VerifiedIcon />
             </span>
             <span v-else>
               {{ shortAddress(accountId) }}
@@ -26,19 +20,19 @@
         <div class="col-2 text-right mt-4">
           <a
             v-b-tooltip.hover
-            class="selected"
+            class="select"
             title="Select / Unselect validator"
             @click="toggleSelected(validator.stashAddress)"
           >
             <font-awesome-icon
               v-if="isSelected(validator.stashAddress)"
               icon="hand-paper"
-              class="fa-2x text-warning"
+              class="selected fa-2x text-selected"
             />
             <font-awesome-icon
               v-else
               icon="hand-paper"
-              class="fa-2x text-secondary"
+              class="unselected fa-2x text-secondary"
             />
           </a>
         </div>
@@ -134,6 +128,7 @@
 import Identicon from '../../../components/Identicon.vue'
 import Loading from '../../../components/Loading.vue'
 import Additional from '../../../components/Additional.vue'
+import VerifiedIcon from '../../../components/VerifiedIcon.vue'
 import Identity from '../../../components/metrics/Identity.vue'
 import Address from '../../../components/metrics/Address.vue'
 import Slashes from '../../../components/metrics/Slashes.vue'
@@ -150,6 +145,7 @@ export default {
     Identicon,
     Loading,
     Additional,
+    VerifiedIcon,
     Identity,
     Address,
     Slashes,
@@ -227,5 +223,10 @@ export default {
 }
 .validator-page .card-body {
   position: relative;
+}
+
+.validator-page .verified {
+  font-size: 2rem;
+  cursor: pointer;
 }
 </style>

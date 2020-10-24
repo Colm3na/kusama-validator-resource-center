@@ -68,7 +68,7 @@ export default {}
 // Variable overrides
 $body-bg: #000;
 $body-color: #fff;
-$primary: #e6007a;
+$primary: #fff;
 $secondary: #6c757d;
 $success: #0dff7e;
 $dark: #000;
@@ -163,5 +163,8 @@ pre {
 }
 .nav-tabs .nav-item a {
   color: gray;
+}
+.text-selected {
+  color: #00effc;
 }
 </style>

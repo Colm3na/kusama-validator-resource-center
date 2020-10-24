@@ -3,7 +3,7 @@
     <div v-if="loading">
       <Loading />
     </div>
-    <div v-else>
+    <div v-else class="ranking">
       <b-tabs content-class="mt-5">
         <b-tab title="Ranking" active>
           <!-- Filter -->
@@ -106,13 +106,7 @@
               <nuxt-link :to="`/validator/${data.item.stashAddress}`">
                 <span v-if="data.item.name">
                   {{ data.item.name }}
-                  <span v-b-tooltip.hover title="Verified identity">
-                    <font-awesome-icon
-                      v-if="data.item.verifiedIdentity"
-                      icon="check"
-                      class="text-success verified"
-                    />
-                  </span>
+                  <VerifiedIcon />
                 </span>
                 <span v-else>
                   {{ shortAddress(data.item.stashAddress) }}
@@ -133,19 +127,19 @@
               <p class="text-center mb-0">
                 <a
                   v-b-tooltip.hover
-                  class="selected"
+                  class="select"
                   title="Select / Unselect validator"
                   @click="toggleSelected(data.item.stashAddress)"
                 >
                   <font-awesome-icon
                     v-if="data.item.selected"
                     icon="hand-paper"
-                    class="text-warning"
+                    class="selected text-selected"
                   />
                   <font-awesome-icon
                     v-else
                     icon="hand-paper"
-                    class="text-secondary"
+                    class="unselected text-secondary"
                   />
                 </a>
               </p>
@@ -212,12 +206,14 @@ import { BigNumber } from 'bignumber.js'
 import SelectedValidators from '../components/SelectedValidators.vue'
 import Loading from '../components/Loading.vue'
 import Identicon from '../components/Identicon.vue'
+import VerifiedIcon from '../components/VerifiedIcon.vue'
 import commonMixin from '../mixins/commonMixin.js'
 
 export default {
   components: {
     Identicon,
     SelectedValidators,
+    VerifiedIcon,
     Loading,
   },
   mixins: [commonMixin],
@@ -412,9 +408,6 @@ export default {
 }
 </script>
 <style>
-.verified {
-  font-size: 0.7rem;
-}
 .led-green {
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px,
@@ -424,9 +417,6 @@ export default {
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px,
     rgba(255, 0, 0, 1) 0 2px 12px;
-}
-.selected {
-  cursor: pointer;
 }
 .custom-switch.b-custom-control-lg .custom-control-label,
 .input-group-lg .custom-switch .custom-control-label {
@@ -439,5 +429,12 @@ export default {
 .exclude h5 {
   font-size: 1rem;
   color: gray;
+}
+.select {
+  cursor: pointer;
+}
+.ranking .select .selected,
+.ranking .select .unselected {
+  font-size: 1.2rem;
 }
 </style>

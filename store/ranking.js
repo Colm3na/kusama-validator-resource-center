@@ -482,7 +482,7 @@ function getName(identity) {
     identity.display &&
     identity.display !== ``
   ) {
-    return `${identity.displayParent} / ${identity.display}`
+    return `${identity.displayParent}/${identity.display}`
   } else {
     return identity.display || ``
   }
