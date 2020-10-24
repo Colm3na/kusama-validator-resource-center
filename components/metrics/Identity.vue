@@ -1,26 +1,26 @@
 <template>
-  <div>
-    <div class="row">
+  <div class="metric h-100">
+    <div class="row mb-4">
       <div class="col-8">
-        <h4 class="mb-0">Identity</h4>
+        <h5 class="mb-0">Identity</h5>
       </div>
       <div class="col-4 text-right text-success">
         <Rating key="identity" :rating="rating" />
       </div>
     </div>
-    <hr />
-    <p v-if="rating === 3">
-      Validator has a verified identity and provide all possible information
-    </p>
-    <p v-else-if="rating === 2">
-      Validator has a verified identity but doesn't provide all possible
-      information
-    </p>
-    <p v-else-if="rating === 1">
-      Validator did set an identity but didn't verify
-    </p>
-    <p v-else>Validator has no identity set</p>
-
+    <div class="description">
+      <p v-if="rating === 3">
+        Validator has a verified identity and provide all possible information
+      </p>
+      <p v-else-if="rating === 2">
+        Validator has a verified identity but doesn't provide all possible
+        information
+      </p>
+      <p v-else-if="rating === 1">
+        Validator did set an identity but didn't verify
+      </p>
+      <p v-else>Validator has no identity set</p>
+    </div>
     <div v-if="identity.legal" class="row">
       <div class="col-md-3">Legal name:</div>
       <div class="col-md-9">

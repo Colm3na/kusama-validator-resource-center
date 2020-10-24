@@ -1,17 +1,18 @@
 <template>
-  <div>
-    <div class="row">
+  <div class="metric h-100">
+    <div class="row mb-4">
       <div class="col-9">
-        <h4 class="mb-0">Address creation</h4>
+        <h5 class="mb-0">Address creation</h5>
       </div>
       <div class="col-3 text-right text-success">
         <Rating key="address" :rating="rating" />
       </div>
     </div>
-    <hr />
-    <p v-if="typeof createdAtBlock === 'number'">
-      Address was created at block #{{ formatNumber(createdAtBlock) }}
-    </p>
+    <div class="description">
+      <p v-if="typeof createdAtBlock === 'number'">
+        Address was created at block #{{ formatNumber(createdAtBlock) }}
+      </p>
+    </div>
   </div>
 </template>
 

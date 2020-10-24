@@ -1,15 +1,16 @@
 <template>
-  <div>
-    <div class="row">
+  <div class="metric h-100">
+    <div class="row mb-4">
       <div class="col-8">
-        <h4 class="mb-0">Commission</h4>
+        <h5 class="mb-0">Commission</h5>
       </div>
       <div class="col-4 text-right text-success">
         <Rating key="commission" :rating="rating" />
       </div>
     </div>
-    <hr />
-    <p v-if="commission">Commission is {{ commission.toFixed(1) }}%</p>
+    <div class="description">
+      <p v-if="commission">Commission is {{ commission.toFixed(1) }}%</p>
+    </div>
   </div>
 </template>
 <script>

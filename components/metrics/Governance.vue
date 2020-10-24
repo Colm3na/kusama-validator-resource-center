@@ -1,18 +1,19 @@
 <template>
-  <div>
-    <div class="row">
+  <div class="metric h-100">
+    <div class="row mb-4">
       <div class="col-8">
-        <h4 class="mb-0">Governance</h4>
+        <h5 class="mb-0">Governance</h5>
       </div>
       <div class="col-4 text-right text-success">
         <Rating key="governance" :rating="rating" />
       </div>
     </div>
-    <hr />
-    <p v-if="councilBacking">
-      The validator is backing at least one council member
-    </p>
-    <p v-else>The validator is not backing any council member</p>
+    <div class="description">
+      <p v-if="councilBacking">
+        The validator is backing at least one council member
+      </p>
+      <p v-else>The validator is not backing any council member</p>
+    </div>
   </div>
 </template>
 <script>

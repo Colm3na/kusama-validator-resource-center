@@ -229,4 +229,11 @@ export default {
   font-size: 2rem;
   cursor: pointer;
 }
+.metric {
+  border: 1px solid gray;
+  padding: 1rem;
+}
+.metric .description {
+  color: gray;
+}
 </style>

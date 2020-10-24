@@ -1,16 +1,17 @@
 <template>
-  <div>
-    <div class="row">
+  <div class="metric h-100">
+    <div class="row mb-4">
       <div class="col-8">
-        <h4 class="mb-0">Subaccounts</h4>
+        <h5 class="mb-0">Subaccounts</h5>
       </div>
       <div class="col-4 text-right text-success">
         <Rating key="subaccounts" :rating="rating" />
       </div>
     </div>
-    <hr />
-    <p v-if="rating > 0">Good! Detected sub-identity</p>
-    <p v-else>Bad! No sub-identity detected</p>
+    <div class="description">
+      <p v-if="rating > 0">Good! Detected sub-identity</p>
+      <p v-else>Bad! No sub-identity detected</p>
+    </div>
   </div>
 </template>
 <script>
