@@ -63,7 +63,7 @@
                 v-b-tooltip.hover
                 title="Active validator"
               >
-                <font-awesome-layers>
+                <font-awesome-layers class="align-middle">
                   <font-awesome-icon
                     icon="circle"
                     style="
@@ -102,7 +102,7 @@
               </span>
             </template>
             <template v-slot:cell(name)="data">
-              <Identicon :address="data.item.stashAddress" :size="28" />
+              <Identicon :address="data.item.stashAddress" :size="24" />
               <nuxt-link :to="`/validator/${data.item.stashAddress}`">
                 <span v-if="data.item.name">{{ data.item.name }}</span>
                 <span v-else>{{ shortAddress(data.item.stashAddress) }}</span>
