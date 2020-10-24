@@ -104,14 +104,10 @@
             <template v-slot:cell(name)="data">
               <Identicon :address="data.item.stashAddress" :size="28" />
               <nuxt-link :to="`/validator/${data.item.stashAddress}`">
-                <span v-if="data.item.name">
-                  {{ data.item.name }}
-                  <VerifiedIcon />
-                </span>
-                <span v-else>
-                  {{ shortAddress(data.item.stashAddress) }}
-                </span>
+                <span v-if="data.item.name">{{ data.item.name }}</span>
+                <span v-else>{{ shortAddress(data.item.stashAddress) }}</span>
               </nuxt-link>
+              <VerifiedIcon />
             </template>
             <template v-slot:cell(commission)="data">
               {{ data.item.commission.toFixed(1) }}%

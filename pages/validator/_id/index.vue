@@ -10,7 +10,7 @@
             <Identicon :address="accountId" :size="64" />
             <span v-if="validator.name">
               {{ validator.name }}
-              <VerifiedIcon />
+              <VerifiedIcon size="lg" />
             </span>
             <span v-else>
               {{ shortAddress(accountId) }}

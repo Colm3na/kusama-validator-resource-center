@@ -103,6 +103,9 @@ $nav-tabs-link-active-color: $body-color !default;
 
 $hr-border-color: rgba(255, 255, 255, 0.2) !default;
 
+$custom-control-indicator-checked-bg: #e6007a !default;
+$custom-control-indicator-bg: white !default;
+
 // Bootstrap and its default variables
 @import '../node_modules/bootstrap/scss/bootstrap';
 // BootstrapVue and its default variables
