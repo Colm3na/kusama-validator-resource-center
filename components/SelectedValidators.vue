@@ -14,13 +14,7 @@
               <Identicon :address="validator.stashAddress" :size="20" />
               <span v-if="validator.name">
                 {{ validator.name }}
-                <span v-b-tooltip.hover title="Verified identity">
-                  <font-awesome-icon
-                    v-if="validator.verifiedIdentity"
-                    icon="check"
-                    class="text-success verified"
-                  />
-                </span>
+                <VerifiedIcon />
               </span>
               <span v-else>
                 {{ shortAddress(validator.stashAddress) }}
@@ -58,10 +52,12 @@
 
 <script>
 import Identicon from '../components/Identicon.vue'
+import VerifiedIcon from '../components/VerifiedIcon.vue'
 import commonMixin from '../mixins/commonMixin.js'
 export default {
   components: {
     Identicon,
+    VerifiedIcon,
   },
   mixins: [commonMixin],
   props: {
@@ -94,6 +90,6 @@ export default {
 .remove,
 .remove:hover,
 .remove:active {
-  color: gray;
+  color: rgba(255, 0, 0, 0.5);
 }
 </style>

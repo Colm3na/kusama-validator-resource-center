@@ -2,7 +2,7 @@
   <div>
     <p class="mb-0 text-right">
       Do you own this validator?
-      <b-button variant="outline-primary" :to="`/validator/${address}/edit`"
+      <b-button variant="outline-kusama" :to="`/validator/${address}/edit`"
         >Edit information</b-button
       >
     </p>
@@ -254,8 +254,8 @@ export default {
   },
 }
 </script>
-<style>
+<style lang="scss">
 .additional-info p {
-  color: #6c757d;
+  color: var(--light);
 }
 </style>

@@ -217,7 +217,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .validator-page .metric {
   min-height: 10rem;
 }
@@ -234,6 +234,6 @@ export default {
   padding: 1rem;
 }
 .metric .description {
-  color: gray;
+  color: var(--light);
 }
 </style>
