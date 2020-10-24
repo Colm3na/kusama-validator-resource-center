@@ -106,6 +106,7 @@ export const actions = {
       (total, num) => total + num,
       0
     )
+    const eraPointsAverage = eraPointsHistoryTotalsSum / numActiveValidators
     const nominations = nominators.map(([key, nominations]) => {
       const nominator = key.toHuman()[0]
       const targets = nominations.toHuman().targets
@@ -115,6 +116,9 @@ export const actions = {
       }
     })
     validators = validators.map((validator) => {
+      // stash
+      const stashAddress = validator.stashId
+
       // identity
       const {
         verifiedIdentity,
@@ -158,21 +162,10 @@ export const actions = {
 
       // commission rating
       const commission = validator.validatorPrefs.commission / 10000000
-      let commissionRating = 0
-      if (commission === 100 || commission === 0) {
-        commissionRating = 0
-      } else if (commission > 10) {
-        commissionRating = 1
-      } else if (commission >= 5) {
-        if (
-          commissionHistory[0] > commissionHistory[commissionHistory.length - 1]
-        ) {
-          commissionRating = 3
-        }
-        commissionRating = 2
-      } else if (commission < 5) {
-        commissionRating = 3
-      }
+      const commissionRating = getCommissionRating(
+        commission,
+        commissionHistory
+      )
 
       // governance
       const councilBacking = councilVotes.some(
@@ -199,7 +192,6 @@ export const actions = {
       )
       const eraPointsPercent =
         (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum
-      const eraPointsAverage = eraPointsHistoryTotalsSum / numActiveValidators
       const eraPointsRating =
         eraPointsHistoryValidator > eraPointsAverage ? 2 : 0
 
@@ -247,12 +239,12 @@ export const actions = {
         subAccountsRating,
         verifiedIdentity,
         identityRating,
-        stashAddress: validator.accountId.toHuman(),
+        stashAddress,
         partOfCluster,
         clusterMembers,
         nominators,
         nominatorsRating,
-        commission: validator.validatorPrefs.commission / 10000000,
+        commission,
         commissionHistory,
         commissionRating,
         eraPointsHistory,
@@ -276,6 +268,9 @@ export const actions = {
     // waiting validators
     //
     intentions = intentions.map((intention) => {
+      // stash
+      const stashAddress = intention.stashId
+
       // identity
       const {
         verifiedIdentity,
@@ -323,16 +318,10 @@ export const actions = {
 
       // commission rating
       const commission = intention.validatorPrefs.commission / 10000000
-      let commissionRating = 0
-      if (commission === 100 || commission === 0) {
-        commissionRating = 0
-      } else if (commission > 10) {
-        commissionRating = 1
-      } else if (commission >= 5) {
-        commissionRating = 2
-      } else if (commission < 5) {
-        commissionRating = 3
-      }
+      const commissionRating = getCommissionRating(
+        commission,
+        commissionHistory
+      )
 
       // governance
       const councilBacking = councilVotes.some(
@@ -359,7 +348,6 @@ export const actions = {
       )
       const eraPointsPercent =
         (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum
-      const eraPointsAverage = eraPointsHistoryTotalsSum / numActiveValidators
       const eraPointsRating =
         eraPointsHistoryValidator > eraPointsAverage ? 2 : 0
 
@@ -407,7 +395,7 @@ export const actions = {
         subAccountsRating,
         verifiedIdentity,
         identityRating,
-        stashAddress: intention.accountId,
+        stashAddress,
         partOfCluster,
         clusterMembers,
         nominators,
@@ -538,4 +526,22 @@ function getCommissionHistory(accountId, erasPreferences) {
     }
   })
   return commissionHistory
+}
+
+function getCommissionRating(commission, commissionHistory) {
+  if (commission === 100 || commission === 0) {
+    return 0
+  } else if (commission > 10) {
+    return 1
+  } else if (commission >= 5) {
+    if (
+      commissionHistory.length > 1 &&
+      commissionHistory[0] > commissionHistory[commissionHistory.length - 1]
+    ) {
+      return 3
+    }
+    return 2
+  } else if (commission < 5) {
+    return 3
+  }
 }
