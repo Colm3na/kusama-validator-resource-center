@@ -116,6 +116,10 @@ export const actions = {
       }
     })
     validators = validators.map((validator) => {
+      // active
+      const active = true
+      const activeRating = 0
+
       // stash
       const stashAddress = validator.stashId.toString()
 
@@ -201,6 +205,7 @@ export const actions = {
 
       // total rating
       const totalRating =
+        activeRating +
         identityRating +
         subAccountsRating +
         nominatorsRating +
@@ -211,7 +216,8 @@ export const actions = {
         payoutRating
 
       return {
-        active: true,
+        active,
+        activeRating,
         name,
         identity,
         hasSubIdentity,
@@ -247,6 +253,10 @@ export const actions = {
     // waiting validators
     //
     intentions = intentions.map((intention) => {
+      // active
+      const active = false
+      const activeRating = 0
+
       // stash
       const stashAddress = intention.stashId.toString()
 
@@ -344,6 +354,7 @@ export const actions = {
 
       // total rating
       const totalRating =
+        activeRating +
         identityRating +
         subAccountsRating +
         nominatorsRating +
@@ -354,7 +365,8 @@ export const actions = {
         payoutRating
 
       return {
-        active: false,
+        active,
+        activeRating,
         name,
         identity,
         hasSubIdentity,
