@@ -521,6 +521,7 @@ function getPayoutRating(payoutHistory) {
   } else if (pendingEras < 28) {
     return 1
   }
+  return 0
 }
 
 function getClusterMembers(hasSubIdentity, validators, validatorIdentity) {

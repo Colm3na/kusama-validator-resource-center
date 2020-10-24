@@ -69,7 +69,7 @@ export default {}
 $body-bg: #000;
 $body-color: #fff;
 $primary: #fff;
-$secondary: #6c757d;
+$secondary:#aaafb3;
 $success: #0dff7e;
 $dark: #000;
 $border-radius: 0 !default;
@@ -84,7 +84,7 @@ $pagination-hover-color: $primary !default;
 $pagination-hover-bg: $dark !default;
 $pagination-hover-border-color: $secondary !default;
 
-$pagination-active-color: $primary !default;
+$pagination-active-color: $secondary !default;
 $pagination-active-bg: $dark !default;
 $pagination-active-border-color: $secondary !default;
 

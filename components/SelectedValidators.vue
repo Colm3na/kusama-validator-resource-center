@@ -7,11 +7,11 @@
         <div
           v-for="validator in list"
           :key="validator.stashAddress"
-          class="d-block p-2"
+          class="d-block pb-2"
         >
           <div class="row">
             <div class="col-11">
-              <Identicon :address="validator.stashAddress" :size="28" />
+              <Identicon :address="validator.stashAddress" :size="20" />
               <span v-if="validator.name">
                 {{ validator.name }}
                 <span v-b-tooltip.hover title="Verified identity">
