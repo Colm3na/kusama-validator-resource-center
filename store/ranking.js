@@ -129,14 +129,11 @@ export const actions = {
       const identity = JSON.parse(JSON.stringify(validator.identity))
 
       // sub-accounts
-      const clusterMembers = hasSubIdentity
-        ? validators
-            .concat(intentions)
-            .filter(
-              ({ identity }) =>
-                identity.displayParent === validator.identity.displayParent
-            ).length
-        : 0
+      const clusterMembers = getClusterMembers(
+        hasSubIdentity,
+        validators.concat(intentions),
+        validator.identity
+      )
       const partOfCluster = clusterMembers > 0
       const subAccountsRating = hasSubIdentity ? 2 : 0
 
@@ -263,14 +260,11 @@ export const actions = {
       const identity = JSON.parse(JSON.stringify(intention.identity))
 
       // sub-accounts
-      const clusterMembers = hasSubIdentity
-        ? validators
-            .concat(intentions)
-            .filter(
-              ({ identity }) =>
-                identity.displayParent === intention.identity.displayParent
-            ).length
-        : 0
+      const clusterMembers = getClusterMembers(
+        hasSubIdentity,
+        validators.concat(intentions),
+        intention.identity
+      )
       const partOfCluster = clusterMembers > 0
       const subAccountsRating = hasSubIdentity ? 2 : 0
 
@@ -527,4 +521,13 @@ function getPayoutRating(payoutHistory) {
   } else if (pendingEras < 28) {
     return 1
   }
+}
+
+function getClusterMembers(hasSubIdentity, validators, validatorIdentity) {
+  if (!hasSubIdentity) {
+    return 0
+  }
+  return validators.filter(
+    ({ identity }) => identity.displayParent === validatorIdentity.displayParent
+  ).length
 }
