@@ -50,6 +50,7 @@ export const actions = {
       erasPoints,
       erasPreferences,
       erasSlashes,
+      maxNominatorRewardedPerValidator,
     ] = await Promise.all([
       api.rpc.chain.getBlock(),
       api.query.session.validators(),
@@ -59,6 +60,7 @@ export const actions = {
       api.derive.staking._erasPoints(eraIndexes),
       api.derive.staking._erasPrefs(eraIndexes),
       api.derive.staking._erasSlashes(eraIndexes),
+      api.consts.staking.maxNominatorRewardedPerValidator,
     ])
     validators = await Promise.all(
       validatorAddresses.map((authorityId) =>
@@ -143,7 +145,8 @@ export const actions = {
 
       // nominators
       const nominators = validator.exposure.others.length
-      const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
+      const nominatorsRating =
+        nominators > 0 && nominators <= maxNominatorRewardedPerValidator ? 2 : 0
 
       // slashes
       const slashes =
@@ -284,7 +287,8 @@ export const actions = {
           (target) => target === intention.accountId.toString()
         )
       ).length
-      const nominatorsRating = nominators > 0 && nominators < 128 ? 2 : 0
+      const nominatorsRating =
+        nominators > 0 && nominators <= maxNominatorRewardedPerValidator ? 2 : 0
 
       // slashes
       const slashes =
