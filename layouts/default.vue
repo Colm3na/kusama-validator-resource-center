@@ -153,6 +153,10 @@ $hr-border-color: rgba(255, 255, 255, 0.2) !default;
 $custom-control-indicator-checked-bg: #e6007a !default;
 $custom-control-indicator-bg: white !default;
 
+$navbar-dark-color: $light !default;
+$navbar-dark-hover-color: $white !default;
+$navbar-dark-disabled-color: $white !default;
+
 // Bootstrap and its default variables
 @import '../node_modules/bootstrap/scss/bootstrap';
 // BootstrapVue and its default variables
@@ -209,10 +213,10 @@ body {
 }
 pre {
   font-size: initial;
-  color: gray;
+  color: var(--light);
 }
 .nav-tabs .nav-item a {
-  color: gray;
+  color: var(--light);
 }
 .text-selected {
   color: #00effc;
