@@ -107,7 +107,7 @@
                 <span v-if="data.item.name">{{ data.item.name }}</span>
                 <span v-else>{{ shortAddress(data.item.stashAddress) }}</span>
               </nuxt-link>
-              <VerifiedIcon />
+              <VerifiedIcon v-if="validator.verifiedIdentity" />
             </template>
             <template v-slot:cell(commission)="data">
               {{ data.item.commission.toFixed(1) }}%
