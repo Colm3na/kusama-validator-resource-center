@@ -1,52 +1,56 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <h5>Selected validators:</h5>
-        <hr />
-        <div
-          v-for="validator in list"
-          :key="validator.stashAddress"
-          class="d-block pb-2"
-        >
-          <div class="row">
-            <div class="col-11">
-              <Identicon :address="validator.stashAddress" :size="20" />
-              <span v-if="validator.name">
-                {{ validator.name }}
-                <VerifiedIcon />
-              </span>
-              <span v-else>
-                {{ shortAddress(validator.stashAddress) }}
-              </span>
-            </div>
-            <div class="col-1 text-right">
-              <a
-                v-b-tooltip.hover
-                href="#"
-                title="Remove"
-                class="remove"
-                @click="$emit('remove', validator.stashAddress)"
-              >
-                <font-awesome-icon icon="times" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 mb-3">
-        <h5>Addresses:</h5>
-        <hr />
-        <pre
-          v-clipboard:copy="addresses"
+    <p v-if="list.length === 0" class="mb-0 text-center">
+      No validators selected
+    </p>
+    <div v-if="list.length > 0" class="row mb-3">
+      <div class="col-8">{{ list.length }}/16</div>
+      <div class="col-4 text-right">
+        <span
           v-b-tooltip.hover
-          class="addresses"
-          title="Click to copy to clipboard"
-          @click="showToast"
-          >{{ addresses }}</pre
+          title="Copy validator addresses to clipboard"
+          v-clipboard:copy="selectedAddressesText"
+          v-on:click.stop.prevent="showToast"
         >
+          <font-awesome-icon
+            icon="paperclip"
+            style="color: gray; font-size: 1.5rem; cursor: pointer"
+          />
+        </span>
       </div>
     </div>
+    <div
+      v-for="validator in list"
+      :key="validator.stashAddress"
+      class="row pb-1"
+    >
+      <div class="col-10">
+        <Identicon :address="validator.stashAddress" :size="20" />
+        <nuxt-link :to="`/validator/${validator.stashAddress}`">
+          <span v-if="validator.name">
+            {{ validator.name }}
+            <VerifiedIcon />
+          </span>
+          <span v-else>
+            {{ shortAddress(validator.stashAddress) }}
+          </span>
+        </nuxt-link>
+      </div>
+      <div class="col-2 text-right">
+        <a
+          v-b-tooltip.hover
+          href="#"
+          title="Remove"
+          class="remove"
+          v-on:click.stop.prevent="remove(validator.stashAddress)"
+        >
+          <font-awesome-icon icon="times" />
+        </a>
+      </div>
+    </div>
+    <p v-if="list.length > 0" class="text-right mt-3 mb-0">
+      <b-button variant="kusama" class="text-right">Set Validators</b-button>
+    </p>
   </div>
 </template>
 
@@ -60,25 +64,33 @@ export default {
     VerifiedIcon,
   },
   mixins: [commonMixin],
-  props: {
-    list: {
-      type: Array,
-      default: () => [],
-    },
-  },
   computed: {
-    addresses() {
-      return this.list.map(({ stashAddress }) => stashAddress).join('\r\n')
+    loading() {
+      return this.$store.state.ranking.loading
+    },
+    list() {
+      return this.$store.state.ranking.list.filter(({ stashAddress }) =>
+        this.selectedAddresses.includes(stashAddress)
+      )
+    },
+    selectedAddresses() {
+      return this.$store.state.ranking.selectedAddresses
+    },
+    selectedAddressesText() {
+      return this.selectedAddresses.join('\r\n')
     },
   },
   methods: {
     showToast() {
-      this.$bvToast.toast(this.addresses, {
+      this.$bvToast.toast(this.selectedAddressesText, {
         title: 'Addresses copied to clipboard!',
         variant: 'secondary',
         autoHideDelay: 5000,
         appendToast: false,
       })
+    },
+    remove(accountId) {
+      this.$store.dispatch('ranking/toggleSelected', { accountId })
     },
   },
 }

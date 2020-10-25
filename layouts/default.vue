@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="dark" sticky>
-      <b-container>
+    <b-navbar type="dark" variant="dark" sticky>
+      <b-container class="px-sm-3">
         <b-navbar-brand>
           <nuxt-link
             to="/"
@@ -11,29 +11,23 @@
             <img class="logo mb-1" src="../assets/img/kusama-logo.svg" />
           </nuxt-link>
         </b-navbar-brand>
-        <b-navbar-toggle target="nav-collapse">
-          <template>
-            <svg
-              class="icon"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3 17C3 17.5523 3.44772 18 4 18H20C20.5523 18 21 17.5523 21 17V17C21 16.4477 20.5523 16 20 16H4C3.44772 16 3 16.4477 3 17V17ZM3 12C3 12.5523 3.44772 13 4 13H20C20.5523 13 21 12.5523 21 12V12C21 11.4477 20.5523 11 20 11H4C3.44772 11 3 11.4477 3 12V12ZM4 6C3.44772 6 3 6.44772 3 7V7C3 7.55228 3.44772 8 4 8H20C20.5523 8 21 7.55228 21 7V7C21 6.44772 20.5523 6 20 6H4Z"
-                fill="#ffffff"
-              ></path>
-            </svg>
-          </template>
-        </b-navbar-toggle>
-        <b-collapse id="nav-collapse" is-nav>
-          <b-navbar-nav class="ml-auto">
-            <b-nav-item to="/">Validator Ranking</b-nav-item>
-            <b-nav-item to="/metrics">Metrics</b-nav-item>
-          </b-navbar-nav>
-        </b-collapse>
+        <!-- <b-navbar-nav class="mr-auto">
+          <b-nav-item to="/metrics">Metrics</b-nav-item>
+        </b-navbar-nav> -->
+        <b-navbar-nav>
+          <b-nav-item-dropdown
+            id="selected-validators"
+            class="selected-validators"
+            toggle-class="btn btn-selected"
+            right
+          >
+            <template #button-content>
+              <font-awesome-icon icon="hand-paper" />
+              Selected validators ({{ selectedValidatorAddresses.length }})
+            </template>
+            <SelectedValidators />
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
       </b-container>
     </b-navbar>
     <Nuxt />
@@ -56,7 +50,20 @@
 </template>
 
 <script>
-export default {}
+import SelectedValidators from '../components/SelectedValidators.vue'
+export default {
+  components: {
+    SelectedValidators,
+  },
+  computed: {
+    selectedValidatorAddresses() {
+      return this.$store.state.ranking.selectedAddresses
+    },
+  },
+  created() {
+    this.$store.dispatch('ranking/loadSelected')
+  },
+}
 </script>
 
 <style lang="scss">
@@ -157,6 +164,8 @@ $navbar-dark-color: $light !default;
 $navbar-dark-hover-color: $white !default;
 $navbar-dark-disabled-color: $white !default;
 
+$h1-font-size: 2.1rem !default;
+
 // Bootstrap and its default variables
 @import '../node_modules/bootstrap/scss/bootstrap';
 // BootstrapVue and its default variables
@@ -176,14 +185,6 @@ body {
 }
 .navbar-dark {
   border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-}
-.navbar {
-  padding: 0.9rem 1.5rem;
-}
-.navbar-dark .navbar-toggler {
-  color: white;
-  border: 0;
-  outline: 0;
 }
 .identicon {
   display: inline-block;
@@ -220,5 +221,17 @@ pre {
 }
 .text-selected {
   color: #00effc;
+}
+.btn-selected {
+  color: #e6007a !important;
+  border-color: #e6007a;
+}
+.selected-validators .dropdown-menu {
+  width: 400px;
+  padding: 1rem;
+  color: gray;
+}
+.selected-validators .dropdown-menu a span {
+  color: gray;
 }
 </style>

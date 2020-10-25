@@ -164,7 +164,6 @@ export default {
   data() {
     return {
       accountId: this.$route.params.id,
-      selectedValidatorAddresses: [],
     }
   },
   computed: {
@@ -180,6 +179,9 @@ export default {
         selected: this.isSelected(validator.stashAddress),
       }
     },
+    selectedValidatorAddresses() {
+      return this.$store.state.ranking.selectedAddresses
+    },
     eraPointsAveragePercent() {
       if (
         this.$store.state.ranking.eraPointsAverage &&
@@ -193,26 +195,9 @@ export default {
       return 0
     },
   },
-  watch: {
-    selectedValidatorAddresses(selectedValidatorAddresses) {
-      this.$cookies.set(
-        'selectedValidatorAddresses',
-        selectedValidatorAddresses,
-        {
-          path: '/',
-          maxAge: 60 * 60 * 24 * 7,
-        }
-      )
-    },
-  },
   async created() {
     if (this.$store.state.ranking.list.length === 0) {
       await this.$store.dispatch('ranking/update')
-    }
-    if (this.$cookies.get('selectedValidatorAddresses')) {
-      this.selectedValidatorAddresses = this.$cookies.get(
-        'selectedValidatorAddresses'
-      )
     }
   },
   methods: {
@@ -220,14 +205,7 @@ export default {
       return this.selectedValidatorAddresses.includes(accountId)
     },
     toggleSelected(accountId) {
-      if (this.selectedValidatorAddresses.includes(accountId)) {
-        this.selectedValidatorAddresses.splice(
-          this.selectedValidatorAddresses.indexOf(accountId),
-          1
-        )
-      } else {
-        this.selectedValidatorAddresses.push(accountId)
-      }
+      this.$store.dispatch('ranking/toggleSelected', { accountId })
     },
   },
 }

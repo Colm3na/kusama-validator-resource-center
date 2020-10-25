@@ -4,202 +4,186 @@
       <Loading />
     </div>
     <div v-else class="ranking">
-      <b-tabs content-class="mt-5">
-        <b-tab title="Ranking" active>
-          <!-- Filter -->
-          <b-row style="margin-bottom: 1rem">
-            <b-col cols="12">
-              <b-form-input
-                id="filterInput"
-                v-model="filter"
-                type="search"
-                placeholder="Search validator by address or name"
-                debounce="500"
-              />
-            </b-col>
-          </b-row>
-          <!-- Exclude -->
-          <div class="exclude mb-4">
-            <h5>Exclude from search:</h5>
-            <div class="row pt-3">
-              <div
-                v-for="option in options"
-                :key="option.text"
-                class="col-md-3 mb-3"
-              >
-                <b-form-checkbox
-                  switch
-                  size="lg"
-                  :checked="getExcludeState(option.value)"
-                  @change="toggleExcluded(option.value)"
-                >
-                  {{ option.text }}
-                </b-form-checkbox>
-              </div>
-            </div>
-          </div>
-          <p class="mb-2 text-secondary">
-            Search results: {{ filteredRows }} / {{ ranking.length }}
-          </p>
-          <b-table
-            dark
-            hover
-            responsive
-            stacked="md"
-            :fields="fields"
-            :items="filteredRanking"
-            :per-page="perPage"
-            :current-page="currentPage"
-            :sort-by.sync="sortBy"
-            :sort-desc.sync="sortDesc"
-            :filter="filter"
-            :filter-included-fields="filterOn"
-            :sort-compare="sortCompare"
-            @filtered="onFiltered"
-          >
-            <template v-slot:cell(active)="data">
-              <span
-                v-if="data.item.active"
-                v-b-tooltip.hover
-                title="Active validator"
-              >
-                <font-awesome-layers class="align-middle">
-                  <font-awesome-icon
-                    icon="circle"
-                    style="
-                      color: black;
-                      font-size: 1.6rem;
-                      border: 2px solid rgb(128 128 128 / 49%);
-                      border-radius: 50%;
-                    "
-                  />
-                  <font-awesome-icon
-                    icon="circle"
-                    class="text-success"
-                    style="font-size: 1.05rem; margin-left: 0.266rem"
-                    transform="shrink-6"
-                  />
-                </font-awesome-layers>
-              </span>
-              <span v-else v-b-tooltip.hover title="Inactive validator">
-                <font-awesome-layers>
-                  <font-awesome-icon
-                    icon="circle"
-                    style="
-                      color: black;
-                      font-size: 1.6rem;
-                      border: 2px solid rgb(128 128 128 / 49%);
-                      border-radius: 50%;
-                    "
-                  />
-                  <font-awesome-icon
-                    icon="circle"
-                    class="text-danger"
-                    style="font-size: 1.05rem; margin-left: 0.266rem"
-                    transform="shrink-6"
-                  />
-                </font-awesome-layers>
-              </span>
-            </template>
-            <template v-slot:cell(name)="data">
-              <Identicon :address="data.item.stashAddress" :size="24" />
-              <nuxt-link :to="`/validator/${data.item.stashAddress}`">
-                <span v-if="data.item.name">{{ data.item.name }}</span>
-                <span v-else>{{ shortAddress(data.item.stashAddress) }}</span>
-              </nuxt-link>
-              <VerifiedIcon v-if="data.item.verifiedIdentity" />
-            </template>
-            <template v-slot:cell(commission)="data">
-              {{ data.item.commission.toFixed(1) }}%
-            </template>
-
-            <template v-slot:cell(selfStake)="data">
-              {{ formatAmount(data.item.selfStake) }}
-            </template>
-            <template v-slot:cell(otherStake)="data">
-              {{ formatAmount(data.item.otherStake) }}
-            </template>
-            <template v-slot:cell(selected)="data">
-              <p class="text-center mb-0">
-                <a
-                  v-b-tooltip.hover
-                  class="select"
-                  title="Select / Unselect validator"
-                  @click="toggleSelected(data.item.stashAddress)"
-                >
-                  <font-awesome-icon
-                    v-if="data.item.selected"
-                    icon="hand-paper"
-                    class="selected text-selected"
-                  />
-                  <font-awesome-icon
-                    v-else
-                    icon="hand-paper"
-                    class="unselected text-secondary"
-                  />
-                </a>
-              </p>
-            </template>
-          </b-table>
-          <div class="row">
-            <div class="col-6">
-              <b-button-group>
-                <b-button
-                  variant="outline-secondary"
-                  :class="{ 'text-primary': perPage === 10 }"
-                  @click="setPageSize(10)"
-                  >10</b-button
-                >
-                <b-button
-                  variant="outline-secondary"
-                  :class="{ 'text-primary': perPage === 50 }"
-                  @click="setPageSize(50)"
-                  >50</b-button
-                >
-                <b-button
-                  variant="outline-secondary"
-                  :class="{ 'text-primary': perPage === 100 }"
-                  @click="setPageSize(100)"
-                  >100</b-button
-                >
-                <b-button
-                  variant="outline-secondary"
-                  :class="{ 'text-primary': perPage === 1000 }"
-                  @click="setPageSize(1000)"
-                  >All</b-button
-                >
-              </b-button-group>
-            </div>
-            <div class="col-6">
-              <b-pagination
-                v-model="currentPage"
-                :total-rows="filteredRows"
-                :per-page="perPage"
-                aria-controls="my-table"
-                variant="dark"
-                align="right"
-              ></b-pagination>
-            </div>
-          </div>
-        </b-tab>
-        <b-tab>
-          <template #title>
-            Selected
-            <font-awesome-icon icon="hand-paper" />
-            ({{ selectedValidators.length }})
-          </template>
-          <SelectedValidators
-            :list="selectedValidators"
-            @remove="toggleSelected"
+      <!-- Filter -->
+      <b-row style="margin-bottom: 1rem">
+        <b-col cols="12">
+          <b-form-input
+            id="filterInput"
+            v-model="filter"
+            type="search"
+            placeholder="Search validator by address or name"
+            debounce="500"
           />
-        </b-tab>
-      </b-tabs>
+        </b-col>
+      </b-row>
+      <!-- Exclude -->
+      <div class="exclude mb-4">
+        <h5>Exclude from search:</h5>
+        <div class="row pt-3">
+          <div
+            v-for="option in options"
+            :key="option.text"
+            class="col-md-3 mb-3"
+          >
+            <b-form-checkbox
+              switch
+              size="lg"
+              :checked="getExcludeState(option.value)"
+              @change="toggleExcluded(option.value)"
+            >
+              {{ option.text }}
+            </b-form-checkbox>
+          </div>
+        </div>
+      </div>
+      <p class="mb-2 text-secondary">
+        Search results: {{ filteredRows }} / {{ ranking.length }}
+      </p>
+      <b-table
+        dark
+        hover
+        responsive
+        stacked="lg"
+        :fields="fields"
+        :items="filteredRanking"
+        :per-page="perPage"
+        :current-page="currentPage"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        :filter="filter"
+        :filter-included-fields="filterOn"
+        :sort-compare="sortCompare"
+        @filtered="onFiltered"
+      >
+        <template v-slot:cell(active)="data">
+          <span
+            v-if="data.item.active"
+            v-b-tooltip.hover
+            title="Active validator"
+          >
+            <font-awesome-layers class="align-middle">
+              <font-awesome-icon
+                icon="circle"
+                style="
+                  color: black;
+                  font-size: 1.6rem;
+                  border: 2px solid rgb(128 128 128 / 49%);
+                  border-radius: 50%;
+                "
+              />
+              <font-awesome-icon
+                icon="circle"
+                class="text-success"
+                style="font-size: 1.05rem; margin-left: 0.266rem"
+                transform="shrink-6"
+              />
+            </font-awesome-layers>
+          </span>
+          <span v-else v-b-tooltip.hover title="Inactive validator">
+            <font-awesome-layers>
+              <font-awesome-icon
+                icon="circle"
+                style="
+                  color: black;
+                  font-size: 1.6rem;
+                  border: 2px solid rgb(128 128 128 / 49%);
+                  border-radius: 50%;
+                "
+              />
+              <font-awesome-icon
+                icon="circle"
+                class="text-danger"
+                style="font-size: 1.05rem; margin-left: 0.266rem"
+                transform="shrink-6"
+              />
+            </font-awesome-layers>
+          </span>
+        </template>
+        <template v-slot:cell(name)="data">
+          <Identicon :address="data.item.stashAddress" :size="24" />
+          <nuxt-link :to="`/validator/${data.item.stashAddress}`">
+            <span v-if="data.item.name">{{ data.item.name }}</span>
+            <span v-else>{{ shortAddress(data.item.stashAddress) }}</span>
+          </nuxt-link>
+          <VerifiedIcon v-if="data.item.verifiedIdentity" />
+        </template>
+        <template v-slot:cell(commission)="data">
+          {{ data.item.commission.toFixed(1) }}%
+        </template>
+
+        <template v-slot:cell(selfStake)="data">
+          {{ formatAmount(data.item.selfStake) }}
+        </template>
+        <template v-slot:cell(otherStake)="data">
+          {{ formatAmount(data.item.otherStake) }}
+        </template>
+        <template v-slot:cell(selected)="data">
+          <p class="text-center mb-0">
+            <a
+              v-b-tooltip.hover
+              class="select"
+              title="Select / Unselect validator"
+              @click="toggleSelected(data.item.stashAddress)"
+            >
+              <font-awesome-icon
+                v-if="data.item.selected"
+                icon="hand-paper"
+                class="selected text-selected"
+              />
+              <font-awesome-icon
+                v-else
+                icon="hand-paper"
+                class="unselected text-secondary"
+              />
+            </a>
+          </p>
+        </template>
+      </b-table>
+      <div class="row">
+        <div class="col-6">
+          <b-button-group>
+            <b-button
+              variant="outline-secondary"
+              :class="{ 'text-primary': perPage === 10 }"
+              @click="setPageSize(10)"
+              >10</b-button
+            >
+            <b-button
+              variant="outline-secondary"
+              :class="{ 'text-primary': perPage === 50 }"
+              @click="setPageSize(50)"
+              >50</b-button
+            >
+            <b-button
+              variant="outline-secondary"
+              :class="{ 'text-primary': perPage === 100 }"
+              @click="setPageSize(100)"
+              >100</b-button
+            >
+            <b-button
+              variant="outline-secondary"
+              :class="{ 'text-primary': perPage === 1000 }"
+              @click="setPageSize(1000)"
+              >All</b-button
+            >
+          </b-button-group>
+        </div>
+        <div class="col-6">
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="filteredRows"
+            :per-page="perPage"
+            aria-controls="my-table"
+            variant="dark"
+            align="right"
+          ></b-pagination>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import { BigNumber } from 'bignumber.js'
-import SelectedValidators from '../components/SelectedValidators.vue'
 import Loading from '../components/Loading.vue'
 import Identicon from '../components/Identicon.vue'
 import VerifiedIcon from '../components/VerifiedIcon.vue'
@@ -208,7 +192,6 @@ import commonMixin from '../mixins/commonMixin.js'
 export default {
   components: {
     Identicon,
-    SelectedValidators,
     VerifiedIcon,
     Loading,
   },
@@ -264,7 +247,6 @@ export default {
       filter: null,
       filterOn: [],
       rows: 0,
-      selectedValidatorAddresses: [],
       maxValidatorsReached: false,
     }
   },
@@ -280,9 +262,12 @@ export default {
         }
       })
     },
+    selectedValidatorAddresses() {
+      return this.$store.state.ranking.selectedAddresses
+    },
     selectedValidators() {
       return this.ranking.filter(({ stashAddress }) =>
-        this.selectedValidatorAddresses.includes(stashAddress)
+        this.$store.state.ranking.selectedAddresses.includes(stashAddress)
       )
     },
     filteredRanking() {
@@ -319,16 +304,6 @@ export default {
     },
   },
   watch: {
-    selectedValidatorAddresses(selectedValidatorAddresses) {
-      this.$cookies.set(
-        'selectedValidatorAddresses',
-        selectedValidatorAddresses,
-        {
-          path: '/',
-          maxAge: 60 * 60 * 24 * 7,
-        }
-      )
-    },
     exclude(exclude) {
       this.$cookies.set('exclude', exclude, {
         path: '/',
@@ -339,11 +314,6 @@ export default {
   async created() {
     if (this.$store.state.ranking.list.length === 0) {
       await this.$store.dispatch('ranking/update')
-    }
-    if (this.$cookies.get('selectedValidatorAddresses')) {
-      this.selectedValidatorAddresses = this.$cookies.get(
-        'selectedValidatorAddresses'
-      )
     }
     if (this.$cookies.get('exclude')) {
       this.exclude = this.$cookies.get('exclude')
@@ -357,21 +327,7 @@ export default {
       return this.selectedValidatorAddresses.includes(accountId)
     },
     toggleSelected(accountId) {
-      if (this.selectedValidatorAddresses.includes(accountId)) {
-        this.selectedValidatorAddresses.splice(
-          this.selectedValidatorAddresses.indexOf(accountId),
-          1
-        )
-      } else if (this.selectedValidatorAddresses.length < 16) {
-        this.selectedValidatorAddresses.push(accountId)
-      } else {
-        this.$bvToast.toast('Please remove before selecting a new one', {
-          title: 'Select up to 16 validators',
-          variant: 'danger',
-          autoHideDelay: 5000,
-          appendToast: false,
-        })
-      }
+      this.$store.dispatch('ranking/toggleSelected', { accountId })
     },
     toggleExcluded(value) {
       if (this.exclude.includes(value)) {

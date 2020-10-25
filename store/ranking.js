@@ -1,5 +1,6 @@
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import { BigNumber } from 'bignumber.js'
+import { BToast } from 'bootstrap-vue'
 
 export const state = () => ({
   list: [],
@@ -8,6 +9,7 @@ export const state = () => ({
   eraPointsHistoryTotalsSum: 0,
   eraPointsAverage: 0,
   loading: true,
+  selectedAddresses: [],
 })
 
 export const mutations = {
@@ -27,6 +29,34 @@ export const mutations = {
     state.blockHeight = blockHeight
     state.eraPointsHistoryTotalsSum = eraPointsHistoryTotalsSum
     state.eraPointsAverage = eraPointsAverage
+  },
+  loadSelected(state) {
+    const selectedAddresses = this.$cookies.get('selectedValidatorAddresses')
+    state.selectedAddresses = selectedAddresses
+  },
+  toggleSelected(state, { accountId }) {
+    const selectedAddresses = state.selectedAddresses
+    if (selectedAddresses.includes(accountId)) {
+      selectedAddresses.splice(state.selectedAddresses.indexOf(accountId), 1)
+    } else if (selectedAddresses.length < 16) {
+      selectedAddresses.push(accountId)
+    } else {
+      const bootStrapToaster = new BToast()
+      bootStrapToaster.$bvToast.toast(
+        'Please remove before selecting a new one',
+        {
+          title: 'Select up to 16 validators',
+          variant: 'danger',
+          autoHideDelay: 5000,
+          appendToast: false,
+        }
+      )
+    }
+    state.selectedAddresses = selectedAddresses
+    this.$cookies.set('selectedValidatorAddresses', selectedAddresses, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    })
   },
 }
 
@@ -434,6 +464,12 @@ export const actions = {
         3
       )}s`
     )
+  },
+  loadSelected(context) {
+    context.commit('loadSelected')
+  },
+  toggleSelected(context, accountId) {
+    context.commit('toggleSelected', accountId)
   },
 }
 
