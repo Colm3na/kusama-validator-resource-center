@@ -8,9 +8,9 @@
       <div class="col-4 text-right">
         <span
           v-b-tooltip.hover
-          title="Copy validator addresses to clipboard"
           v-clipboard:copy="selectedAddressesText"
-          v-on:click.stop.prevent="showToast"
+          title="Copy validator addresses to clipboard"
+          @click.stop.prevent="showToast"
         >
           <font-awesome-icon
             icon="paperclip"
@@ -42,7 +42,7 @@
           href="#"
           title="Remove"
           class="remove"
-          v-on:click.stop.prevent="remove(validator.stashAddress)"
+          @click.stop.prevent="remove(validator.stashAddress)"
         >
           <font-awesome-icon icon="times" />
         </a>

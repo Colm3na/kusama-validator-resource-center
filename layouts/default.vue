@@ -22,8 +22,9 @@
             right
           >
             <template #button-content>
-              <font-awesome-icon icon="hand-paper" />
-              Selected validators ({{ selectedValidatorAddresses.length }})
+              Selected validators <font-awesome-icon icon="hand-paper" /> ({{
+                selectedValidatorAddresses.length
+              }})
             </template>
             <SelectedValidators />
           </b-nav-item-dropdown>
