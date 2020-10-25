@@ -5,17 +5,28 @@ export const state = () => ({
   list: [],
   eraHistory: [],
   blockHeight: 0,
-  eraPointsHistoryTotals: [],
+  eraPointsHistoryTotalsSum: 0,
+  eraPointsAverage: 0,
   loading: true,
 })
 
 export const mutations = {
-  update(state, { ranking, eraHistory, blockHeight, eraPointsHistoryTotals }) {
+  update(
+    state,
+    {
+      ranking,
+      eraHistory,
+      blockHeight,
+      eraPointsHistoryTotalsSum,
+      eraPointsAverage,
+    }
+  ) {
     state.list = ranking
     state.loading = false
     state.eraHistory = eraHistory.map((era) => parseInt(era.toString()))
     state.blockHeight = blockHeight
-    state.eraPointsHistoryTotals = eraPointsHistoryTotals
+    state.eraPointsHistoryTotalsSum = eraPointsHistoryTotalsSum
+    state.eraPointsAverage = eraPointsAverage
   },
 }
 
@@ -408,7 +419,8 @@ export const actions = {
       ranking,
       eraHistory: eraIndexes,
       blockHeight,
-      eraPointsHistoryTotals,
+      eraPointsHistoryTotalsSum,
+      eraPointsAverage,
     })
     const endTime = new Date().getTime()
     const dataProcessingTime = endTime - dataCollectionEndTime

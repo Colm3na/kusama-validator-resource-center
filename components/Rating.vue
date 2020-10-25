@@ -13,7 +13,7 @@
       Neutral
     </span>
     <span v-else class="text-danger">
-      <font-awesome-icon icon="minus-circle" />
+      <font-awesome-icon icon="times" />
       Bad
     </span>
   </div>
@@ -29,7 +29,7 @@ export default {
 }
 </script>
 <style scoped>
-.rating .svg-inline--fa {
-  font-size: 0.7rem;
+.rating {
+  font-size: 1rem;
 }
 </style>

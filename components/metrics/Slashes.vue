@@ -9,8 +9,8 @@
       </div>
     </div>
     <div class="description">
-      <p v-if="rating > 0">Good! No slashes detected</p>
-      <p v-else>Bad! Validator was slashed!</p>
+      <p v-if="rating > 0">No unapplied slashes detected</p>
+      <p v-else>Validator was slashed</p>
     </div>
   </div>
 </template>

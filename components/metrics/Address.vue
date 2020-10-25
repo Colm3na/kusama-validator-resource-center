@@ -1,10 +1,10 @@
 <template>
   <div class="metric h-100">
     <div class="row mb-4">
-      <div class="col-9">
+      <div class="col-8">
         <h5 class="mb-0">Address creation</h5>
       </div>
-      <div class="col-3 text-right text-success">
+      <div class="col-4 text-right text-success">
         <Rating key="address" :rating="rating" />
       </div>
     </div>

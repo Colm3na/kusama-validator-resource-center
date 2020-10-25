@@ -9,8 +9,13 @@
       </div>
     </div>
     <div class="description">
-      <p v-if="rating > 0">Good! Detected sub-identity</p>
-      <p v-else>Bad! No sub-identity detected</p>
+      <p v-if="rating > 0">
+        Detected sub-identity<span v-if="clusterMembers > 1"
+          >, the validator is part of a cluster of
+          {{ clusterMembers }} validators</span
+        >
+      </p>
+      <p v-else>No sub-identity detected</p>
     </div>
   </div>
 </template>
@@ -22,6 +27,10 @@ export default {
   },
   props: {
     rating: {
+      type: Number,
+      default: () => 0,
+    },
+    clusterMembers: {
       type: Number,
       default: () => 0,
     },

@@ -10,12 +10,14 @@
     </div>
     <div class="description">
       <p v-if="rating === 2">
-        Above average! {{ percent.toFixed(2) }}% of era points in the last
-        week<br />
+        Above average! Validator got {{ percent.toFixed(2) }}% of the total era
+        points in the last week while average was
+        {{ average.toFixed(2) }}%<br />
       </p>
       <p v-else>
-        Below average! {{ percent.toFixed(2) }}% of era points in the last
-        week<br />
+        Below average! Validator got {{ percent.toFixed(2) }}% of the total era
+        points in the last week while average was
+        {{ average.toFixed(2) }}%<br />
       </p>
     </div>
   </div>
@@ -28,6 +30,10 @@ export default {
   },
   props: {
     rating: {
+      type: Number,
+      default: () => 0,
+    },
+    average: {
       type: Number,
       default: () => 0,
     },

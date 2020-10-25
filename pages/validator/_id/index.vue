@@ -67,7 +67,10 @@
               />
             </div>
             <div class="col-md-6 mb-5">
-              <Subaccounts :rating="validator.subAccountsRating" />
+              <Subaccounts
+                :rating="validator.subAccountsRating"
+                :cluster-members="validator.clusterMembers"
+              />
             </div>
           </div>
           <div class="row">
@@ -80,6 +83,7 @@
             <div class="col-md-6 mb-5">
               <EraPoints
                 :percent="validator.eraPointsPercent"
+                :average="eraPointsAveragePercent"
                 :rating="validator.eraPointsRating"
               />
             </div>
@@ -175,6 +179,18 @@ export default {
         ...validator,
         selected: this.isSelected(validator.stashAddress),
       }
+    },
+    eraPointsAveragePercent() {
+      if (
+        this.$store.state.ranking.eraPointsAverage &&
+        this.$store.state.ranking.eraPointsHistoryTotalsSum
+      ) {
+        return (
+          (this.$store.state.ranking.eraPointsAverage * 100) /
+          this.$store.state.ranking.eraPointsHistoryTotalsSum
+        )
+      }
+      return 0
     },
   },
   watch: {
