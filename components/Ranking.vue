@@ -18,12 +18,12 @@
       </b-row>
       <!-- Exclude -->
       <div class="exclude mb-4">
-        <h5>Exclude from search:</h5>
+        <h5 class="exclude-title">Exclude from search:</h5>
         <div class="row pt-3">
           <div
             v-for="option in options"
             :key="option.text"
-            class="col-md-3 mb-3"
+            class="col-lg-3 mb-2"
           >
             <b-form-checkbox
               switch
@@ -359,7 +359,7 @@ export default {
   },
 }
 </script>
-<style>
+<style lang="scss">
 .led-green {
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px,
@@ -378,9 +378,10 @@ export default {
   padding: 1rem 1rem 0.5rem 1rem;
   border: 1px solid #e6007a;
 }
-.exclude h5 {
-  font-size: 1rem;
-  color: gray;
+.exclude-title {
+  font-size: 0.9rem;
+  color: var(--light);
+  margin-bottom: 0;
 }
 .select {
   cursor: pointer;
