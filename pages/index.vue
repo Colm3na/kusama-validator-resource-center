@@ -17,17 +17,17 @@ export default {
   components: {
     Ranking,
   },
-  head: {
-    title: 'Validator Resource Center and Ranking Website for Kusama',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'Validator Resource Center and Ranking Website for Kusama',
-      },
-    ],
+  head() {
+    return {
+      title: 'Validator Resource Center and Ranking Website for Kusama',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Validator Resource Center and Ranking Website for Kusama',
+        },
+      ],
+    }
   },
 }
 </script>

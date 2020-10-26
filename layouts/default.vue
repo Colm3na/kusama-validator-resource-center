@@ -11,9 +11,6 @@
             <img class="logo mb-1" src="../assets/img/kusama-logo.svg" />
           </nuxt-link>
         </b-navbar-brand>
-        <!-- <b-navbar-nav class="mr-auto">
-          <b-nav-item to="/metrics">Metrics</b-nav-item>
-        </b-navbar-nav> -->
         <b-navbar-nav>
           <b-nav-item-dropdown
             id="selected-validators"
@@ -179,6 +176,16 @@ body {
   font-family: 'Space Mono', monospace;
   margin-bottom: 60px;
   font-size: 0.9rem;
+}
+body::-webkit-scrollbar {
+  width: 10px;
+}
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--kusama);
+  outline: none;
 }
 .logo {
   height: 1.65rem;

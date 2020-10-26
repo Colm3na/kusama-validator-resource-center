@@ -160,6 +160,18 @@ export default {
     Payouts,
     Governance,
   },
+  head() {
+    return {
+      title: `Validator ${this.accountId} metrics | Validator Resource Center and Ranking Website for Kusama`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: `Validator ${this.accountId} metrics`,
+        },
+      ],
+    }
+  },
   mixins: [commonMixin],
   data() {
     return {

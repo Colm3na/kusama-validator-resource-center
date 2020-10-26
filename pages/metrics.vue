@@ -58,17 +58,17 @@
 
 <script>
 export default {
-  head: {
-    title: 'Metrics | Validator Resource Center and Ranking Website for Kusama',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'List of metrics and ranking criteria',
-      },
-    ],
+  head() {
+    return {
+      title: `Metrics | Validator Resource Center and Ranking Website for Kusama`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'List of metrics and ranking criteria',
+        },
+      ],
+    }
   },
 }
 </script>
