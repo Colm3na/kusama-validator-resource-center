@@ -1,9 +1,10 @@
 <template>
   <div>
-    <p v-if="list.length === 0" class="mb-0 text-center">
+    <p v-if="loading" class="mb-0 text-center">Loading data...</p>
+    <p v-else-if="list.length === 0" class="mb-0 text-center">
       No validators selected
     </p>
-    <div v-if="list.length > 0" class="row mb-3">
+    <div v-else class="row mb-3">
       <div class="col-8">{{ list.length }}/16</div>
       <div class="col-4 text-right">
         <span

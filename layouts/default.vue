@@ -19,7 +19,10 @@
             right
           >
             <template #button-content>
-              {{ selectedValidatorAddresses.length }}/16 selected
+              <span v-if="loading">Selected</span>
+              <span v-else>
+                {{ selectedValidatorAddresses.length }}/16 selected
+              </span>
               <font-awesome-icon icon="hand-paper" />
             </template>
             <SelectedValidators />
@@ -53,6 +56,9 @@ export default {
     SelectedValidators,
   },
   computed: {
+    loading() {
+      return this.$store.state.ranking.loading
+    },
     selectedValidatorAddresses() {
       return this.$store.state.ranking.selectedAddresses
     },

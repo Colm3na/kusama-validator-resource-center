@@ -106,6 +106,7 @@
             <div class="col-md-6 mb-5">
               <Governance
                 :council-backing="validator.councilBacking"
+                :active="validator.activeInGovernance"
                 :rating="validator.governanceRating"
               />
             </div>

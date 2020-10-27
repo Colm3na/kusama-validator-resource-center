@@ -311,6 +311,7 @@ export const actions = {
         slashRating,
         slashes,
         councilBacking,
+        activeInGovernance,
         governanceRating,
         payoutHistory,
         payoutRating,
@@ -382,7 +383,15 @@ export const actions = {
       const councilBacking = councilVotes.some(
         (vote) => vote[0] === intention.accountId
       )
-      const governanceRating = councilBacking ? 2 : 0
+      const activeInGovernance = participateInGovernance.includes(
+        intention.accountId.toString()
+      )
+      const governanceRating =
+        councilBacking && activeInGovernance
+          ? 3
+          : councilBacking || activeInGovernance
+          ? 2
+          : 0
 
       // era points
       const eraPointsHistory = []
@@ -453,6 +462,7 @@ export const actions = {
         slashRating,
         slashes,
         councilBacking,
+        activeInGovernance,
         governanceRating,
         payoutHistory,
         payoutRating,
