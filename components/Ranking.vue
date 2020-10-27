@@ -23,7 +23,7 @@
           <div
             v-for="option in options"
             :key="option.text"
-            class="col-lg-3 mb-2"
+            class="col-md-6 col-lg-3 mb-2"
           >
             <b-form-checkbox
               switch
@@ -59,7 +59,7 @@
           <span
             v-if="data.item.active"
             v-b-tooltip.hover
-            title="Active validator"
+            title="Elected validator"
           >
             <font-awesome-layers class="align-middle">
               <font-awesome-icon
@@ -79,7 +79,7 @@
               />
             </font-awesome-layers>
           </span>
-          <span v-else v-b-tooltip.hover title="Inactive validator">
+          <span v-else v-b-tooltip.hover title="Not elected validator">
             <font-awesome-layers>
               <font-awesome-icon
                 icon="circle"
@@ -206,7 +206,7 @@ export default {
         // { key: 'rank', label: '#', sortable: true },
         {
           key: 'active',
-          label: 'Status',
+          label: 'Elected',
           sortable: true,
           class: 'text-center',
         },
@@ -224,7 +224,7 @@ export default {
       ],
       exclude: [],
       options: [
-        { text: 'Inactive', value: 'inactive' },
+        { text: 'Not elected', value: 'inactive' },
         { text: '100% commission', value: 'greedy' },
         { text: 'Slashed', value: 'slashed' },
         { text: 'Oversubscribed', value: 'oversubscribed' },
