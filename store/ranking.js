@@ -91,6 +91,8 @@ export const actions = {
       erasPoints,
       erasPreferences,
       erasSlashes,
+      proposals,
+      referendums,
       maxNominatorRewardedPerValidator,
     ] = await Promise.all([
       api.rpc.chain.getBlock(),
@@ -101,6 +103,8 @@ export const actions = {
       api.derive.staking._erasPoints(eraIndexes),
       api.derive.staking._erasPrefs(eraIndexes),
       api.derive.staking._erasSlashes(eraIndexes),
+      api.derive.democracy.proposals(),
+      api.derive.democracy.referendums(),
       api.consts.staking.maxNominatorRewardedPerValidator,
     ])
     validators = await Promise.all(
@@ -158,6 +162,22 @@ export const actions = {
         targets,
       }
     })
+
+    // include democracy referendums and proposals proposers and voters addresses
+    const participateInGovernance = []
+    proposals.forEach(({ seconds, image: { proposer } }) => {
+      participateInGovernance.push(proposer.toString())
+      seconds.forEach((accountId) =>
+        participateInGovernance.push(accountId.toString())
+      )
+    })
+    referendums.forEach(({ votes, image: { proposer } }) => {
+      participateInGovernance.push(proposer.toString())
+      votes.forEach(({ accountId }) =>
+        participateInGovernance.push(accountId.toString())
+      )
+    })
+
     validators = validators.map((validator) => {
       // active
       const active = true
@@ -212,7 +232,15 @@ export const actions = {
       const councilBacking = councilVotes.some(
         (vote) => vote[0].toString() === validator.accountId.toString()
       )
-      const governanceRating = councilBacking ? 2 : 0
+      const activeInGovernance = participateInGovernance.includes(
+        validator.accountId.toString()
+      )
+      const governanceRating =
+        councilBacking && activeInGovernance
+          ? 3
+          : councilBacking || activeInGovernance
+          ? 2
+          : 0
 
       // era points
       const eraPointsHistory = []
