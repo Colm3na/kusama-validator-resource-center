@@ -44,14 +44,14 @@ How it's rated?
 
 ### Address creation
 
-Evaluate how old is the validator address.
+The older the address is, the more trustable it might be.
 
 How it's rated?
 
-- Bad: `createdAtBlock >= (blockHeight / 4) * 3`
-- Neutral: `createdAtBlock > (blockHeight / 4) * 2 && createdAtBlock <= (blockHeight / 4) * 3`
-- Good: `createdAtBlock > blockHeight / 4 && createdAtBlock <= (blockHeight / 4) * 2`
-- Very good: `createdAtBlock <= blockHeight / 4`
+- Bad: `addressCreationBlock >= (blockHeight / 4) * 3`
+- Neutral: `addressCreationBlock > (blockHeight / 4) * 2 && addressCreationBlock <= (blockHeight / 4) * 3`
+- Good: `addressCreationBlock > blockHeight / 4 && addressCreationBlock <= (blockHeight / 4) * 2`
+- Very good: `addressCreationBlock <= blockHeight / 4`
 
 ### Slashes
 
@@ -64,7 +64,7 @@ How it's rated?
 
 ### Subaccounts
 
-Evaluate if the validator uses sub-accounts.
+Evaluate if the validator uses subaccounts, this can be considered a more orderly way to set up a validator and good practice.
 
 How it's rated?
 
@@ -77,8 +77,8 @@ Evaluate nominators and if the validator is oversubscribed.
 
 How it's rated?
 
-- Bad: validator is oversubscribed
-- Good: validator have more than 1 nominator and it's not oversubscribed 
+- Bad: validator has no nominators or is oversubscribed
+- Good: validator have 1 or more nominators and it's not oversubscribed 
 
 ### Era points
 

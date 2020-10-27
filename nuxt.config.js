@@ -56,6 +56,8 @@ export default {
     ['cookie-universal-nuxt', { alias: 'cookies' }],
     // https://www.npmjs.com/package/nuxt-clipboard2
     'nuxt-clipboard2',
+    // https://www.npmjs.com/package/vue-scrollto
+    'vue-scrollto/nuxt',
   ],
   fontawesome: {
     icons: {
