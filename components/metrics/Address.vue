@@ -54,11 +54,11 @@ export default {
         )
         .then(function ({ data }) {
           vm.createdAtBlock = parseInt(data.data.attributes.created_at_block)
-          if (vm.createdAtBlock < vm.blockHeight / 4) {
+          if (vm.createdAtBlock <= vm.blockHeight / 4) {
             vm.rating = 3
-          } else if (vm.createdAtBlock < (vm.blockHeight / 4) * 2) {
+          } else if (vm.createdAtBlock <= (vm.blockHeight / 4) * 2) {
             vm.rating = 2
-          } else if (vm.createdAtBlock < (vm.blockHeight / 4) * 3) {
+          } else if (vm.createdAtBlock <= (vm.blockHeight / 4) * 3) {
             vm.rating = 1
           }
         })

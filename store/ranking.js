@@ -1,6 +1,7 @@
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import { BigNumber } from 'bignumber.js'
 import { BToast } from 'bootstrap-vue'
+import { config } from '../config.js'
 
 export const state = () => ({
   list: [],
@@ -64,19 +65,15 @@ export const actions = {
   async update(context) {
     const startTime = new Date().getTime()
 
-    const historySize = 28 // 1 week
-    const withActive = false
-
     //
     // data collection
     //
-    const nodeWs = 'wss://kusama-rpc.polkadot.io'
-    const wsProvider = new WsProvider(nodeWs)
+    const wsProvider = new WsProvider(config.nodeWs)
     const api = await ApiPromise.create({ provider: wsProvider })
-
+    const withActive = false
     const erasHistoric = await api.derive.staking.erasHistoric(withActive)
     const eraIndexes = erasHistoric.slice(
-      Math.max(erasHistoric.length - historySize, 0)
+      Math.max(erasHistoric.length - config.historySize, 0)
     )
 
     let validators = []
