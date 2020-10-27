@@ -2,7 +2,20 @@
   <div class="metric h-100">
     <div class="row mb-4">
       <div class="col-8">
-        <h5 class="mb-0">Frequency of payouts</h5>
+        <h5 class="mb-0">
+          Frequency of payouts
+          <nuxt-link
+            to="/metrics#payouts"
+            v-b-tooltip.hover
+            title="Evaluate frequency of rewards distribution"
+          >
+            <font-awesome-icon
+              icon="question-circle"
+              class="d-inline-block"
+              style="font-size: 1rem"
+            />
+          </nuxt-link>
+        </h5>
       </div>
       <div class="col-4 text-right text-success">
         <Rating key="payouts" :rating="rating" />

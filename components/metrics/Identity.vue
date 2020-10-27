@@ -2,7 +2,20 @@
   <div class="metric h-100">
     <div class="row mb-4">
       <div class="col-8">
-        <h5 class="mb-0">Identity</h5>
+        <h5 class="mb-0">
+          Identity
+          <nuxt-link
+            to="/metrics#identity"
+            v-b-tooltip.hover
+            title="Evaluate the quality of the identity data provided by the validator"
+          >
+            <font-awesome-icon
+              icon="question-circle"
+              class="d-inline-block"
+              style="font-size: 1rem"
+            />
+          </nuxt-link>
+        </h5>
       </div>
       <div class="col-4 text-right text-success">
         <Rating key="identity" :rating="rating" />

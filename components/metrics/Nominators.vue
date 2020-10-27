@@ -2,7 +2,20 @@
   <div class="metric h-100">
     <div class="row mb-4">
       <div class="col-8">
-        <h5 class="mb-0">Nominators</h5>
+        <h5 class="mb-0">
+          Nominators
+          <nuxt-link
+            to="/metrics#nominators"
+            v-b-tooltip.hover
+            title="Evaluate nominators and if the validator is oversubscribed"
+          >
+            <font-awesome-icon
+              icon="question-circle"
+              class="d-inline-block"
+              style="font-size: 1rem"
+            />
+          </nuxt-link>
+        </h5>
       </div>
       <div class="col-4 text-right text-success">
         <Rating key="nominators" :rating="rating" />

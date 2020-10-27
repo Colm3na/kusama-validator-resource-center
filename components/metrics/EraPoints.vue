@@ -2,7 +2,20 @@
   <div class="metric h-100">
     <div class="row mb-4">
       <div class="col-8">
-        <h5 class="mb-0">Era points</h5>
+        <h5 class="mb-0">
+          Era points
+          <nuxt-link
+            to="/metrics#erapoints"
+            v-b-tooltip.hover
+            title="Evaluate if the era points earned by the validator in the history are below or above average"
+          >
+            <font-awesome-icon
+              icon="question-circle"
+              class="d-inline-block"
+              style="font-size: 1rem"
+            />
+          </nuxt-link>
+        </h5>
       </div>
       <div class="col-4 text-right text-success">
         <Rating key="erapoints" :rating="rating" />
