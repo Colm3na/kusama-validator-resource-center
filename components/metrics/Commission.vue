@@ -5,8 +5,8 @@
         <h5 class="mb-0">
           Commission
           <nuxt-link
-            to="/metrics#commission"
             v-b-tooltip.hover
+            to="/metrics#commission"
             title="Evaluate validator commission over time"
           >
             <font-awesome-icon

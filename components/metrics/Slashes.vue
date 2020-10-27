@@ -5,8 +5,8 @@
         <h5 class="mb-0">
           Slashes
           <nuxt-link
-            to="/metrics#slashes"
             v-b-tooltip.hover
+            to="/metrics#slashes"
             title="Evaluate if the validator have a unapplied slash"
           >
             <font-awesome-icon

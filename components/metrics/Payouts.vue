@@ -5,8 +5,8 @@
         <h5 class="mb-0">
           Frequency of payouts
           <nuxt-link
-            to="/metrics#payouts"
             v-b-tooltip.hover
+            to="/metrics#payouts"
             title="Evaluate frequency of rewards distribution"
           >
             <font-awesome-icon

@@ -5,8 +5,8 @@
         <h5 class="mb-0">
           Nominators
           <nuxt-link
-            to="/metrics#nominators"
             v-b-tooltip.hover
+            to="/metrics#nominators"
             title="Evaluate nominators and if the validator is oversubscribed"
           >
             <font-awesome-icon

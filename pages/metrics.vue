@@ -4,9 +4,9 @@
       <h1 class="mb-4">Ranking criteria</h1>
       <p>The ranking is based on this on-chain metrics:</p>
       <div
-        :key="metric.title"
         v-for="metric in metrics"
         :id="metric.id"
+        :key="metric.title"
         class="pt-2 pb-3"
       >
         <h4>{{ metric.title }}</h4>

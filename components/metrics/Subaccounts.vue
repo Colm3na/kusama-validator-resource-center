@@ -5,8 +5,8 @@
         <h5 class="mb-0">
           Subaccounts
           <nuxt-link
-            to="/metrics#subaccounts"
             v-b-tooltip.hover
+            to="/metrics#subaccounts"
             title="Evaluate if the validator uses sub-accounts"
           >
             <font-awesome-icon
