@@ -288,7 +288,7 @@ export default {
         : filteredRanking
       filteredRanking = this.exclude.includes('noParticipateGovernance')
         ? filteredRanking.filter(
-            ({ governanceRating }) => governanceRating === 2
+            ({ governanceRating }) => governanceRating !== 0
           )
         : filteredRanking
       filteredRanking = this.exclude.includes('partOfCluster')
