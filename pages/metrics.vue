@@ -85,8 +85,9 @@ export default {
         },
         {
           id: 'slashes',
-          title: 'Slashes',
-          description: 'Evaluate if the validator have a unapplied slash.',
+          title: 'Slashes over time',
+          description:
+            'Evaluate if the validator was slashed in the last 28 eras (1 week)',
           rating: [
             {
               rating: 0,

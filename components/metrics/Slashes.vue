@@ -7,7 +7,7 @@
           <nuxt-link
             v-b-tooltip.hover
             to="/metrics#slashes"
-            title="Evaluate if the validator have a unapplied slash"
+            title="Evaluate if the validator was slashed in the last 28 eras (1 week)"
           >
             <font-awesome-icon
               icon="question-circle"
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="description">
-      <p v-if="rating > 0">No unapplied slashes detected</p>
+      <p v-if="rating > 0">No slashes detected</p>
       <p v-else>Validator was slashed</p>
     </div>
   </div>

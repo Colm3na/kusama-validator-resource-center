@@ -32,7 +32,8 @@ export const mutations = {
     state.eraPointsAverage = eraPointsAverage
   },
   loadSelected(state) {
-    const selectedAddresses = this.$cookies.get('selectedValidatorAddresses')
+    const selectedAddresses =
+      this.$cookies.get('selectedValidatorAddresses') || []
     state.selectedAddresses = selectedAddresses
   },
   toggleSelected(state, { accountId }) {
