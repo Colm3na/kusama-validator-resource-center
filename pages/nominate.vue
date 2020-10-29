@@ -36,8 +36,8 @@
                 :class="{ 'text-danger': !(tranferableBalance > 0) }"
               >
                 Transferable balance:
-                {{ tranferableBalance }}
-                <!-- {{ formatAmount(tranferableBalance) }} -->
+                <!-- {{ tranferableBalance }} -->
+                {{ formatAmount(tranferableBalance) }}
               </p>
             </div>
             <b-form-invalid-feedback id="selectedAddress-feedback"
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { BigNumber } from 'bignumber.js'
 import {
   web3Accounts,
   web3Enable,
@@ -188,7 +189,7 @@ export default {
       const { availableBalance } = await this.api.derive.balances.all(address)
       console.log(`address ${address}: ${availableBalance}`)
       if (availableBalance) {
-        this.tranferableBalance = availableBalance
+        this.tranferableBalance = new BigNumber(availableBalance)
       }
     },
     send() {
