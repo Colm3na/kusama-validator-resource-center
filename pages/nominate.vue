@@ -96,18 +96,10 @@ import {
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import { encodeAddress } from '@polkadot/keyring'
 import { validationMixin } from 'vuelidate'
-import { required, integer } from 'vuelidate/lib/validators'
+import { required } from 'vuelidate/lib/validators'
 import Identicon from '../components/Identicon.vue'
 import commonMixin from '../mixins/commonMixin.js'
 import { config } from '../config.js'
-
-const isValidAddress = (address) => {
-  const polkadotRegexp = /^(([0-9a-zA-Z]{47})|([0-9a-zA-Z]{48}))$/
-  return polkadotRegexp.test(address)
-}
-
-const isValidAmount = (amount, vm) =>
-  amount > 0 && vm.getAmount() <= parseInt(vm.tranferableBalance.toString())
 
 export default {
   components: { Identicon },
