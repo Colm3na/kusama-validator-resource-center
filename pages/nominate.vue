@@ -1,71 +1,52 @@
 <template>
   <b-container class="py-5">
-    <b-row>
-      <b-col md="12">
-        <h1 class="mb-4">Nominate selected validators</h1>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col md="6 mb-4">
-        <b-alert v-if="!detectedExtension" variant="danger" show>
-          <i class="fa fa-frown-o"></i>
-          Extension not found!
-        </b-alert>
-        <b-alert v-if="noAccountsFound" variant="danger" show>
-          <i class="fa fa-frown-o"></i> No accounts found!
-        </b-alert>
-        <b-form class="mt-2" @submit="onSubmit">
-          <b-form-group
-            id="input-group-from"
-            label="From"
-            label-for="input-from"
-            class="w-100"
+    <h1 class="mb-4">Nominate selected</h1>
+    <b-alert v-if="!detectedExtension" variant="danger" show>
+      <i class="fa fa-frown-o"></i>
+      Extension not found!
+    </b-alert>
+    <b-alert v-if="noAccountsFound" variant="danger" show>
+      <i class="fa fa-frown-o"></i> No accounts found!
+    </b-alert>
+    <b-form class="mt-2" @submit="onSubmit">
+      <b-form-group
+        id="input-group-from"
+        label="Address"
+        label-for="input-from"
+        class="w-100"
+      >
+        <b-form-select
+          id="input-from"
+          v-model="$v.selectedAddress.$model"
+          :options="extensionAddresses"
+          :state="validateState('selectedAddress')"
+          aria-describedby="selectedAddress-feedback"
+          class="w-100"
+          @change="getBalance(selectedAddress)"
+        ></b-form-select>
+        <div>
+          <p
+            v-if="tranferableBalance"
+            class="ml-2 mb-0 mt-1"
+            :class="{ 'text-danger': !(tranferableBalance > 0) }"
           >
-            <b-form-select
-              id="input-from"
-              v-model="$v.selectedAddress.$model"
-              :options="extensionAddresses"
-              :state="validateState('selectedAddress')"
-              aria-describedby="selectedAddress-feedback"
-              class="w-100"
-              @change="getBalance(selectedAddress)"
-            ></b-form-select>
-            <div>
-              <p
-                class="ml-2 mb-0 mt-1"
-                :class="{ 'text-danger': !(tranferableBalance > 0) }"
-              >
-                Transferable balance:
-                <!-- {{ tranferableBalance }} -->
-                {{ formatAmount(tranferableBalance) }}
-              </p>
-            </div>
-            <b-form-invalid-feedback id="selectedAddress-feedback"
-              >Please install Polkadot JS extension
-            </b-form-invalid-feedback>
-          </b-form-group>
-          <b-button
-            type="submit"
-            variant="primary"
-            class="btn-send btn-block mt-3"
-            :disabled="noAccountsFound"
-          >
-            <i class="fas fa-paper-plane mr-2"></i> Nominate
-          </b-button>
-        </b-form>
-      </b-col>
-      <b-col md="1"></b-col>
-      <b-col md="5">
-        <b-card>
-          <h2>Nominate selected</h2>
-          <p>
-            <a href="https://github.com/polkadot-js/extension" target="_blank"
-              >Polkadot JS extension</a
-            >
+            Transferable balance:
+            {{ formatAmount(tranferableBalance) }}
           </p>
-        </b-card>
-      </b-col>
-    </b-row>
+        </div>
+        <b-form-invalid-feedback id="selectedAddress-feedback"
+          >Please install Polkadot JS extension
+        </b-form-invalid-feedback>
+      </b-form-group>
+      <b-button
+        type="submit"
+        variant="outline-kusama"
+        class="btn-block mt-3"
+        :disabled="noAccountsFound"
+      >
+        Nominate
+      </b-button>
+    </b-form>
   </b-container>
 </template>
 
@@ -187,10 +168,7 @@ export default {
     },
     async getBalance(address) {
       const { availableBalance } = await this.api.derive.balances.all(address)
-      console.log(`address ${address}: ${availableBalance}`)
-      if (availableBalance) {
-        this.tranferableBalance = new BigNumber(availableBalance)
-      }
+      this.tranferableBalance = new BigNumber(availableBalance)
     },
     send() {
       this.selectedAccount = encodeAddress(this.selectedAddress, 42)
