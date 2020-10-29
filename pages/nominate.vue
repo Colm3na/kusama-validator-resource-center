@@ -5,6 +5,13 @@
     </div>
     <div v-else>
       <h1 class="mb-4">Nominate selected</h1>
+      <b-alert v-if="!detectedExtension" variant="danger" show>
+        <i class="fa fa-frown-o"></i>
+        Extension not found!
+      </b-alert>
+      <b-alert v-if="noAccountsFound" variant="danger" show>
+        <i class="fa fa-frown-o"></i> No accounts found!
+      </b-alert>
       <h5>Your validator set:</h5>
       <hr />
       <div
@@ -36,13 +43,6 @@
           </a>
         </div>
       </div>
-      <b-alert v-if="!detectedExtension" variant="danger" show>
-        <i class="fa fa-frown-o"></i>
-        Extension not found!
-      </b-alert>
-      <b-alert v-if="noAccountsFound" variant="danger" show>
-        <i class="fa fa-frown-o"></i> No accounts found!
-      </b-alert>
       <b-form class="mt-2" @submit="onSubmit">
         <b-form-group
           id="input-group-from"
