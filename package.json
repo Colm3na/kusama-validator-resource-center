@@ -46,7 +46,7 @@
     "nuxt-clipboard2": "^0.2.1",
     "sass": "^1.27.0",
     "sass-loader": "^10.0.4",
-    "vue-scrollto": "^2.19.1",
+    "vue-scrollto": "^2.20.0",
     "vue-typed-text": "^1.0.5"
   },
   "devDependencies": {
