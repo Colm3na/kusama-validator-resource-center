@@ -36,6 +36,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@nuxtjs/axios": "^5.12.2",
     "@polkadot/api": "^2.4.1",
+    "@polkadot/extension-dapp": "^0.34.1",
     "@polkadot/vue-identicon": "^0.60.1",
     "bignumber.js": "^9.0.1",
     "bootstrap": "^4.5.3",
@@ -47,7 +48,8 @@
     "sass": "^1.27.1",
     "sass-loader": "^10.0.4",
     "vue-scrollto": "^2.20.0",
-    "vue-typed-text": "^1.0.5"
+    "vue-typed-text": "^1.0.5",
+    "vuelidate": "^0.7.6"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
