@@ -81,6 +81,41 @@
             >Please install Polkadot JS extension
           </b-form-invalid-feedback>
         </b-form-group>
+
+        <b-alert
+          v-if="extrinsicHash && extrinsicStatus === 'Finalized'"
+          variant="success"
+          class="text-center"
+          fade
+          show
+        >
+          <h4>{{ extrinsicStatus }} transaction!</h4>
+          <p>
+            Extrinsic with hash {{ extrinsicHash }} was included in block
+            <a
+              v-b-tooltip.hover
+              :href="`https://kusama.polkastats.io/block/${blockHash}`"
+              title="Check block information"
+              target="_blank"
+            >
+              <Promised :promise="getBlockNumber(blockHash)">
+                <template v-slot="data">{{ data }}</template>
+              </Promised>
+            </a>
+          </p>
+        </b-alert>
+        <b-alert
+          v-else-if="
+            extrinsicHash && extrinsicStatus && extrinsicStatus !== 'Finalized'
+          "
+          variant="info"
+          class="text-center"
+          fade
+          show
+        >
+          <h4>Transaction hash {{ extrinsicHash }}</h4>
+          <p>Transaction status: {{ extrinsicStatus }}</p>
+        </b-alert>
         <b-button
           type="submit"
           variant="outline-kusama"
@@ -112,12 +147,13 @@ import { ApiPromise, WsProvider } from '@polkadot/api'
 import { encodeAddress } from '@polkadot/keyring'
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
+import { Promised } from 'vue-promised'
 import Identicon from '../components/Identicon.vue'
 import commonMixin from '../mixins/commonMixin.js'
 import { config } from '../config.js'
 
 export default {
-  components: { Identicon },
+  components: { Identicon, Promised },
   mixins: [commonMixin, validationMixin],
   data() {
     return {
@@ -134,7 +170,8 @@ export default {
       error: null,
       amount: 0,
       extrinsicHash: null,
-      extrinsic: null,
+      extrinsicStatus: null,
+      blockHash: null,
       success: null,
       noAccountsFound: true,
       addressRole: null,
@@ -233,6 +270,11 @@ export default {
         }
       }
     },
+    async getBlockNumber(hash) {
+      const { number } = await this.api.rpc.chain.getHeader(hash)
+      console.log(`block number: ${number}`)
+      return number
+    },
     nominate() {
       this.selectedAccount = encodeAddress(this.selectedAddress, 42)
       web3FromAddress(this.selectedAccount)
@@ -247,8 +289,10 @@ export default {
               this.selectedAccount,
               { nonce },
               ({ events = [], status }) => {
+                this.extrinsicStatus = status.type
                 console.log('Transaction status:', status.type)
                 if (status.isInBlock) {
+                  this.extrinsicHash = status.asInBlock.toHex()
                   console.log(
                     'Included at block hash',
                     status.asInBlock.toHex()
@@ -265,6 +309,7 @@ export default {
                     }
                   )
                 } else if (status.isFinalized) {
+                  this.blockHash = status.asFinalized.toHex()
                   console.log(
                     'Finalized block hash',
                     status.asFinalized.toHex()
