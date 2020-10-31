@@ -51,7 +51,7 @@
     </div>
     <p v-if="list.length > 0" class="text-right mt-3 mb-0">
       <b-button variant="kusama" class="text-right" to="/nominate"
-        >Set Validators</b-button
+        >Nominate</b-button
       >
     </p>
   </div>

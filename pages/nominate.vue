@@ -57,7 +57,7 @@
             :state="validateState('selectedAddress')"
             aria-describedby="selectedAddress-feedback"
             class="w-100"
-            @change="getBalance(selectedAddress)"
+            @change="getAccountInfo(selectedAddress)"
           ></b-form-select>
           <div>
             <p
@@ -68,6 +68,14 @@
               Transferable balance:
               {{ formatAmount(tranferableBalance) }}
             </p>
+            <p
+              v-if="addressRole"
+              class="ml-2 mb-0 mt-1"
+              :class="{ 'text-danger': !(tranferableBalance > 0) }"
+            >
+              AddresssRole:
+              {{ addressRole }}
+            </p>
           </div>
           <b-form-invalid-feedback id="selectedAddress-feedback"
             >Please install Polkadot JS extension
@@ -77,7 +85,14 @@
           type="submit"
           variant="outline-kusama"
           class="btn-block mt-3"
-          :disabled="noAccountsFound"
+          :disabled="
+            noAccountsFound ||
+            !this.tranferableBalance > 0 ||
+            !(
+              this.addressRole === 'controller' ||
+              this.addressRole === 'stash/controller'
+            )
+          "
         >
           Nominate
         </b-button>
@@ -121,7 +136,8 @@ export default {
       extrinsicHash: null,
       extrinsic: null,
       success: null,
-      noAccountsFound: false,
+      noAccountsFound: true,
+      addressRole: null,
     }
   },
   computed: {
@@ -157,7 +173,6 @@ export default {
               if (accounts.length > 0) {
                 this.detectedExtension = true
                 this.extensionAccounts = accounts
-                console.log(accounts)
                 accounts.forEach((account) =>
                   this.extensionAddresses.push(
                     encodeAddress(account.address, config.addressPrefix)
@@ -169,7 +184,8 @@ export default {
                 ) {
                   this.selectedAccount = this.extensionAccounts[0]
                   this.selectedAddress = this.extensionAddresses[0]
-                  this.getBalance(this.selectedAddress)
+                  this.getAccountInfo(this.selectedAddress)
+                  this.noAccountsFound = false
                 } else {
                   this.noAccountsFound = true
                 }
@@ -197,19 +213,65 @@ export default {
       }
       this.nominate()
     },
-    async getBalance(address) {
+    async getAccountInfo(address) {
       const { availableBalance } = await this.api.derive.balances.all(address)
       this.tranferableBalance = new BigNumber(availableBalance)
+      this.addressRole = await this.getAddressRole(address)
+    },
+    async getAddressRole(address) {
+      const bonded = await this.api.query.staking.bonded(address)
+      if (bonded.toString() && bonded.toString() === address) {
+        return `stash/controller`
+      } else if (bonded.toString() && bonded.toString() !== address) {
+        return `stash`
+      } else {
+        const stakingLedger = await this.api.query.staking.ledger(address)
+        if (stakingLedger.toString()) {
+          return `controller`
+        } else {
+          return `none`
+        }
+      }
     },
     nominate() {
       this.selectedAccount = encodeAddress(this.selectedAddress, 42)
       web3FromAddress(this.selectedAccount)
         .then(async (injector) => {
           this.api.setSigner(injector.signer)
-          const extrinsic = await this.api.tx.staking.nominate(
-            this.selectedAddresses
+          const { nonce } = await this.api.query.system.account(
+            this.selectedAddress
           )
-          this.extrinsicHash = await extrinsic.signAndSend(this.selectedAccount)
+          await this.api.tx.staking
+            .nominate(this.selectedAddresses)
+            .signAndSend(
+              this.selectedAccount,
+              { nonce },
+              ({ events = [], status }) => {
+                console.log('Transaction status:', status.type)
+                if (status.isInBlock) {
+                  console.log(
+                    'Included at block hash',
+                    status.asInBlock.toHex()
+                  )
+                  console.log('Events:')
+                  events.forEach(
+                    ({ event: { data, method, section }, phase }) => {
+                      console.log(
+                        '\t',
+                        phase.toString(),
+                        `: ${section}.${method}`,
+                        data.toString()
+                      )
+                    }
+                  )
+                } else if (status.isFinalized) {
+                  console.log(
+                    'Finalized block hash',
+                    status.asFinalized.toHex()
+                  )
+                }
+              }
+            )
         })
         .catch((error) => {
           console.log('Error: ', error)
