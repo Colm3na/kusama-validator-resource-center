@@ -99,7 +99,7 @@
               target="_blank"
             >
               <Promised :promise="getBlockNumber(blockHash)">
-                <template v-slot="data">{{ data }}</template>
+                <template v-slot="data">#{{ formatNumber(data) }}</template>
               </Promised>
             </a>
           </p>
@@ -272,7 +272,6 @@ export default {
     },
     async getBlockNumber(hash) {
       const { number } = await this.api.rpc.chain.getHeader(hash)
-      console.log(`block number: ${number}`)
       return number
     },
     nominate() {
