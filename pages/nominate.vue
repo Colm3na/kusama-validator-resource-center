@@ -12,53 +12,36 @@
       <b-alert v-if="noAccountsFound" variant="danger" show>
         <i class="fa fa-frown-o"></i> No accounts found!
       </b-alert>
-      <h5>Your validator set:</h5>
-      <hr />
-      <div
-        v-for="validator in list"
-        :key="validator.stashAddress"
-        class="row pb-1"
-      >
-        <div class="col-10">
-          <Identicon :address="validator.stashAddress" :size="20" />
-          <nuxt-link :to="`/validator/${validator.stashAddress}`">
-            <span v-if="validator.name">
-              {{ validator.name }}
-              <VerifiedIcon />
-            </span>
-            <span v-else>
-              {{ shortAddress(validator.stashAddress) }}
-            </span>
-          </nuxt-link>
-        </div>
-        <div class="col-2 text-right">
-          <a
-            v-b-tooltip.hover
-            href="#"
-            title="Remove"
-            class="remove"
-            @click.stop.prevent="remove(validator.stashAddress)"
-          >
-            <font-awesome-icon icon="times" />
-          </a>
-        </div>
-      </div>
       <b-form class="mt-2" @submit="onSubmit">
         <b-form-group
           id="input-group-from"
-          label="Select controller address"
+          label="Select your controller address:"
           label-for="input-from"
           class="w-100 pt-4"
         >
-          <b-form-select
-            id="input-from"
-            v-model="$v.selectedAddress.$model"
-            :options="extensionAddresses"
+          <b-dropdown
+            block
+            menu-class="w-100"
+            class="py-2"
+            @change="getAccountInfo(selectedAddress)"
             :state="validateState('selectedAddress')"
             aria-describedby="selectedAddress-feedback"
-            class="w-100"
-            @change="getAccountInfo(selectedAddress)"
-          ></b-form-select>
+            :text="selectedAddress"
+          >
+            <b-dropdown-item
+              @click="
+                selectAddress(accountId)
+                getAccountInfo(selectedAddress)
+              "
+              v-for="accountId in extensionAddresses"
+              :key="accountId"
+            >
+              <div>
+                <Identicon :address="accountId" />
+                {{ accountId }}
+              </div>
+            </b-dropdown-item>
+          </b-dropdown>
           <div>
             <p
               v-if="tranferableBalance"
@@ -80,8 +63,37 @@
           <b-form-invalid-feedback id="selectedAddress-feedback"
             >Please install Polkadot JS extension
           </b-form-invalid-feedback>
+          <p class="pt-4">Target validators:</p>
+          <div
+            v-for="validator in list"
+            :key="validator.stashAddress"
+            class="row pb-1"
+          >
+            <div class="col-10">
+              <Identicon :address="validator.stashAddress" :size="20" />
+              <nuxt-link :to="`/validator/${validator.stashAddress}`">
+                <span v-if="validator.name">
+                  {{ validator.name }}
+                  <VerifiedIcon />
+                </span>
+                <span v-else>
+                  {{ shortAddress(validator.stashAddress) }}
+                </span>
+              </nuxt-link>
+            </div>
+            <div class="col-2 text-right">
+              <a
+                v-b-tooltip.hover
+                href="#"
+                title="Remove"
+                class="remove"
+                @click.stop.prevent="remove(validator.stashAddress)"
+              >
+                <font-awesome-icon icon="times" />
+              </a>
+            </div>
+          </div>
         </b-form-group>
-
         <b-alert
           v-if="extrinsicHash && extrinsicStatus === 'Finalized'"
           variant="success"
@@ -323,6 +335,9 @@ export default {
     },
     remove(accountId) {
       this.$store.dispatch('ranking/toggleSelected', { accountId })
+    },
+    selectAddress(accountId) {
+      this.selectedAddress = accountId
     },
   },
   head() {

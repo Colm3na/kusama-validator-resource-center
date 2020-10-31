@@ -16,6 +16,7 @@
             id="selected-validators"
             class="selected-validators"
             toggle-class="btn btn-selected"
+            ref="selectedValidators"
             right
           >
             <template #button-content>
@@ -65,6 +66,11 @@ export default {
   },
   created() {
     this.$store.dispatch('ranking/loadSelected')
+  },
+  watch: {
+    $route(to, from) {
+      this.$refs.selectedValidators.hide(true)
+    },
   },
 }
 </script>
