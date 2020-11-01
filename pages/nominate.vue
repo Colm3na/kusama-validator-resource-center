@@ -9,7 +9,7 @@
         <i class="fa fa-frown-o"></i>
         Extension not found!
       </b-alert>
-      <b-alert v-if="noAccountsFound" variant="danger" show>
+      <b-alert v-else-if="noAccountsFound" variant="danger" show>
         <i class="fa fa-frown-o"></i> No accounts found!
       </b-alert>
       <b-form class="mt-2" @submit="onSubmit">
@@ -23,18 +23,18 @@
             block
             menu-class="w-100"
             class="py-2"
-            @change="getAccountInfo(selectedAddress)"
             :state="validateState('selectedAddress')"
             aria-describedby="selectedAddress-feedback"
             :text="selectedAddress"
+            @change="getAccountInfo(selectedAddress)"
           >
             <b-dropdown-item
+              v-for="accountId in extensionAddresses"
+              :key="accountId"
               @click="
                 selectAddress(accountId)
                 getAccountInfo(selectedAddress)
               "
-              v-for="accountId in extensionAddresses"
-              :key="accountId"
             >
               <div>
                 <Identicon :address="accountId" />

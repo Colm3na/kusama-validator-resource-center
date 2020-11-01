@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="selected-validators">
     <p v-if="loading" class="mb-0 text-center">Loading data...</p>
     <p v-else-if="list.length === 0" class="mb-0 text-center">
       No validators selected
@@ -20,12 +20,8 @@
         </span>
       </div>
     </div>
-    <div
-      v-for="validator in list"
-      :key="validator.stashAddress"
-      class="row pb-1"
-    >
-      <div class="col-10">
+    <div v-for="validator in list" :key="validator.stashAddress" class="row">
+      <div class="col-10 selected-validator">
         <Identicon :address="validator.stashAddress" :size="20" />
         <nuxt-link :to="`/validator/${validator.stashAddress}`">
           <span v-if="validator.name">
@@ -49,8 +45,8 @@
         </a>
       </div>
     </div>
-    <p v-if="list.length > 0" class="text-right mt-3 mb-0">
-      <b-button variant="kusama" class="text-right" to="/nominate"
+    <p v-if="list.length > 0" class="mt-3 mb-0">
+      <b-button variant="kusama" class="btn-block" to="/nominate"
         >Nominate</b-button
       >
     </p>
@@ -106,5 +102,8 @@ export default {
 .remove:hover,
 .remove:active {
   color: rgba(255, 0, 0, 0.5);
+}
+.selected-validators .selected-validator {
+  font-size: 0.8rem;
 }
 </style>

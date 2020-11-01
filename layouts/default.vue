@@ -14,9 +14,9 @@
         <b-navbar-nav>
           <b-nav-item-dropdown
             id="selected-validators"
+            ref="selectedValidators"
             class="selected-validators"
             toggle-class="btn btn-selected"
-            ref="selectedValidators"
             right
           >
             <template #button-content>
@@ -64,13 +64,13 @@ export default {
       return this.$store.state.ranking.selectedAddresses
     },
   },
-  created() {
-    this.$store.dispatch('ranking/loadSelected')
-  },
   watch: {
     $route(to, from) {
       this.$refs.selectedValidators.hide(true)
     },
+  },
+  created() {
+    this.$store.dispatch('ranking/loadSelected')
   },
 }
 </script>
