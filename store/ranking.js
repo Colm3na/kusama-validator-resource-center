@@ -41,6 +41,7 @@ export const mutations = {
     if (selectedAddresses.includes(accountId)) {
       selectedAddresses.splice(state.selectedAddresses.indexOf(accountId), 1)
     } else if (selectedAddresses.length < 16) {
+      // TODO: check if a member of the same cluster is already in the set
       selectedAddresses.push(accountId)
     } else {
       const bootStrapToaster = new BToast()
