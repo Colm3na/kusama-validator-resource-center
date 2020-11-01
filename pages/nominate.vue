@@ -7,7 +7,10 @@
       <h1 class="mb-4">Nominate selected</h1>
       <b-alert v-if="!detectedExtension" variant="danger" show>
         <i class="fa fa-frown-o"></i>
-        Extension not found!
+        <a href="https://github.com/polkadot-js/extension" target="_blank"
+          >Polkadot JS extension</a
+        >
+        not found, please install it and import your account/s before proceed
       </b-alert>
       <b-alert v-else-if="noAccountsFound" variant="danger" show>
         <i class="fa fa-frown-o"></i> No accounts found!
