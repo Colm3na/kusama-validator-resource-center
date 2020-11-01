@@ -42,7 +42,25 @@ export const mutations = {
       selectedAddresses.splice(state.selectedAddresses.indexOf(accountId), 1)
     } else if (selectedAddresses.length < 16) {
       // TODO: check if a member of the same cluster is already in the set
-      selectedAddresses.push(accountId)
+      const validator = state.list.find(
+        ({ stashAddress }) => accountId === stashAddress
+      )
+      const clusterMemberAlreadyIncluded = state.list
+        .filter(({ stashAddress }) =>
+          state.selectedAddresses.includes(stashAddress)
+        )
+        .some(({ clusterName }) => clusterName === validator.clusterName)
+      if (clusterMemberAlreadyIncluded) {
+        const bootStrapToaster = new BToast()
+        bootStrapToaster.$bvToast.toast('Cluster member already included', {
+          title: 'Selecting more than one member of a cluster is not allowed',
+          variant: 'danger',
+          autoHideDelay: 5000,
+          appendToast: false,
+        })
+      } else {
+        selectedAddresses.push(accountId)
+      }
     } else {
       const bootStrapToaster = new BToast()
       bootStrapToaster.$bvToast.toast(
@@ -201,6 +219,7 @@ export const actions = {
         validator.identity
       )
       const partOfCluster = clusterMembers > 0
+      const clusterName = getClusterName(validator.identity)
       const subAccountsRating = hasSubIdentity ? 2 : 0
 
       // nominators
@@ -297,6 +316,7 @@ export const actions = {
         identityRating,
         stashAddress,
         partOfCluster,
+        clusterName,
         clusterMembers,
         nominators,
         nominatorsRating,
@@ -348,6 +368,7 @@ export const actions = {
         intention.identity
       )
       const partOfCluster = clusterMembers > 0
+      const clusterName = getClusterName(intention.identity)
       const subAccountsRating = hasSubIdentity ? 2 : 0
 
       // nominators
@@ -448,6 +469,7 @@ export const actions = {
         identityRating,
         stashAddress,
         partOfCluster,
+        clusterName,
         clusterMembers,
         nominators,
         nominatorsRating,
@@ -529,6 +551,10 @@ function getName(identity) {
   } else {
     return identity.display || ``
   }
+}
+
+function getClusterName(identity) {
+  return identity.displayParent || null
 }
 
 function subIdentity(identity) {
