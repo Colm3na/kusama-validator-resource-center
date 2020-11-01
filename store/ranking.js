@@ -49,7 +49,10 @@ export const mutations = {
         .filter(({ stashAddress }) =>
           state.selectedAddresses.includes(stashAddress)
         )
-        .some(({ clusterName }) => clusterName === validator.clusterName)
+        .some(
+          ({ clusterName, partOfCluster }) =>
+            partOfCluster && clusterName === validator.clusterName
+        )
       if (clusterMemberAlreadyIncluded) {
         const bootStrapToaster = new BToast()
         bootStrapToaster.$bvToast.toast('Cluster member already included', {
@@ -502,7 +505,7 @@ export const actions = {
           ...validator,
         }
       })
-    // console.log(JSON.parse(JSON.stringify(ranking)))
+    console.log(JSON.parse(JSON.stringify(ranking)))
     context.commit('update', {
       ranking,
       eraHistory: eraIndexes,
