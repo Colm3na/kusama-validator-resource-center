@@ -41,7 +41,7 @@ export const mutations = {
     if (selectedAddresses.includes(accountId)) {
       selectedAddresses.splice(state.selectedAddresses.indexOf(accountId), 1)
     } else if (selectedAddresses.length < 16) {
-      // TODO: check if a member of the same cluster is already in the set
+      // check if a member of the same cluster is already in the set
       const validator = state.list.find(
         ({ stashAddress }) => accountId === stashAddress
       )
@@ -505,7 +505,7 @@ export const actions = {
           ...validator,
         }
       })
-    console.log(JSON.parse(JSON.stringify(ranking)))
+    // console.log(JSON.parse(JSON.stringify(ranking)))
     context.commit('update', {
       ranking,
       eraHistory: eraIndexes,
