@@ -1,20 +1,31 @@
 <template>
   <b-container class="py-5">
+    <h1 class="mb-4">Nominate selected</h1>
     <div v-if="loading">
       <Loading />
     </div>
-    <div v-else>
-      <h1 class="mb-4">Nominate selected</h1>
-      <b-alert v-if="!detectedExtension" variant="danger" show>
+    <div v-else-if="!detectedExtension">
+      <b-alert variant="warning" show>
         <i class="fa fa-frown-o"></i>
         <a href="https://github.com/polkadot-js/extension" target="_blank"
           >Polkadot JS extension</a
         >
         not found, please install it and import your account/s before proceed
       </b-alert>
-      <b-alert v-else-if="noAccountsFound" variant="danger" show>
-        <i class="fa fa-frown-o"></i> No accounts found!
+    </div>
+    <div v-else-if="noAccountsFound">
+      <b-alert variant="warning" show>
+        <i class="fa fa-frown-o"></i> No accounts found, open Polkadot JS
+        extension and import your account/s before proceed
       </b-alert>
+    </div>
+    <div v-else-if="onGoingElection">
+      <b-alert variant="warning" show>
+        <i class="fa fa-frown-o"></i> There is currently an ongoing election for
+        new validator candidates. As such staking operations are not permitted
+      </b-alert>
+    </div>
+    <div v-else>
       <b-form class="mt-2" @submit="onSubmit">
         <b-form-group
           id="input-group-from"
@@ -49,7 +60,10 @@
             <p
               v-if="tranferableBalance"
               class="ml-2 mb-0 mt-1"
-              :class="{ 'text-danger': !(tranferableBalance > 0) }"
+              :class="{
+                'text-danger': !(tranferableBalance > 0),
+                'text-success': tranferableBalance > 0,
+              }"
             >
               Transferable balance:
               {{ formatAmount(tranferableBalance) }}
@@ -57,9 +71,16 @@
             <p
               v-if="addressRole"
               class="ml-2 mb-0 mt-1"
-              :class="{ 'text-danger': !(tranferableBalance > 0) }"
+              :class="{
+                'text-danger':
+                  addressRole !== 'controller' &&
+                  addressRole !== 'stash/controller',
+                'text-success':
+                  addressRole === 'controller' ||
+                  addressRole === 'stash/controller',
+              }"
             >
-              AddresssRole:
+              Address is a
               {{ addressRole }}
             </p>
           </div>
@@ -179,7 +200,6 @@ export default {
       selectedAccount: null,
       selectedAddress: null,
       tranferableBalance: 0,
-      targetAddress: '',
       api: null,
       enableWeb3: false,
       error: null,
@@ -190,6 +210,7 @@ export default {
       success: null,
       noAccountsFound: true,
       addressRole: null,
+      onGoingElection: false,
     }
   },
   computed: {
@@ -222,6 +243,7 @@ export default {
             const wsProvider = new WsProvider(config.nodeWs)
             ApiPromise.create({ provider: wsProvider }).then((api) => {
               this.api = api
+              this.getElectionStatus()
               if (accounts.length > 0) {
                 this.detectedExtension = true
                 this.extensionAccounts = accounts
@@ -288,6 +310,11 @@ export default {
     async getBlockNumber(hash) {
       const { number } = await this.api.rpc.chain.getHeader(hash)
       return number
+    },
+    async getElectionStatus() {
+      const eraElectionStatus = await this.api.query.staking.eraElectionStatus()
+      this.onGoingElection = eraElectionStatus.isOpen
+      console.log(`onGoingElection:`, this.onGoingElection)
     },
     nominate() {
       this.selectedAccount = encodeAddress(this.selectedAddress, 42)
