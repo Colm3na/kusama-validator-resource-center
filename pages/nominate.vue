@@ -56,7 +56,7 @@
               </div>
             </b-dropdown-item>
           </b-dropdown>
-          <div>
+          <div class="controller-address-validation">
             <p
               v-if="tranferableBalance"
               class="ml-2 mb-0 mt-1"
@@ -67,6 +67,9 @@
             >
               Transferable balance:
               {{ formatAmount(tranferableBalance) }}
+              <span v-if="tranferableBalance > 0">
+                <font-awesome-icon icon="check" />
+              </span>
             </p>
             <p
               v-if="addressRole"
@@ -80,8 +83,21 @@
                   addressRole === 'stash/controller',
               }"
             >
-              Address is a
-              {{ addressRole }}
+              <span v-if="addressRole === 'none'">
+                Address is not a controller
+              </span>
+              <span v-else>
+                Address is a
+                {{ addressRole }}
+              </span>
+              <span
+                v-if="
+                  addressRole === 'controller' ||
+                  addressRole === 'stash/controller'
+                "
+              >
+                <font-awesome-icon icon="check" />
+              </span>
             </p>
           </div>
           <b-form-invalid-feedback id="selectedAddress-feedback"
@@ -385,4 +401,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.controller-address-validation p {
+  font-size: 0.75rem;
+}
+</style>
