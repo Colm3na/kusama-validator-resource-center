@@ -253,4 +253,9 @@ pre {
 .selected-validators .dropdown-menu a span {
   color: gray;
 }
+@media (max-width: 576px) {
+  .selected-validators .dropdown-menu {
+    width: 350px;
+  }
+}
 </style>

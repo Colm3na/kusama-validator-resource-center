@@ -174,32 +174,48 @@
       </b-table>
       <div class="row">
         <div class="col-6">
-          <b-button-group>
-            <b-button
+          <!-- desktop -->
+          <div class="d-none d-sm-none d-md-none d-lg-block d-xl-block">
+            <b-button-group>
+              <b-button
+                variant="outline-secondary"
+                :class="{ 'text-primary': perPage === 10 }"
+                @click="setPageSize(10)"
+                >10</b-button
+              >
+              <b-button
+                variant="outline-secondary"
+                :class="{ 'text-primary': perPage === 50 }"
+                @click="setPageSize(50)"
+                >50</b-button
+              >
+              <b-button
+                variant="outline-secondary"
+                :class="{ 'text-primary': perPage === 100 }"
+                @click="setPageSize(100)"
+                >100</b-button
+              >
+              <b-button
+                variant="outline-secondary"
+                :class="{ 'text-primary': perPage === 1000 }"
+                @click="setPageSize(1000)"
+                >All</b-button
+              >
+            </b-button-group>
+          </div>
+          <!-- mobile -->
+          <div class="d-block d-sm-block d-md-block d-lg-none d-xl-none">
+            <b-dropdown
+              class="m-md-2"
+              text="Page size"
               variant="outline-secondary"
-              :class="{ 'text-primary': perPage === 10 }"
-              @click="setPageSize(10)"
-              >10</b-button
             >
-            <b-button
-              variant="outline-secondary"
-              :class="{ 'text-primary': perPage === 50 }"
-              @click="setPageSize(50)"
-              >50</b-button
-            >
-            <b-button
-              variant="outline-secondary"
-              :class="{ 'text-primary': perPage === 100 }"
-              @click="setPageSize(100)"
-              >100</b-button
-            >
-            <b-button
-              variant="outline-secondary"
-              :class="{ 'text-primary': perPage === 1000 }"
-              @click="setPageSize(1000)"
-              >All</b-button
-            >
-          </b-button-group>
+              <b-dropdown-item @click="setPageSize(10)">10</b-dropdown-item>
+              <b-dropdown-item @click="setPageSize(50)">50</b-dropdown-item>
+              <b-dropdown-item @click="setPageSize(100)">100</b-dropdown-item>
+              <b-dropdown-item @click="setPageSize(1000)">All</b-dropdown-item>
+            </b-dropdown>
+          </div>
         </div>
         <div class="col-6">
           <b-pagination
