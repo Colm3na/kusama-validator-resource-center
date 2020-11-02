@@ -42,8 +42,6 @@
       <b-table
         dark
         hover
-        responsive
-        stacked="lg"
         :fields="fields"
         :items="filteredRanking"
         :per-page="perPage"
@@ -100,12 +98,47 @@
           </span>
         </template>
         <template v-slot:cell(name)="data">
-          <Identicon :address="data.item.stashAddress" :size="24" />
-          <nuxt-link :to="`/validator/${data.item.stashAddress}`">
-            <span v-if="data.item.name">{{ data.item.name }}</span>
-            <span v-else>{{ shortAddress(data.item.stashAddress) }}</span>
-          </nuxt-link>
-          <VerifiedIcon v-if="data.item.verifiedIdentity" />
+          <!-- desktop -->
+          <div class="d-none d-sm-none d-md-none d-lg-block d-xl-block">
+            <Identicon :address="data.item.stashAddress" :size="24" />
+            <nuxt-link :to="`/validator/${data.item.stashAddress}`">
+              <span v-if="data.item.name">{{ data.item.name }}</span>
+              <span v-else>{{ shortAddress(data.item.stashAddress) }}</span>
+            </nuxt-link>
+            <VerifiedIcon v-if="data.item.verifiedIdentity" />
+          </div>
+          <!-- mobile -->
+          <div class="d-block d-sm-block d-md-block d-lg-none d-xl-none">
+            <b-row>
+              <b-col cols="10">
+                <Identicon :address="data.item.stashAddress" :size="24" />
+                <nuxt-link :to="`/validator/${data.item.stashAddress}`">
+                  <span v-if="data.item.name">{{ data.item.name }}</span>
+                  <span v-else>{{ shortAddress(data.item.stashAddress) }}</span>
+                </nuxt-link>
+                <VerifiedIcon v-if="data.item.verifiedIdentity" />
+              </b-col>
+              <b-col cols="2">
+                <a
+                  v-b-tooltip.hover
+                  class="select"
+                  title="Select / Unselect validator"
+                  @click="toggleSelected(data.item.stashAddress)"
+                >
+                  <font-awesome-icon
+                    v-if="data.item.selected"
+                    icon="hand-paper"
+                    class="selected text-selected"
+                  />
+                  <font-awesome-icon
+                    v-else
+                    icon="hand-paper"
+                    class="unselected text-secondary"
+                  />
+                </a>
+              </b-col>
+            </b-row>
+          </div>
         </template>
         <template v-slot:cell(commission)="data">
           {{ data.item.commission.toFixed(1) }}%
@@ -203,23 +236,40 @@ export default {
       sortBy: 'rank',
       sortDesc: false,
       fields: [
-        // { key: 'rank', label: '#', sortable: true },
         {
           key: 'active',
           label: 'Elected',
           sortable: true,
-          class: 'text-center',
+          class:
+            'text-center d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell',
         },
         { key: 'name', sortable: true },
-        { key: 'nominators', sortable: true },
-        { key: 'commission', sortable: true },
-        { key: 'selfStake', sortable: true },
-        { key: 'otherStake', sortable: true },
+        {
+          key: 'nominators',
+          sortable: true,
+          class: 'd-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell',
+        },
+        {
+          key: 'commission',
+          sortable: true,
+          class: 'd-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell',
+        },
+        {
+          key: 'selfStake',
+          sortable: true,
+          class: 'd-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell',
+        },
+        {
+          key: 'otherStake',
+          sortable: true,
+          class: 'd-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell',
+        },
         {
           key: 'selected',
           label: 'Select',
           sortable: true,
-          class: 'text-center',
+          class:
+            'text-center d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell',
         },
       ],
       exclude: [],
