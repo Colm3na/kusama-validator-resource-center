@@ -174,10 +174,9 @@
           class="btn-block mt-3"
           :disabled="
             noAccountsFound ||
-            !this.tranferableBalance > 0 ||
+            !tranferableBalance > 0 ||
             !(
-              this.addressRole === 'controller' ||
-              this.addressRole === 'stash/controller'
+              addressRole === 'controller' || addressRole === 'stash/controller'
             )
           "
         >
@@ -283,10 +282,12 @@ export default {
             })
           })
           .catch((error) => {
+            // eslint-disable-next-line
             console.log('Error: ', error)
           })
       })
       .catch((error) => {
+        // eslint-disable-next-line
         console.log('Error: ', error)
       })
   },
