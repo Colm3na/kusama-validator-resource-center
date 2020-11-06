@@ -331,7 +331,6 @@ export default {
     async getElectionStatus() {
       const eraElectionStatus = await this.api.query.staking.eraElectionStatus()
       this.onGoingElection = eraElectionStatus.isOpen
-      console.log(`onGoingElection:`, this.onGoingElection)
     },
     nominate() {
       this.selectedAccount = encodeAddress(this.selectedAddress, 42)
@@ -348,35 +347,16 @@ export default {
               { nonce },
               ({ events = [], status }) => {
                 this.extrinsicStatus = status.type
-                console.log('Transaction status:', status.type)
                 if (status.isInBlock) {
                   this.extrinsicHash = status.asInBlock.toHex()
-                  console.log(
-                    'Included at block hash',
-                    status.asInBlock.toHex()
-                  )
-                  console.log('Events:')
-                  events.forEach(
-                    ({ event: { data, method, section }, phase }) => {
-                      console.log(
-                        '\t',
-                        phase.toString(),
-                        `: ${section}.${method}`,
-                        data.toString()
-                      )
-                    }
-                  )
                 } else if (status.isFinalized) {
                   this.blockHash = status.asFinalized.toHex()
-                  console.log(
-                    'Finalized block hash',
-                    status.asFinalized.toHex()
-                  )
                 }
               }
             )
         })
         .catch((error) => {
+          // eslint-disable-next-line
           console.log('Error: ', error)
         })
     },
