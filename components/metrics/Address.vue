@@ -5,9 +5,8 @@
         <h5 class="mb-0">
           Address creation
           <nuxt-link
-            v-scroll-to="'#address'"
             v-b-tooltip.hover
-            to="/metrics"
+            to="/metrics#address"
             title="Evaluate how old is the validator address"
           >
             <font-awesome-icon
