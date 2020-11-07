@@ -33,6 +33,7 @@
 import axios from 'axios'
 import Rating from '../../components/Rating.vue'
 import commonMixin from '../../mixins/commonMixin.js'
+import { config } from '../../config.js'
 export default {
   components: {
     Rating,
@@ -62,9 +63,7 @@ export default {
     getAddressCreationDate() {
       const vm = this
       axios
-        .get(
-          `https://explorer-31.polkascan.io/kusama/api/v1/account/${this.accountId}`
-        )
+        .get(`${config.polkascanAPI}/account/${this.accountId}`)
         .then(function ({ data }) {
           vm.createdAtBlock = parseInt(data.data.attributes.created_at_block)
           if (vm.createdAtBlock <= vm.blockHeight / 4) {

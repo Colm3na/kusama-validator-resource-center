@@ -26,6 +26,9 @@
         Detected {{ nominators }} nominator<span v-if="nominators > 1">s</span>,
         validator is not oversubscribed
       </p>
+      <p v-else-if="rating === 0 && nominators > 0">
+        Validator is oversubscribed ({{ nominators }} nominators)
+      </p>
       <p v-else>Validator doesn't have any nominators</p>
     </div>
   </div>
