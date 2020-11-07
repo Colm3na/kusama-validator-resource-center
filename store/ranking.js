@@ -191,8 +191,7 @@ export const actions = {
         participateInGovernance.push(accountId.toString())
       )
     })
-    referendums.forEach(({ votes, image: { proposer } }) => {
-      participateInGovernance.push(proposer.toString())
+    referendums.forEach(({ votes }) => {
       votes.forEach(({ accountId }) =>
         participateInGovernance.push(accountId.toString())
       )
