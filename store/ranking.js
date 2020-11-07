@@ -183,7 +183,6 @@ export const actions = {
       }
     })
 
-    // include democracy referendums and proposals proposers and voters addresses
     const participateInGovernance = []
     proposals.forEach(({ seconds, image: { proposer } }) => {
       participateInGovernance.push(proposer.toString())
