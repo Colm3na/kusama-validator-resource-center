@@ -1670,13 +1670,13 @@
     "@fortawesome/fontawesome-svg-core" "^1.2.27"
     "@fortawesome/vue-fontawesome" "^0.1.9"
 
-"@nuxtjs/google-fonts@^1.1.5":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/google-fonts/-/google-fonts-1.1.5.tgz#962d040e9ba579460c5acb6ac80a76ec421ba6b4"
-  integrity sha512-HmsBnxyxOZq1B6KCL0087SbHBnxMm7HkfTpnjAgPW88YGX/O4jz9uUpr/Oj44xLOXjdg7v4Wl+cHbgZm3It6QQ==
+"@nuxtjs/google-fonts@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/google-fonts/-/google-fonts-1.2.0.tgz#b226683f2ccfdb1caab02729ff1c513062b9e868"
+  integrity sha512-uxH3A9j0kyPDyhq4yFxT4GZjYinVzOFRFSTT1Tx5mqXvAaiqa9u6wie2KnN8i+LFypn/WKp1mREPO17cgdlZkQ==
   dependencies:
     consola "^2.15.0"
-    google-fonts-helper "^1.1.0"
+    google-fonts-helper "^1.1.1"
 
 "@nuxtjs/proxy@^2.0.1":
   version "2.0.1"
@@ -5894,10 +5894,10 @@ good-listener@^1.2.2:
   dependencies:
     delegate "^3.1.2"
 
-google-fonts-helper@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/google-fonts-helper/-/google-fonts-helper-1.1.0.tgz#d192fa10f590a9f1d6aa9b5c665e39328ee2be31"
-  integrity sha512-ipyBrL1Mgpqo2daRuDHo5OM4gWoy6ePbTum39p3SdJm0YyF7DY+aGuQrrRTJLAQsELE7hSA/myQLGAqgQoRLGw==
+google-fonts-helper@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/google-fonts-helper/-/google-fonts-helper-1.1.1.tgz#bead59e31654425363e0cfbaea88d94ef20653be"
+  integrity sha512-rJ484VtEQKOsbPcAhE+kB8/W1IkG1LpbLjeoEhx2z1WQz7OOdLL9I71DbgePbT4asxJs+btGc9+Otkt9G5bOcg==
   dependencies:
     deepmerge "^4.2.2"
     fs-extra "^9.0.1"
