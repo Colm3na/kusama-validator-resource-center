@@ -138,6 +138,7 @@ export const actions = {
           return {
             ...validator,
             identity,
+            active: true,
           }
         })
       )
@@ -148,6 +149,7 @@ export const actions = {
           return {
             ...intention,
             identity,
+            active: false,
           }
         })
       )
@@ -196,9 +198,11 @@ export const actions = {
       )
     })
 
+    validators = validators.concat(intentions)
+
     validators = validators.map((validator) => {
       // active
-      const active = true
+      const active = validator.active
       const activeRating = active ? 2 : 0
 
       // stash
@@ -216,7 +220,7 @@ export const actions = {
       // sub-accounts
       const clusterMembers = getClusterMembers(
         hasSubIdentity,
-        validators.concat(intentions),
+        validators,
         validator.identity
       )
       const partOfCluster = clusterMembers > 0
@@ -224,7 +228,13 @@ export const actions = {
       const subAccountsRating = hasSubIdentity ? 2 : 0
 
       // nominators
-      const nominators = validator.exposure.others.length
+      const nominators = active
+        ? validator.exposure.others.length
+        : nominations.filter((nomination) =>
+            nomination.targets.some(
+              (target) => target === validator.accountId.toString()
+            )
+          ).length
       const nominatorsRating =
         nominators > 0 && nominators <= maxNominatorRewardedPerValidator ? 2 : 0
 
@@ -290,9 +300,13 @@ export const actions = {
       const payoutRating = getPayoutRating(payoutHistory)
 
       // stake
-      const selfStake = new BigNumber(validator.exposure.own)
-      const totalStake = new BigNumber(validator.exposure.total)
-      const otherStake = totalStake.minus(selfStake)
+      const selfStake = active
+        ? new BigNumber(validator.exposure.own)
+        : new BigNumber(validator.stakingLedger.total)
+      const totalStake = active
+        ? new BigNumber(validator.exposure.total)
+        : selfStake
+      const otherStake = active ? totalStake.minus(selfStake) : new BigNumber(0)
 
       // total rating
       const totalRating =
@@ -342,160 +356,7 @@ export const actions = {
       }
     })
 
-    //
-    // waiting validators
-    //
-    intentions = intentions.map((intention) => {
-      // active
-      const active = false
-      const activeRating = active ? 2 : 0
-
-      // stash
-      const stashAddress = intention.stashId.toString()
-
-      // identity
-      const {
-        verifiedIdentity,
-        hasSubIdentity,
-        name,
-        identityRating,
-      } = parseIdentity(intention.identity)
-      const identity = JSON.parse(JSON.stringify(intention.identity))
-
-      // sub-accounts
-      const clusterMembers = getClusterMembers(
-        hasSubIdentity,
-        validators.concat(intentions),
-        intention.identity
-      )
-      const partOfCluster = clusterMembers > 0
-      const clusterName = getClusterName(intention.identity)
-      const subAccountsRating = hasSubIdentity ? 2 : 0
-
-      // nominators
-      const nominators = nominations.filter((nomination) =>
-        nomination.targets.some(
-          (target) => target === intention.accountId.toString()
-        )
-      ).length
-      const nominatorsRating =
-        nominators > 0 && nominators <= maxNominatorRewardedPerValidator ? 2 : 0
-
-      // slashes
-      const slashes =
-        erasSlashes.filter(
-          ({ validators }) => validators[intention.accountId]
-        ) || []
-      const slashed = slashes.length > 0
-      const slashRating = slashed ? 0 : 2
-
-      // commission
-      const commissionHistory = getCommissionHistory(
-        intention.accountId,
-        erasPreferences
-      )
-      const commission = intention.validatorPrefs.commission / 10000000
-      const commissionRating = getCommissionRating(
-        commission,
-        commissionHistory
-      )
-
-      // governance
-      const councilBacking = councilVotes.some(
-        (vote) => vote[0] === intention.accountId
-      )
-      const activeInGovernance = participateInGovernance.includes(
-        intention.accountId.toString()
-      )
-      const governanceRating =
-        councilBacking && activeInGovernance
-          ? 3
-          : councilBacking || activeInGovernance
-          ? 2
-          : 0
-
-      // era points
-      const eraPointsHistory = []
-      erasPoints.forEach(({ validators }) => {
-        if (validators[intention.accountId]) {
-          eraPointsHistory.push(validators[intention.accountId])
-        } else {
-          eraPointsHistory.push(0)
-        }
-      })
-      const eraPointsHistoryValidator = eraPointsHistory.reduce(
-        (total, num) => total + num,
-        0
-      )
-      const eraPointsPercent =
-        (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum
-      const eraPointsRating =
-        eraPointsHistoryValidator > eraPointsAverage ? 2 : 0
-
-      // frecuency of payouts
-      const claimedRewards = JSON.parse(
-        JSON.stringify(intention.stakingLedger.claimedRewards)
-      )
-      const payoutHistory =
-        JSON.parse(JSON.stringify(eraIndexes)).map((eraIndex) =>
-          claimedRewards.some((claimedEra) => claimedEra === eraIndex)
-        ) || []
-      const payoutRating = getPayoutRating(payoutHistory)
-
-      // stake
-      const selfStake = new BigNumber(intention.stakingLedger.total)
-      const totalStake = selfStake
-      const otherStake = new BigNumber(0)
-
-      // total rating
-      const totalRating =
-        activeRating +
-        identityRating +
-        subAccountsRating +
-        nominatorsRating +
-        commissionRating +
-        eraPointsRating +
-        slashRating +
-        governanceRating +
-        payoutRating
-
-      return {
-        active,
-        activeRating,
-        name,
-        identity,
-        hasSubIdentity,
-        subAccountsRating,
-        verifiedIdentity,
-        identityRating,
-        stashAddress,
-        partOfCluster,
-        clusterName,
-        clusterMembers,
-        nominators,
-        nominatorsRating,
-        commission,
-        commissionHistory,
-        commissionRating,
-        eraPointsHistory,
-        eraPointsPercent,
-        eraPointsRating,
-        slashed,
-        slashRating,
-        slashes,
-        councilBacking,
-        activeInGovernance,
-        governanceRating,
-        payoutHistory,
-        payoutRating,
-        selfStake,
-        otherStake,
-        totalStake,
-        totalRating,
-      }
-    })
     const ranking = validators
-      .concat(intentions)
       .sort((a, b) => (a.totalRating < b.totalRating ? 1 : -1))
       .map((validator, rank) => {
         return {
@@ -503,7 +364,7 @@ export const actions = {
           ...validator,
         }
       })
-    // console.log(JSON.parse(JSON.stringify(ranking)))
+    console.log(JSON.parse(JSON.stringify(ranking)))
     context.commit('update', {
       ranking,
       eraHistory: eraIndexes,
