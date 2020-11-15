@@ -314,6 +314,7 @@ export default {
       filterOn: [],
       rows: 0,
       maxValidatorsReached: false,
+      polling: null,
     }
   },
   computed: {
@@ -384,6 +385,15 @@ export default {
     if (this.$cookies.get('exclude')) {
       this.exclude = this.$cookies.get('exclude')
     }
+    // update ranking every 5 min
+    this.polling = setInterval(async () => {
+      // eslint-disable-next-line
+      console.log('refreshing...')
+      await this.$store.dispatch('ranking/update')
+    }, 300 * 1000)
+  },
+  beforeDestroy() {
+    clearInterval(this.polling)
   },
   methods: {
     setPageSize(size) {
