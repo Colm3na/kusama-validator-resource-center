@@ -132,7 +132,7 @@
 <script>
 import Identicon from '../../../components/Identicon.vue'
 import Loading from '../../../components/Loading.vue'
-import Additional from '../../../components/Additional.vue'
+// import Additional from '../../../components/Additional.vue'
 import VerifiedIcon from '../../../components/VerifiedIcon.vue'
 import Identity from '../../../components/metrics/Identity.vue'
 import Address from '../../../components/metrics/Address.vue'
@@ -149,7 +149,7 @@ export default {
   components: {
     Identicon,
     Loading,
-    Additional,
+    // Additional,
     VerifiedIcon,
     Identity,
     Address,
@@ -165,6 +165,7 @@ export default {
   data() {
     return {
       accountId: this.$route.params.id,
+      polling: null,
     }
   },
   computed: {
@@ -200,6 +201,15 @@ export default {
     if (this.$store.state.ranking.list.length === 0) {
       await this.$store.dispatch('ranking/update')
     }
+    // update ranking every 5 min
+    this.polling = setInterval(async () => {
+      // eslint-disable-next-line
+      console.log('refreshing...')
+      await this.$store.dispatch('ranking/update')
+    }, 300 * 1000)
+  },
+  beforeDestroy() {
+    clearInterval(this.polling)
   },
   methods: {
     isSelected(accountId) {
