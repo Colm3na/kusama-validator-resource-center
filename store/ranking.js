@@ -184,7 +184,6 @@ export const actions = {
         targets,
       }
     })
-
     const participateInGovernance = []
     proposals.forEach(({ seconds, image: { proposer } }) => {
       participateInGovernance.push(proposer.toString())
@@ -197,166 +196,167 @@ export const actions = {
         participateInGovernance.push(accountId.toString())
       )
     })
-
     validators = validators.concat(intentions)
+    const ranking = validators
+      .map((validator) => {
+        // active
+        const active = validator.active
+        const activeRating = active ? 2 : 0
 
-    validators = validators.map((validator) => {
-      // active
-      const active = validator.active
-      const activeRating = active ? 2 : 0
+        // stash
+        const stashAddress = validator.stashId.toString()
 
-      // stash
-      const stashAddress = validator.stashId.toString()
+        // identity
+        const {
+          verifiedIdentity,
+          hasSubIdentity,
+          name,
+          identityRating,
+        } = parseIdentity(validator.identity)
+        const identity = JSON.parse(JSON.stringify(validator.identity))
 
-      // identity
-      const {
-        verifiedIdentity,
-        hasSubIdentity,
-        name,
-        identityRating,
-      } = parseIdentity(validator.identity)
-      const identity = JSON.parse(JSON.stringify(validator.identity))
+        // sub-accounts
+        const clusterMembers = getClusterMembers(
+          hasSubIdentity,
+          validators,
+          validator.identity
+        )
+        const partOfCluster = clusterMembers > 0
+        const clusterName = getClusterName(validator.identity)
+        const subAccountsRating = hasSubIdentity ? 2 : 0
 
-      // sub-accounts
-      const clusterMembers = getClusterMembers(
-        hasSubIdentity,
-        validators,
-        validator.identity
-      )
-      const partOfCluster = clusterMembers > 0
-      const clusterName = getClusterName(validator.identity)
-      const subAccountsRating = hasSubIdentity ? 2 : 0
+        // nominators
+        const nominators = active
+          ? validator.exposure.others.length
+          : nominations.filter((nomination) =>
+              nomination.targets.some(
+                (target) => target === validator.accountId.toString()
+              )
+            ).length
+        const nominatorsRating =
+          nominators > 0 && nominators <= maxNominatorRewardedPerValidator
+            ? 2
+            : 0
 
-      // nominators
-      const nominators = active
-        ? validator.exposure.others.length
-        : nominations.filter((nomination) =>
-            nomination.targets.some(
-              (target) => target === validator.accountId.toString()
-            )
-          ).length
-      const nominatorsRating =
-        nominators > 0 && nominators <= maxNominatorRewardedPerValidator ? 2 : 0
+        // slashes
+        const slashes =
+          erasSlashes.filter(
+            ({ validators }) => validators[validator.accountId]
+          ) || []
+        const slashed = slashes.length > 0
+        const slashRating = slashed ? 0 : 2
 
-      // slashes
-      const slashes =
-        erasSlashes.filter(
-          ({ validators }) => validators[validator.accountId]
-        ) || []
-      const slashed = slashes.length > 0
-      const slashRating = slashed ? 0 : 2
+        // commission
+        const commission = validator.validatorPrefs.commission / 10000000
+        const commissionHistory = getCommissionHistory(
+          validator.accountId,
+          erasPreferences
+        )
+        const commissionRating = getCommissionRating(
+          commission,
+          commissionHistory
+        )
 
-      // commission
-      const commission = validator.validatorPrefs.commission / 10000000
-      const commissionHistory = getCommissionHistory(
-        validator.accountId,
-        erasPreferences
-      )
-      const commissionRating = getCommissionRating(
-        commission,
-        commissionHistory
-      )
+        // governance
+        const councilBacking = councilVotes.some(
+          (vote) => vote[0].toString() === validator.accountId.toString()
+        )
+        const activeInGovernance = participateInGovernance.includes(
+          validator.accountId.toString()
+        )
+        const governanceRating =
+          councilBacking && activeInGovernance
+            ? 3
+            : councilBacking || activeInGovernance
+            ? 2
+            : 0
 
-      // governance
-      const councilBacking = councilVotes.some(
-        (vote) => vote[0].toString() === validator.accountId.toString()
-      )
-      const activeInGovernance = participateInGovernance.includes(
-        validator.accountId.toString()
-      )
-      const governanceRating =
-        councilBacking && activeInGovernance
-          ? 3
-          : councilBacking || activeInGovernance
-          ? 2
-          : 0
+        // era points
+        const eraPointsHistory = []
+        erasPoints.forEach(({ validators }) => {
+          if (validators[validator.accountId]) {
+            eraPointsHistory.push(parseInt(validators[validator.accountId]))
+          } else {
+            eraPointsHistory.push(0)
+          }
+        })
+        const eraPointsHistoryValidator = eraPointsHistory.reduce(
+          (total, num) => total + num,
+          0
+        )
+        const eraPointsPercent =
+          (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum
+        const eraPointsRating =
+          eraPointsHistoryValidator > eraPointsAverage ? 2 : 0
 
-      // era points
-      const eraPointsHistory = []
-      erasPoints.forEach(({ validators }) => {
-        if (validators[validator.accountId]) {
-          eraPointsHistory.push(parseInt(validators[validator.accountId]))
-        } else {
-          eraPointsHistory.push(0)
+        // frecuency of payouts
+        const claimedRewards = JSON.parse(
+          JSON.stringify(validator.stakingLedger.claimedRewards)
+        )
+        const payoutHistory =
+          JSON.parse(JSON.stringify(eraIndexes)).map((eraIndex) =>
+            claimedRewards.some((claimedEra) => claimedEra === eraIndex)
+          ) || []
+        const payoutRating = getPayoutRating(payoutHistory)
+
+        // stake
+        const selfStake = active
+          ? new BigNumber(validator.exposure.own)
+          : new BigNumber(validator.stakingLedger.total)
+        const totalStake = active
+          ? new BigNumber(validator.exposure.total)
+          : selfStake
+        const otherStake = active
+          ? totalStake.minus(selfStake)
+          : new BigNumber(0)
+
+        // total rating
+        const totalRating =
+          activeRating +
+          identityRating +
+          subAccountsRating +
+          nominatorsRating +
+          commissionRating +
+          eraPointsRating +
+          slashRating +
+          governanceRating +
+          payoutRating
+
+        return {
+          active,
+          activeRating,
+          name,
+          identity,
+          hasSubIdentity,
+          subAccountsRating,
+          verifiedIdentity,
+          identityRating,
+          stashAddress,
+          partOfCluster,
+          clusterName,
+          clusterMembers,
+          nominators,
+          nominatorsRating,
+          commission,
+          commissionHistory,
+          commissionRating,
+          eraPointsHistory,
+          eraPointsPercent,
+          eraPointsRating,
+          slashed,
+          slashRating,
+          slashes,
+          councilBacking,
+          activeInGovernance,
+          governanceRating,
+          payoutHistory,
+          payoutRating,
+          selfStake,
+          otherStake,
+          totalStake,
+          totalRating,
         }
       })
-      const eraPointsHistoryValidator = eraPointsHistory.reduce(
-        (total, num) => total + num,
-        0
-      )
-      const eraPointsPercent =
-        (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum
-      const eraPointsRating =
-        eraPointsHistoryValidator > eraPointsAverage ? 2 : 0
-
-      // frecuency of payouts
-      const claimedRewards = JSON.parse(
-        JSON.stringify(validator.stakingLedger.claimedRewards)
-      )
-      const payoutHistory =
-        JSON.parse(JSON.stringify(eraIndexes)).map((eraIndex) =>
-          claimedRewards.some((claimedEra) => claimedEra === eraIndex)
-        ) || []
-      const payoutRating = getPayoutRating(payoutHistory)
-
-      // stake
-      const selfStake = active
-        ? new BigNumber(validator.exposure.own)
-        : new BigNumber(validator.stakingLedger.total)
-      const totalStake = active
-        ? new BigNumber(validator.exposure.total)
-        : selfStake
-      const otherStake = active ? totalStake.minus(selfStake) : new BigNumber(0)
-
-      // total rating
-      const totalRating =
-        activeRating +
-        identityRating +
-        subAccountsRating +
-        nominatorsRating +
-        commissionRating +
-        eraPointsRating +
-        slashRating +
-        governanceRating +
-        payoutRating
-
-      return {
-        active,
-        activeRating,
-        name,
-        identity,
-        hasSubIdentity,
-        subAccountsRating,
-        verifiedIdentity,
-        identityRating,
-        stashAddress,
-        partOfCluster,
-        clusterName,
-        clusterMembers,
-        nominators,
-        nominatorsRating,
-        commission,
-        commissionHistory,
-        commissionRating,
-        eraPointsHistory,
-        eraPointsPercent,
-        eraPointsRating,
-        slashed,
-        slashRating,
-        slashes,
-        councilBacking,
-        activeInGovernance,
-        governanceRating,
-        payoutHistory,
-        payoutRating,
-        selfStake,
-        otherStake,
-        totalStake,
-        totalRating,
-      }
-    })
-
-    const ranking = validators
       .sort((a, b) => (a.totalRating < b.totalRating ? 1 : -1))
       .map((validator, rank) => {
         return {
