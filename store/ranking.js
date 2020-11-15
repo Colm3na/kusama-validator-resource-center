@@ -364,7 +364,7 @@ export const actions = {
           ...validator,
         }
       })
-    console.log(JSON.parse(JSON.stringify(ranking)))
+    // console.log(JSON.parse(JSON.stringify(ranking)))
     context.commit('update', {
       ranking,
       eraHistory: eraIndexes,
