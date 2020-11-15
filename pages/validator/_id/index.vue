@@ -113,7 +113,7 @@
             <div class="col-md-6 mb-5"></div>
           </div>
         </b-tab>
-        <b-tab title="Additional data">
+        <!-- <b-tab title="Additional data">
           <b-alert
             show
             dismissible
@@ -123,7 +123,7 @@
             This information is unverified and provided by the validator
           </b-alert>
           <Additional :address="validator.stashAddress" />
-        </b-tab>
+        </b-tab> -->
       </b-tabs>
     </div>
   </div>
