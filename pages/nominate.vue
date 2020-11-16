@@ -151,7 +151,7 @@
               target="_blank"
             >
               <Promised :promise="getBlockNumber(blockHash)">
-                <template v-slot="data">#{{ formatNumber(data) }}</template>
+                <template #default="data">#{{ formatNumber(data) }}</template>
               </Promised>
             </a>
           </p>
@@ -226,6 +226,18 @@ export default {
       noAccountsFound: true,
       addressRole: null,
       onGoingElection: false,
+    }
+  },
+  head() {
+    return {
+      title: `Nominate | Validator Resource Center and Ranking Website for Kusama`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Nominate selected validators',
+        },
+      ],
     }
   },
   computed: {
@@ -366,18 +378,6 @@ export default {
     selectAddress(accountId) {
       this.selectedAddress = accountId
     },
-  },
-  head() {
-    return {
-      title: `Nominate | Validator Resource Center and Ranking Website for Kusama`,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: 'Nominate selected validators',
-        },
-      ],
-    }
   },
 }
 </script>

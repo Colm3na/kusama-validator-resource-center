@@ -168,6 +168,18 @@ export default {
       polling: null,
     }
   },
+  head() {
+    return {
+      title: `Validator ${this.accountId} metrics | Validator Resource Center and Ranking Website for Kusama`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: `Validator ${this.accountId} metrics`,
+        },
+      ],
+    }
+  },
   computed: {
     loading() {
       return this.$store.state.ranking.loading
@@ -218,18 +230,6 @@ export default {
     toggleSelected(accountId) {
       this.$store.dispatch('ranking/toggleSelected', { accountId })
     },
-  },
-  head() {
-    return {
-      title: `Validator ${this.accountId} metrics | Validator Resource Center and Ranking Website for Kusama`,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: `Validator ${this.accountId} metrics`,
-        },
-      ],
-    }
   },
 }
 </script>

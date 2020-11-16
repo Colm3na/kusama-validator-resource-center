@@ -53,7 +53,7 @@
         :sort-compare="sortCompare"
         @filtered="onFiltered"
       >
-        <template v-slot:cell(active)="data">
+        <template #cell(active)="data">
           <span
             v-if="data.item.active"
             v-b-tooltip.hover
@@ -97,7 +97,7 @@
             </font-awesome-layers>
           </span>
         </template>
-        <template v-slot:cell(name)="data">
+        <template #cell(name)="data">
           <!-- desktop -->
           <div class="d-none d-sm-none d-md-none d-lg-block d-xl-block">
             <Identicon :address="data.item.stashAddress" :size="24" />
@@ -140,17 +140,17 @@
             </b-row>
           </div>
         </template>
-        <template v-slot:cell(commission)="data">
+        <template #cell(commission)="data">
           {{ data.item.commission.toFixed(1) }}%
         </template>
 
-        <template v-slot:cell(selfStake)="data">
+        <template #cell(selfStake)="data">
           {{ formatAmount(data.item.selfStake) }}
         </template>
-        <template v-slot:cell(otherStake)="data">
+        <template #cell(otherStake)="data">
           {{ formatAmount(data.item.otherStake) }}
         </template>
-        <template v-slot:cell(selected)="data">
+        <template #cell(selected)="data">
           <p class="text-center mb-0">
             <a
               v-b-tooltip.hover

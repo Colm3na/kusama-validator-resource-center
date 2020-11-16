@@ -14,7 +14,7 @@
         <p>{{ metric.description }}</p>
         <h6>How it's rated?</h6>
         <b-table hover :items="metric.rating" class="my-4">
-          <template v-slot:cell(rating)="data">
+          <template #cell(rating)="data">
             <Rating :rating="data.item.rating" />
           </template>
         </b-table>
