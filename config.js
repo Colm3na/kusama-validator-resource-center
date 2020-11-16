@@ -4,6 +4,7 @@
 //   nodeWs: 'wss://kusama-rpc.polkadot.io',
 //   denom: 'KSM',
 //   addressPrefix: 2,
+//   tokenDecimals: 12,
 //   historySize: 28, // 1 week
 //   polkascanAPI: 'https://explorer-31.polkascan.io/kusama/api/v1', // no trailing slash
 //   theme: '@/assets/scss/themes/kusama.scss',
@@ -19,6 +20,7 @@
 //   nodeWs: 'wss://rpc.polkadot.io',
 //   denom: 'DOT',
 //   addressPrefix: 1,
+//   tokenDecimals: 10,
 //   historySize: 7, // 1 week
 //   polkascanAPI: 'https://explorer-31.polkascan.io/polkadot/api/v1', // no trailing slash
 //   theme: '@/assets/scss/themes/polkadot.scss',
@@ -35,6 +37,7 @@ export const config = {
   nodeWs: 'wss://mainnet1.edgewa.re',
   denom: 'EDG',
   addressPrefix: 7,
+  tokenDecimals: 18,
   historySize: 28, // 1 week
   polkascanAPI: '', // no trailing slash
   theme: '@/assets/scss/themes/edgeware.scss',
