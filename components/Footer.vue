@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="container text-center">
-      &copy; {{ new Date().getFullYear() }} {{ config.name }} ·
+      &copy; {{ new Date().getFullYear() }} {{ capitalize(config.name) }} ·
       <a href="https://kusama.network/privacy" target="_blank"
         >Privacy Policy</a
       >
@@ -16,7 +16,9 @@
 </template>
 <script>
 import { config } from '@/config.js'
+import commonMixin from '@/mixins/commonMixin.js'
 export default {
+  mixins: [commonMixin],
   data() {
     return {
       config,

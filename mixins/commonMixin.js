@@ -22,5 +22,9 @@ export default {
         .toFixed(1)
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} ${config.denom}`
     },
+    capitalize(s) {
+      if (typeof s !== 'string') return ''
+      return s.charAt(0).toUpperCase() + s.slice(1)
+    },
   },
 }
