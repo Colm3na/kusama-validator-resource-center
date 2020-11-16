@@ -5,6 +5,8 @@ export const config = {
   addressPrefix: 2,
   historySize: 28, // 1 week
   polkascanAPI: 'https://explorer-31.polkascan.io/kusama/api/v1', // no trailing slash
+  theme: '@/assets/themes/kusama.scss',
+  baseURL: '/kusama-validator-resource-center/',
 }
 
 // polkadot
@@ -15,4 +17,6 @@ export const config = {
 //   addressPrefix: 1,
 //   historySize: 7, // 1 week
 //   polkascanAPI: 'https://explorer-31.polkascan.io/polkadot/api/v1', // no trailing slash
+//   theme: '@/assets/themes/polkadot.scss',
+//   baseURL: '/kusama-validator-resource-center/',
 // }
