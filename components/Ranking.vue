@@ -221,6 +221,7 @@ import Loading from '@/components/Loading.vue'
 import Identicon from '@/components/Identicon.vue'
 import VerifiedIcon from '@/components/VerifiedIcon.vue'
 import commonMixin from '@/mixins/commonMixin.js'
+import { config } from '@/config.js'
 
 export default {
   components: {
@@ -356,7 +357,7 @@ export default {
   },
   watch: {
     exclude(exclude) {
-      this.$cookies.set('exclude', exclude, {
+      this.$cookies.set(`${config.name}-exclude`, exclude, {
         path: '/',
         maxAge: 60 * 60 * 24 * 7,
       })
@@ -366,8 +367,8 @@ export default {
     if (this.$store.state.ranking.list.length === 0) {
       await this.$store.dispatch('ranking/update')
     }
-    if (this.$cookies.get('exclude')) {
-      this.exclude = this.$cookies.get('exclude')
+    if (this.$cookies.get(`${config.name}-exclude`)) {
+      this.exclude = this.$cookies.get(`${config.name}-exclude`)
     }
     // update ranking every 5 min
     this.polling = setInterval(async () => {

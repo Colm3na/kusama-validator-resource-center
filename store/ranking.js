@@ -1,7 +1,7 @@
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import { BigNumber } from 'bignumber.js'
 import { BToast } from 'bootstrap-vue'
-import { config } from '../config.js'
+import { config } from '@/config.js'
 
 export const state = () => ({
   list: [],
@@ -33,7 +33,7 @@ export const mutations = {
   },
   loadSelected(state) {
     const selectedAddresses =
-      this.$cookies.get('selectedValidatorAddresses') || []
+      this.$cookies.get(`${config.name}-selectedValidatorAddresses`) || []
     state.selectedAddresses = selectedAddresses
   },
   toggleSelected(state, { accountId }) {
@@ -77,10 +77,14 @@ export const mutations = {
       )
     }
     state.selectedAddresses = selectedAddresses
-    this.$cookies.set('selectedValidatorAddresses', selectedAddresses, {
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7,
-    })
+    this.$cookies.set(
+      `${config.name}-selectedValidatorAddresses`,
+      selectedAddresses,
+      {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7,
+      }
+    )
   },
 }
 
