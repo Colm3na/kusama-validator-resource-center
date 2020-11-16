@@ -18,7 +18,7 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: config.favicon }],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -82,6 +82,7 @@ export default {
       {
         test: /\.s[ac]ss$/i,
         use: ['style-loader', 'css-loader', 'sass-loader'],
+        loader: 'vue-svg-loader',
       },
     ],
   },

@@ -3,12 +3,8 @@
     <b-navbar type="dark" variant="dark" sticky>
       <b-container class="px-sm-3">
         <b-navbar-brand>
-          <nuxt-link
-            to="/"
-            class="navbar-brand"
-            title="Validator Resource Center and Ranking Website for Kusama"
-          >
-            <img class="logo mb-1" src="../assets/img/kusama-logo.svg" />
+          <nuxt-link to="/" class="navbar-brand" :title="config.title">
+            <img class="logo mb-1" :src="config.logo" />
           </nuxt-link>
         </b-navbar-brand>
         <b-navbar-nav>
@@ -32,29 +28,23 @@
       </b-container>
     </b-navbar>
     <Nuxt />
-    <footer class="footer">
-      <div class="container text-center">
-        &copy; {{ new Date().getFullYear() }}
-        Kusama ·
-        <a href="https://kusama.network/privacy" target="_blank"
-          >Privacy Policy</a
-        >
-        ·
-        <a href="https://kusama.network/terms" target="_blank"
-          >Terms and Conditions</a
-        >
-        ·
-        <a href="#" target="_blank">Cookie Settings</a>
-      </div>
-    </footer>
+    <Footer />
   </div>
 </template>
 
 <script>
+import { config } from '../config.js'
 import SelectedValidators from '../components/SelectedValidators.vue'
+import Footer from '../components/Footer.vue'
 export default {
   components: {
     SelectedValidators,
+    Footer,
+  },
+  data() {
+    return {
+      config,
+    }
   },
   computed: {
     loading() {
