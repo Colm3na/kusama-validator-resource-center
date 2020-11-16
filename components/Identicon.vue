@@ -17,6 +17,7 @@
 </template>
 <script>
 import Identicon from '@polkadot/vue-identicon'
+// eslint-disable-next-line
 import { config } from '@/config.js'
 export default {
   components: {
