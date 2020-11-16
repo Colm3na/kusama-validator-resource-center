@@ -31,14 +31,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.title {
-  font-family: 'Space Mono', monospace;
-  display: block;
-  font-weight: 400;
-  font-size: 25px;
-  color: #e6007a;
-  letter-spacing: 1px;
-}
-</style>

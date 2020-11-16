@@ -60,15 +60,7 @@
             title="Elected validator"
           >
             <font-awesome-layers class="align-middle">
-              <font-awesome-icon
-                icon="circle"
-                style="
-                  color: black;
-                  font-size: 1.6rem;
-                  border: 2px solid rgb(128 128 128 / 49%);
-                  border-radius: 50%;
-                "
-              />
+              <font-awesome-icon icon="circle" class="elected-icon" />
               <font-awesome-icon
                 icon="circle"
                 class="text-success"
@@ -435,35 +427,3 @@ export default {
   },
 }
 </script>
-<style lang="scss">
-.led-green {
-  border-radius: 50%;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px,
-    #89ff00 0 2px 12px;
-}
-.led-red {
-  border-radius: 50%;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px,
-    rgba(255, 0, 0, 1) 0 2px 12px;
-}
-.custom-switch.b-custom-control-lg .custom-control-label,
-.input-group-lg .custom-switch .custom-control-label {
-  font-size: 0.9rem;
-}
-.exclude {
-  padding: 1rem 1rem 0.5rem 1rem;
-  border: 1px solid #e6007a;
-}
-.exclude-title {
-  font-size: 0.9rem;
-  color: var(--light);
-  margin-bottom: 0;
-}
-.select {
-  cursor: pointer;
-}
-.ranking .select .selected,
-.ranking .select .unselected {
-  font-size: 1.2rem;
-}
-</style>

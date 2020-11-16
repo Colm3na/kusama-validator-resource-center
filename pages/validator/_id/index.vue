@@ -233,24 +233,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-.validator-page .metric {
-  min-height: 10rem;
-}
-.validator-page .card-body {
-  position: relative;
-}
-
-.validator-page .verified {
-  font-size: 2rem;
-  cursor: pointer;
-}
-.metric {
-  border: 1px solid gray;
-  padding: 1rem;
-}
-.metric .description {
-  color: var(--light);
-}
-</style>

@@ -28,8 +28,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-.rating {
-  font-size: 1rem;
-}
-</style>

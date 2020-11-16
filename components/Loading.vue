@@ -18,11 +18,3 @@
 <script>
 export default {}
 </script>
-
-<style>
-.loading {
-  margin-top: calc(30vh);
-  font-family: 'Visuelt', sans-serif;
-  font-size: 2rem;
-}
-</style>

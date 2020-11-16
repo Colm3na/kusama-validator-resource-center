@@ -237,9 +237,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.metrics-page p {
-  color: gray;
-}
-</style>

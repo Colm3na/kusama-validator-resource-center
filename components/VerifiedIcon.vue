@@ -16,11 +16,3 @@ export default {
   },
 }
 </script>
-<style>
-.verified .circle {
-  color: #0fccd6;
-}
-.verified .fa-check {
-  color: white;
-}
-</style>

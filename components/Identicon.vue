@@ -44,8 +44,3 @@ export default {
   },
 }
 </script>
-<style>
-.identicon {
-  cursor: pointer;
-}
-</style>

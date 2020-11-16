@@ -381,9 +381,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.controller-address-validation p {
-  font-size: 0.75rem;
-}
-</style>

@@ -254,8 +254,3 @@ export default {
   },
 }
 </script>
-<style lang="scss">
-.additional-info p {
-  color: var(--light);
-}
-</style>

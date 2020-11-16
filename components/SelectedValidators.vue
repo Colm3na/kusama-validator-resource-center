@@ -94,16 +94,3 @@ export default {
   },
 }
 </script>
-<style>
-.addresses {
-  cursor: pointer;
-}
-.remove,
-.remove:hover,
-.remove:active {
-  color: rgba(255, 0, 0, 0.5);
-}
-.selected-validators .selected-validator {
-  font-size: 0.8rem;
-}
-</style>
