@@ -32,7 +32,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: `${config.title} for ${config.name}`,
+          content: `${config.title} for ${this.capitalize(config.name)}`,
         },
       ],
     }

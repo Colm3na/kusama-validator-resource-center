@@ -171,7 +171,9 @@ export default {
   },
   head() {
     return {
-      title: `Validator ${this.accountId} metrics | ${config.title} for ${config.name}`,
+      title: `Validator ${this.accountId} metrics | ${
+        config.title
+      } for ${this.capitalize(config.name)}`,
       meta: [
         {
           hid: 'description',

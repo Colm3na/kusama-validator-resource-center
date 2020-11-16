@@ -249,6 +249,7 @@
 import Identicon from '@/components/Identicon.vue'
 import Loading from '@/components/Loading.vue'
 import commonMixin from '@/mixins/commonMixin.js'
+import { config } from '@/config.js'
 
 export default {
   components: {
@@ -283,6 +284,20 @@ export default {
           },
         ],
       },
+    }
+  },
+  head() {
+    return {
+      title: `Edit ${this.accountId} qualitative data | ${
+        config.title
+      } for ${this.capitalize(config.name)}`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: `Validator ${this.accountId} metrics`,
+        },
+      ],
     }
   },
   computed: {

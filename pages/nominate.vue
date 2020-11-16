@@ -231,7 +231,9 @@ export default {
   },
   head() {
     return {
-      title: `Nominate | ${this.config.title} for ${this.config.name}`,
+      title: `Nominate | ${this.config.title} for ${this.capitalize(
+        this.config.name
+      )}`,
       meta: [
         {
           hid: 'description',

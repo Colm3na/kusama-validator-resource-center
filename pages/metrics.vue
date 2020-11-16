@@ -25,11 +25,13 @@
 
 <script>
 import Rating from '@/components/Rating.vue'
+import commonMixin from '@/mixins/commonMixin.js'
 import { config } from '@/config.js'
 export default {
   components: {
     Rating,
   },
+  mixins: [commonMixin],
   data() {
     return {
       config,
@@ -227,7 +229,7 @@ export default {
   },
   head() {
     return {
-      title: `Metrics | ${config.title} for ${config.name}`,
+      title: `Metrics | ${config.title} for ${this.capitalize(config.name)}`,
       meta: [
         {
           hid: 'description',
