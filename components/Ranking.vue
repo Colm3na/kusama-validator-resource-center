@@ -71,15 +71,7 @@
           </span>
           <span v-else v-b-tooltip.hover title="Not elected validator">
             <font-awesome-layers>
-              <font-awesome-icon
-                icon="circle"
-                style="
-                  color: black;
-                  font-size: 1.6rem;
-                  border: 2px solid rgb(128 128 128 / 49%);
-                  border-radius: 50%;
-                "
-              />
+              <font-awesome-icon icon="circle" class="not-elected-icon" />
               <font-awesome-icon
                 icon="circle"
                 class="text-danger"

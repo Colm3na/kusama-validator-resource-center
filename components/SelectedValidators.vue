@@ -46,7 +46,7 @@
       </div>
     </div>
     <p v-if="list.length > 0" class="mt-3 mb-0">
-      <b-button variant="kusama" class="btn-block" to="/nominate"
+      <b-button variant="primary2" class="btn-block" to="/nominate"
         >Nominate</b-button
       >
     </p>
