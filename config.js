@@ -35,7 +35,7 @@ export const config = {
   nodeWs: 'wss://mainnet1.edgewa.re',
   denom: 'EDG',
   addressPrefix: 7,
-  historySize: 7, // 1 week
+  historySize: 28, // 1 week
   polkascanAPI: '', // no trailing slash
   theme: '@/assets/scss/themes/edgeware.scss',
   identiconTheme: 'substrate',
