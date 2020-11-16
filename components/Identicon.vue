@@ -9,7 +9,7 @@
       :key="address"
       v-clipboard:copy="address"
       :size="size"
-      :theme="'polkadot'"
+      :theme="config.identiconTheme"
       :value="address"
       class="identicon"
     />
@@ -17,7 +17,7 @@
 </template>
 <script>
 import Identicon from '@polkadot/vue-identicon'
-
+import { config } from '@/config.js'
 export default {
   components: {
     Identicon,
