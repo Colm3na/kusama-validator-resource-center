@@ -170,7 +170,7 @@
         </b-alert>
         <b-button
           type="submit"
-          variant="outline-kusama"
+          variant="outline-primary2"
           class="btn-block mt-3"
           :disabled="
             noAccountsFound ||

@@ -81,105 +81,6 @@ export default {
   src: url('../assets/fonts/Visuelt/Visuelt.ttf') format('truetype');
 }
 
-// Base grayscale colors definitions
-$white: #fff !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
-$gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
-$gray-600: #6c757d !default;
-$gray-700: #495057 !default;
-$gray-800: #343a40 !default;
-$gray-900: #212529 !default;
-$black: #000 !default;
-
-// Base colors definitions
-$blue: #007bff !default;
-$indigo: #6610f2 !default;
-$purple: #6f42c1 !default;
-$pink: #e83e8c !default;
-$red: #dc3545 !default;
-$orange: #fd7e14 !default;
-$yellow: #ffc107 !default;
-$green: #28a745 !default;
-$teal: #20c997 !default;
-$cyan: #17a2b8 !default;
-
-$body-bg: #000;
-$body-color: #fff;
-$primary: #fff;
-$secondary: #aaafb3;
-$success: #0dff7e;
-$kusama: #e6007a;
-$info: $cyan !default;
-$warning: $yellow !default;
-$danger: $red !default;
-$light: $gray-500 !default;
-$dark: #000;
-
-// This table defines the theme colors (variant names)
-$theme-colors: () !default;
-$theme-colors: map-merge(
-  (
-    'primary': $primary,
-    'secondary': $secondary,
-    'success': $success,
-    'info': $info,
-    'warning': $warning,
-    'danger': $danger,
-    'light': $light,
-    'dark': $dark,
-    'kusama': $kusama,
-  ),
-  $theme-colors
-);
-
-$border-radius: 0 !default;
-$border-radius-lg: 0 !default;
-$border-radius-sm: 0 !default;
-
-$pagination-color: $body-color !default;
-$pagination-bg: $dark !default;
-$pagination-border-color: $secondary !default;
-
-$pagination-hover-color: $primary !default;
-$pagination-hover-bg: $dark !default;
-$pagination-hover-border-color: $secondary !default;
-
-$pagination-active-color: $secondary !default;
-$pagination-active-bg: $dark !default;
-$pagination-active-border-color: $secondary !default;
-
-$pagination-disabled-color: $secondary !default;
-$pagination-disabled-bg: $dark !default;
-$pagination-disabled-border-color: $secondary !default;
-
-$table-dark-bg: $body-bg !default;
-$table-dark-border-color: rgba(255, 255, 255, 0.2) !default;
-
-$alert-bg-level: 10;
-$alert-border-level: 1;
-$alert-color-level: -10;
-
-$nav-tabs-link-active-color: $body-color !default;
-
-$hr-border-color: rgba(255, 255, 255, 0.2) !default;
-
-$custom-control-indicator-checked-bg: #e6007a !default;
-$custom-control-indicator-bg: white !default;
-
-$navbar-dark-color: $light !default;
-$navbar-dark-hover-color: $white !default;
-$navbar-dark-disabled-color: $white !default;
-
-$h1-font-size: 2.1rem !default;
-
-// Bootstrap and its default variables
-@import '../node_modules/bootstrap/scss/bootstrap';
-// BootstrapVue and its default variables
-@import '../node_modules/bootstrap-vue/src/index.scss';
-
 html {
   position: relative;
   min-height: 100%;
@@ -196,7 +97,7 @@ body::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 body::-webkit-scrollbar-thumb {
-  background-color: var(--kusama);
+  background-color: var(--primary2);
   outline: none;
 }
 .logo {

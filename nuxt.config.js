@@ -1,3 +1,4 @@
+import { config } from './config.js'
 export default {
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
@@ -6,12 +7,12 @@ export default {
   target: 'static',
 
   router: {
-    base: '/kusama-validator-resource-center/',
+    base: config.baseURL,
   },
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'kusama-validator-resource-center',
+    title: config.name,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -21,7 +22,7 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [],
+  css: [config.theme],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: ['@/plugins/vue-typed-text.js'],
@@ -59,6 +60,10 @@ export default {
     // https://www.npmjs.com/package/vue-scrollto
     'vue-scrollto/nuxt',
   ],
+  bootstrapVue: {
+    bootstrapCSS: false,
+    bootstrapVueCSS: false,
+  },
   fontawesome: {
     icons: {
       solid: true,
@@ -71,4 +76,13 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
+
+  module: {
+    rules: [
+      {
+        test: /\.s[ac]ss$/i,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+    ],
+  },
 }

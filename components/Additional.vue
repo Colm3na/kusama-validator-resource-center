@@ -2,7 +2,7 @@
   <div>
     <p class="mb-0 text-right">
       Do you own this validator?
-      <b-button variant="outline-kusama" :to="`/validator/${address}/edit`"
+      <b-button variant="outline-primary2" :to="`/validator/${address}/edit`"
         >Edit information</b-button
       >
     </p>
