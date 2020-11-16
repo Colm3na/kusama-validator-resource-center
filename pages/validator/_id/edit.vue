@@ -246,9 +246,9 @@
 </template>
 
 <script>
-import Identicon from '../../../components/Identicon.vue'
-import Loading from '../../../components/Loading.vue'
-import commonMixin from '../../../mixins/commonMixin.js'
+import Identicon from '@/components/Identicon.vue'
+import Loading from '@/components/Loading.vue'
+import commonMixin from '@/mixins/commonMixin.js'
 
 export default {
   components: {

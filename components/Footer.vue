@@ -1,8 +1,7 @@
 <template>
   <footer class="footer">
     <div class="container text-center">
-      &copy; {{ new Date().getFullYear() }}
-      Kusama ·
+      &copy; {{ new Date().getFullYear() }} {{ config.name }} ·
       <a href="https://kusama.network/privacy" target="_blank"
         >Privacy Policy</a
       >
@@ -15,3 +14,13 @@
     </div>
   </footer>
 </template>
+<script>
+import { config } from '@/config.js'
+export default {
+  data() {
+    return {
+      config,
+    }
+  },
+}
+</script>

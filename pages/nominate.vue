@@ -199,15 +199,16 @@ import { encodeAddress } from '@polkadot/keyring'
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 import { Promised } from 'vue-promised'
-import Identicon from '../components/Identicon.vue'
-import commonMixin from '../mixins/commonMixin.js'
-import { config } from '../config.js'
+import Identicon from '@/components/Identicon.vue'
+import commonMixin from '@/mixins/commonMixin.js'
+import { config } from '@/config.js'
 
 export default {
   components: { Identicon, Promised },
   mixins: [commonMixin, validationMixin],
   data() {
     return {
+      config,
       favorites: [],
       detectedExtension: false,
       extensionAccounts: [],
@@ -230,7 +231,7 @@ export default {
   },
   head() {
     return {
-      title: `Nominate | Validator Resource Center and Ranking Website for Kusama`,
+      title: `Nominate | ${this.config.title} for ${this.config.name}`,
       meta: [
         {
           hid: 'description',
@@ -262,8 +263,7 @@ export default {
     if (this.$store.state.ranking.list.length === 0) {
       await this.$store.dispatch('ranking/update')
     }
-    this.enableWeb3 = await web3Enable(config.name)
-    web3Enable(config.name)
+    this.enableWeb3 = await web3Enable(`${config.title} for ${config.name}`)
       .then(() => {
         web3Accounts()
           .then((accounts) => {

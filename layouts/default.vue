@@ -33,9 +33,9 @@
 </template>
 
 <script>
-import { config } from '../config.js'
-import SelectedValidators from '../components/SelectedValidators.vue'
-import Footer from '../components/Footer.vue'
+import { config } from '@/config.js'
+import SelectedValidators from '@/components/SelectedValidators.vue'
+import Footer from '@/components/Footer.vue'
 export default {
   components: {
     SelectedValidators,

@@ -1,7 +1,7 @@
 {
   "name": "kusama-validator-resource-center",
   "version": "1.0.0",
-  "description": "Validator Resource Center and Ranking Website for Kusama",
+  "description": "Validator resource center and ranking for Kusama",
   "main": "index.js",
   "repository": {
     "type": "git",

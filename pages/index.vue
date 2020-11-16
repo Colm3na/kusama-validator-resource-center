@@ -2,9 +2,9 @@
   <div class="container pt-3">
     <div>
       <b-alert show dismissible variant="info" class="text-center py-3 glitch">
-        The Validator Resource Center and Ranking Website for Kusama aims to
-        provide quantitative and qualitative data about validators performance
-        and help nominators to choose their best nomination set
+        The {{ config.title }} for {{ config.name }} aims to provide
+        quantitative and qualitative data about validators performance and help
+        nominators to choose their best nomination set
       </b-alert>
       <Ranking />
     </div>
@@ -12,19 +12,25 @@
 </template>
 
 <script>
-import Ranking from '../components/Ranking.vue'
+import Ranking from '@/components/Ranking.vue'
+import { config } from '@/config.js'
 export default {
   components: {
     Ranking,
   },
+  data() {
+    return {
+      config,
+    }
+  },
   head() {
     return {
-      title: 'Validator Resource Center and Ranking Website for Kusama',
+      title: `${config.title} for ${config.name}`,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: 'Validator Resource Center and Ranking Website for Kusama',
+          content: `${config.title} for ${config.name}`,
         },
       ],
     }

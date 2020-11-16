@@ -130,20 +130,21 @@
 </template>
 
 <script>
-import Identicon from '../../../components/Identicon.vue'
-import Loading from '../../../components/Loading.vue'
-// import Additional from '../../../components/Additional.vue'
-import VerifiedIcon from '../../../components/VerifiedIcon.vue'
-import Identity from '../../../components/metrics/Identity.vue'
-import Address from '../../../components/metrics/Address.vue'
-import Slashes from '../../../components/metrics/Slashes.vue'
-import Subaccounts from '../../../components/metrics/Subaccounts.vue'
-import Nominators from '../../../components/metrics/Nominators.vue'
-import EraPoints from '../../../components/metrics/EraPoints.vue'
-import Commission from '../../../components/metrics/Commission.vue'
-import Payouts from '../../../components/metrics/Payouts.vue'
-import Governance from '../../../components/metrics/Governance.vue'
-import commonMixin from '../../../mixins/commonMixin.js'
+import Identicon from '@/components/Identicon.vue'
+import Loading from '@/components/Loading.vue'
+// import Additional from '@/components/Additional.vue'
+import VerifiedIcon from '@/components/VerifiedIcon.vue'
+import Identity from '@/components/metrics/Identity.vue'
+import Address from '@/components/metrics/Address.vue'
+import Slashes from '@/components/metrics/Slashes.vue'
+import Subaccounts from '@/components/metrics/Subaccounts.vue'
+import Nominators from '@/components/metrics/Nominators.vue'
+import EraPoints from '@/components/metrics/EraPoints.vue'
+import Commission from '@/components/metrics/Commission.vue'
+import Payouts from '@/components/metrics/Payouts.vue'
+import Governance from '@/components/metrics/Governance.vue'
+import commonMixin from '@/mixins/commonMixin.js'
+import { config } from '@/config.js'
 
 export default {
   components: {
@@ -170,7 +171,7 @@ export default {
   },
   head() {
     return {
-      title: `Validator ${this.accountId} metrics | Validator Resource Center and Ranking Website for Kusama`,
+      title: `Validator ${this.accountId} metrics | ${config.title} for ${config.name}`,
       meta: [
         {
           hid: 'description',

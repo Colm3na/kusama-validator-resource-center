@@ -54,9 +54,9 @@
 </template>
 
 <script>
-import Identicon from '../components/Identicon.vue'
-import VerifiedIcon from '../components/VerifiedIcon.vue'
-import commonMixin from '../mixins/commonMixin.js'
+import Identicon from '@/components/Identicon.vue'
+import VerifiedIcon from '@/components/VerifiedIcon.vue'
+import commonMixin from '@/mixins/commonMixin.js'
 export default {
   components: {
     Identicon,

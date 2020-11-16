@@ -24,13 +24,15 @@
 </template>
 
 <script>
-import Rating from '../components/Rating.vue'
+import Rating from '@/components/Rating.vue'
+import { config } from '@/config.js'
 export default {
   components: {
     Rating,
   },
   data() {
     return {
+      config,
       metrics: [
         {
           id: 'identity',
@@ -225,7 +227,7 @@ export default {
   },
   head() {
     return {
-      title: `Metrics | Validator Resource Center and Ranking Website for Kusama`,
+      title: `Metrics | ${config.title} for ${config.name}`,
       meta: [
         {
           hid: 'description',

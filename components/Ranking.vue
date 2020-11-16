@@ -217,10 +217,10 @@
 </template>
 <script>
 import { BigNumber } from 'bignumber.js'
-import Loading from '../components/Loading.vue'
-import Identicon from '../components/Identicon.vue'
-import VerifiedIcon from '../components/VerifiedIcon.vue'
-import commonMixin from '../mixins/commonMixin.js'
+import Loading from '@/components/Loading.vue'
+import Identicon from '@/components/Identicon.vue'
+import VerifiedIcon from '@/components/VerifiedIcon.vue'
+import commonMixin from '@/mixins/commonMixin.js'
 
 export default {
   components: {
