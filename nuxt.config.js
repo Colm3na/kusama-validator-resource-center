@@ -12,7 +12,9 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: `${config.title} for ${config.name}`,
+    title: `${config.title} for ${
+      config.name.charAt(0).toUpperCase() + config.name.slice(1)
+    }`,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

@@ -27,7 +27,7 @@ export default {
   },
   head() {
     return {
-      title: `${config.title} for ${config.name}`,
+      title: `${config.title} for ${this.capitalize(config.name)}`,
       meta: [
         {
           hid: 'description',

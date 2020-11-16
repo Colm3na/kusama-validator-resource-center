@@ -265,7 +265,9 @@ export default {
     if (this.$store.state.ranking.list.length === 0) {
       await this.$store.dispatch('ranking/update')
     }
-    this.enableWeb3 = await web3Enable(`${config.title} for ${config.name}`)
+    this.enableWeb3 = await web3Enable(
+      `${config.title} for ${this.capitalize(config.name)}`
+    )
       .then(() => {
         web3Accounts()
           .then((accounts) => {
