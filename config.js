@@ -30,19 +30,34 @@
 //   baseURL: '/kusama-validator-resource-center/',
 // }
 
-// edgeware
+// export const config = {
+//   name: 'edgeware',
+//   title: 'Validator resource center and ranking',
+//   nodeWs: 'wss://mainnet1.edgewa.re',
+//   denom: 'EDG',
+//   addressPrefix: 7,
+//   tokenDecimals: 18,
+//   historySize: 28, // 1 week
+//   polkascanAPI: '', // no trailing slash
+//   theme: '@/assets/scss/themes/edgeware.scss',
+//   identiconTheme: 'substrate',
+//   logo: 'edgeware-logo.png',
+//   favicon: 'edgeware-favicon.ico',
+//   baseURL: '/kusama-validator-resource-center/',
+// }
+
 export const config = {
-  name: 'edgeware',
+  name: 'stafi',
   title: 'Validator resource center and ranking',
-  nodeWs: 'wss://mainnet1.edgewa.re',
-  denom: 'EDG',
-  addressPrefix: 7,
-  tokenDecimals: 18,
+  nodeWs: 'wss://mainnet-rpc.stafi.io',
+  denom: 'FIS',
+  addressPrefix: 20,
+  tokenDecimals: 12,
   historySize: 28, // 1 week
   polkascanAPI: '', // no trailing slash
-  theme: '@/assets/scss/themes/edgeware.scss',
+  theme: '@/assets/scss/themes/stafi.scss',
   identiconTheme: 'substrate',
-  logo: 'edgeware-logo.png',
-  favicon: 'edgeware-favicon.ico',
+  logo: 'stafi-logo.png',
+  favicon: 'stafi-favicon.ico',
   baseURL: '/kusama-validator-resource-center/',
 }
