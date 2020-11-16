@@ -28,7 +28,7 @@ $body-bg: #fff;
 $body-color: #000;
 $primary: #fff;
 $primary2: #e6007a;
-$secondary: #aaafb3;
+$secondary: $gray-600;
 $success: #068642;
 $info: $cyan !default;
 $warning: $yellow !default;
@@ -58,13 +58,13 @@ $link-color: $primary2 !default;
 $border-radius: 0 !default;
 $border-radius-lg: 0 !default;
 $border-radius-sm: 0 !default;
-$pagination-color: $body-color !default;
+$pagination-color: $secondary !default;
 $pagination-bg: $white !default;
 $pagination-border-color: $secondary !default;
 $pagination-hover-color: $white !default;
 $pagination-hover-bg: $primary2 !default;
 $pagination-hover-border-color: $secondary !default;
-$pagination-active-color: $secondary !default;
+$pagination-active-color: $primary2 !default;
 $pagination-active-bg: $white !default;
 $pagination-active-border-color: $secondary !default;
 $pagination-disabled-color: $secondary !default;
@@ -114,7 +114,7 @@ body::-webkit-scrollbar-thumb {
   height: 35px;
 }
 .navbar-dark {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 1px solid#fdf5f5cc;
 }
 .identicon {
   display: inline-block;
@@ -207,7 +207,7 @@ pre {
 }
 .exclude-title {
   font-size: 0.9rem;
-  color: $light;
+  color: $gray-600;
   margin-bottom: 0;
 }
 .select {
@@ -216,6 +216,9 @@ pre {
 .ranking .select .selected,
 .ranking .select .unselected {
   font-size: 1.2rem;
+}
+.selected-per-page {
+  color: $primary2;
 }
 
 // rating component

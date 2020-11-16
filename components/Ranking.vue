@@ -163,25 +163,25 @@
             <b-button-group>
               <b-button
                 variant="outline-secondary"
-                :class="{ 'text-primary': perPage === 10 }"
+                :class="{ 'selected-per-page': perPage === 10 }"
                 @click="setPageSize(10)"
                 >10</b-button
               >
               <b-button
                 variant="outline-secondary"
-                :class="{ 'text-primary': perPage === 50 }"
+                :class="{ 'selected-per-page': perPage === 50 }"
                 @click="setPageSize(50)"
                 >50</b-button
               >
               <b-button
                 variant="outline-secondary"
-                :class="{ 'text-primary': perPage === 100 }"
+                :class="{ 'selected-per-page': perPage === 100 }"
                 @click="setPageSize(100)"
                 >100</b-button
               >
               <b-button
                 variant="outline-secondary"
-                :class="{ 'text-primary': perPage === 1000 }"
+                :class="{ 'selected-per-page': perPage === 1000 }"
                 @click="setPageSize(1000)"
                 >All</b-button
               >
