@@ -1,4 +1,5 @@
 import { isHex } from '@polkadot/util'
+import { config } from '../config.js'
 export default {
   methods: {
     shortAddress(address) {
@@ -19,7 +20,7 @@ export default {
       return `${amount
         .div(1e12)
         .toFixed(1)
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} KSM`
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} ${config.denom}`
     },
   },
 }
