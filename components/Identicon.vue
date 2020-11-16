@@ -23,6 +23,11 @@ export default {
   components: {
     Identicon,
   },
+  data() {
+    return {
+      config,
+    }
+  },
   props: {
     address: {
       type: String,
