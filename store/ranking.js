@@ -225,7 +225,7 @@ export const actions = {
           validators,
           validator.identity
         )
-        const partOfCluster = clusterMembers > 0
+        const partOfCluster = clusterMembers > 1
         const clusterName = getClusterName(validator.identity)
         const subAccountsRating = hasSubIdentity ? 2 : 0
 
@@ -368,7 +368,7 @@ export const actions = {
           ...validator,
         }
       })
-    // console.log(JSON.parse(JSON.stringify(ranking)))
+    console.log(JSON.parse(JSON.stringify(ranking)))
     context.commit('update', {
       ranking,
       eraHistory: eraIndexes,
