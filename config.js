@@ -1,18 +1,18 @@
-// export const config = {
-//   name: 'kusama',
-//   title: 'Validator resource center and ranking',
-//   nodeWs: 'wss://kusama-rpc.polkadot.io',
-//   denom: 'KSM',
-//   addressPrefix: 2,
-//   tokenDecimals: 12,
-//   historySize: 28, // 1 week
-//   polkascanAPI: 'https://explorer-31.polkascan.io/kusama/api/v1', // no trailing slash
-//   theme: '@/assets/scss/themes/kusama.scss',
-//   identiconTheme: 'polkadot',
-//   logo: 'kusama-logo.svg',
-//   favicon: 'kusama-favicon.ico',
-//   baseURL: '/kusama-validator-resource-center/',
-// }
+export const config = {
+  name: 'kusama',
+  title: 'Validator resource center and ranking',
+  nodeWs: 'wss://kusama-rpc.polkadot.io',
+  denom: 'KSM',
+  addressPrefix: 2,
+  tokenDecimals: 12,
+  historySize: 28, // 1 week
+  polkascanAPI: 'https://explorer-31.polkascan.io/kusama/api/v1', // no trailing slash
+  theme: '@/assets/scss/themes/kusama.scss',
+  identiconTheme: 'polkadot',
+  logo: 'kusama-logo.svg',
+  favicon: 'kusama-favicon.ico',
+  baseURL: '/kusama-validator-resource-center/',
+}
 
 // export const config = {
 //   name: 'polkadot',
@@ -46,18 +46,18 @@
 //   baseURL: '/kusama-validator-resource-center/',
 // }
 
-export const config = {
-  name: 'stafi',
-  title: 'Validator resource center and ranking',
-  nodeWs: 'wss://mainnet-rpc.stafi.io',
-  denom: 'FIS',
-  addressPrefix: 20,
-  tokenDecimals: 12,
-  historySize: 28, // 1 week
-  polkascanAPI: '', // no trailing slash
-  theme: '@/assets/scss/themes/stafi.scss',
-  identiconTheme: 'substrate',
-  logo: 'stafi-logo.png',
-  favicon: 'stafi-favicon.ico',
-  baseURL: '/kusama-validator-resource-center/',
-}
+// export const config = {
+//   name: 'stafi',
+//   title: 'Validator resource center and ranking',
+//   nodeWs: 'wss://mainnet-rpc.stafi.io',
+//   denom: 'FIS',
+//   addressPrefix: 20,
+//   tokenDecimals: 12,
+//   historySize: 28, // 1 week
+//   polkascanAPI: '', // no trailing slash
+//   theme: '@/assets/scss/themes/stafi.scss',
+//   identiconTheme: 'substrate',
+//   logo: 'stafi-logo.png',
+//   favicon: 'stafi-favicon.ico',
+//   baseURL: '/kusama-validator-resource-center/',
+// }
