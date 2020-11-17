@@ -1,6 +1,10 @@
 # Validator Resource Center and Ranking Website for Kusama
 
+![Kusama](https://raw.githubusercontent.com/Colm3na/kusama-validator-resource-center/master/static/screenshots/kusama.png)
+
 Resource center website focusing on validators information on Kusama Network. The website aims to provide quantitative and qualitative data about validators’ performance and help nominators to choose the best nomination set that works for them.
+
+This project is funded by Kusama Treasury, thanks!
 
 Check it out:
 
@@ -22,7 +26,7 @@ $ yarn start
 # generate static project
 $ yarn generate
 
-# depoy to GitHub Pages
+# deploy to GitHub Pages
 $ yarn generate
 $ yarn deploy
 ```
@@ -121,3 +125,36 @@ How it's rated?
 - Bad: no participating in governance
 - Good: validator is backing a council member or is participating in a current proposal or referendum (as proposer or voter)
 - Very good: validator is backing a council member and is participating in a current proposal or referendum (as proposer or voter)
+
+
+## Customize
+
+This dapp can be used to provide a validator ranking for every substrate based network that uses this pallets:
+
+- Staking
+- Identity
+- Democracy
+- Council
+
+Currently supports Kusama, Polkadot, Edgeware and Stafi out of the box, you only need to uncomment the desired network config in `config.js`.
+
+### Steps to use it for another network
+
+1. Clone this repo
+2. Add network logo image file in path `static/img/logo/`
+3. Add favicon image file in path `static/img/favicon/`
+4. Copy and modify one scss theme file in path `assets/scss/themes/`
+5. Edit footer links in `components/Footer.vue`
+6. Modify `config.js` parameters to suit the new network
+7. Configure GitHub Pages and execute `yarn generate && yarn deploy`
+8. Enjoy!
+
+
+### Some screenshots
+
+![Polkadot](https://raw.githubusercontent.com/Colm3na/kusama-validator-resource-center/master/static/screenshots/polkadot.png)
+
+![Edgeware](https://raw.githubusercontent.com/Colm3na/kusama-validator-resource-center/master/static/screenshots/edgeware.png)
+
+![Stafi](https://raw.githubusercontent.com/Colm3na/kusama-validator-resource-center/master/static/screenshots/stafi.png)
+
