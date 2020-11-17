@@ -368,7 +368,7 @@ export const actions = {
           ...validator,
         }
       })
-    console.log(JSON.parse(JSON.stringify(ranking)))
+    // console.log(JSON.parse(JSON.stringify(ranking)))
     context.commit('update', {
       ranking,
       eraHistory: eraIndexes,
@@ -500,11 +500,11 @@ function getCommissionRating(commission, commissionHistory) {
 
 function getPayoutRating(payoutHistory) {
   const pendingEras = payoutHistory.filter((era) => !era).length
-  if (pendingEras <= 4) {
+  if (pendingEras <= config.erasPerDay) {
     return 3
-  } else if (pendingEras <= 12) {
+  } else if (pendingEras <= 3 * config.erasPerDay) {
     return 2
-  } else if (pendingEras < 28) {
+  } else if (pendingEras < 7 * config.erasPerDay) {
     return 1
   }
   return 0
