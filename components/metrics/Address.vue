@@ -25,15 +25,16 @@
       <p v-if="typeof createdAtBlock === 'number'">
         Address was created at block #{{ formatNumber(createdAtBlock) }}
       </p>
+      <p v-else>Address creation metric is not available for this network</p>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import Rating from '../../components/Rating.vue'
-import commonMixin from '../../mixins/commonMixin.js'
-import { config } from '../../config.js'
+import Rating from '@/components/Rating.vue'
+import commonMixin from '@/mixins/commonMixin.js'
+import { config } from '@/config.js'
 export default {
   components: {
     Rating,

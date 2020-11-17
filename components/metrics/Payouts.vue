@@ -34,7 +34,8 @@
   </div>
 </template>
 <script>
-import Rating from '../../components/Rating.vue'
+import Rating from '@/components/Rating.vue'
+import { config } from '@/config.js'
 export default {
   components: {
     Rating,
@@ -48,11 +49,11 @@ export default {
   computed: {
     rating() {
       const pendingEras = this.payoutHistory.filter((era) => !era).length
-      if (pendingEras <= 4) {
+      if (pendingEras <= config.erasPerDay) {
         return 3
-      } else if (pendingEras <= 12) {
+      } else if (pendingEras <= 3 * config.erasPerDay) {
         return 2
-      } else if (pendingEras < 28) {
+      } else if (pendingEras < 7 * config.erasPerDay) {
         return 1
       }
       return 0
