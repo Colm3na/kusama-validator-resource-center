@@ -22,7 +22,9 @@
       </div>
     </div>
     <div class="description">
-      <p v-if="commission">Commission is {{ commission.toFixed(1) }}%</p>
+      <p v-if="!isNaN(commission)">
+        Commission is {{ commission.toFixed(2) }}%
+      </p>
     </div>
   </div>
 </template>
