@@ -23,11 +23,6 @@ export default {
   components: {
     Identicon,
   },
-  data() {
-    return {
-      config,
-    }
-  },
   props: {
     address: {
       type: String,
@@ -37,6 +32,11 @@ export default {
       type: Number,
       default: () => 20,
     },
+  },
+  data() {
+    return {
+      config,
+    }
   },
   methods: {
     showToast() {
