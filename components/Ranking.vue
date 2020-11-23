@@ -5,15 +5,34 @@
     </div>
     <div v-else class="ranking">
       <!-- Filter -->
-      <b-row style="margin-bottom: 1rem">
-        <b-col cols="12">
+      <b-row>
+        <b-col lg="9">
           <b-form-input
             id="filterInput"
             v-model="filter"
             type="search"
             placeholder="Search validator by address or name"
             debounce="500"
+            class="mb-3"
           />
+        </b-col>
+        <b-col lg="3">
+          <b-dropdown
+            id="selected-validators"
+            ref="selectedValidators"
+            class="selected-validators"
+            toggle-class="btn btn-block btn-selected mb-3"
+            right
+          >
+            <template #button-content>
+              <span v-if="loading">Selected</span>
+              <span v-else>
+                {{ selectedValidatorAddresses.length }}/16 selected
+              </span>
+              <font-awesome-icon icon="hand-paper" />
+            </template>
+            <SelectedValidators />
+          </b-dropdown>
         </b-col>
       </b-row>
       <!-- Exclude -->
@@ -220,6 +239,7 @@ import { BigNumber } from 'bignumber.js'
 import Loading from '@/components/Loading.vue'
 import Identicon from '@/components/Identicon.vue'
 import VerifiedIcon from '@/components/VerifiedIcon.vue'
+import SelectedValidators from '@/components/SelectedValidators.vue'
 import commonMixin from '@/mixins/commonMixin.js'
 import { config } from '@/config.js'
 
@@ -227,6 +247,7 @@ export default {
   components: {
     Identicon,
     VerifiedIcon,
+    SelectedValidators,
     Loading,
   },
   mixins: [commonMixin],

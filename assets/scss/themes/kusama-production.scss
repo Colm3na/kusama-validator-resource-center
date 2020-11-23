@@ -1,0 +1,501 @@
+// base grayscale colors definitions
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+
+// base colors definitions
+$blue: #007bff !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #dc3545 !default;
+$orange: #fd7e14 !default;
+$yellow: #ffc107 !default;
+$green: #28a745 !default;
+$teal: #20c997 !default;
+$cyan: #17a2b8 !default;
+
+// theme colors
+$body-bg: #000;
+$body-color: #fff;
+$primary: #fff;
+$primary2: #e6007a;
+$secondary: #aaafb3;
+$success: #0dff7e;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-500 !default;
+$dark: #000;
+
+// set theme colors (variant names)
+$theme-colors: () !default;
+$theme-colors: map-merge(
+  (
+    'primary': $primary,
+    'primary2': $primary2,
+    'secondary': $secondary,
+    'success': $success,
+    'info': $info,
+    'warning': $warning,
+    'danger': $danger,
+    'light': $light,
+    'dark': $dark,
+  ),
+  $theme-colors
+);
+
+// bootstrap variable overrides
+$border-radius: 0 !default;
+$border-radius-lg: 0 !default;
+$border-radius-sm: 0 !default;
+$pagination-color: $body-color !default;
+$pagination-bg: $dark !default;
+$pagination-border-color: $secondary !default;
+$pagination-hover-color: $primary !default;
+$pagination-hover-bg: $dark !default;
+$pagination-hover-border-color: $secondary !default;
+$pagination-active-color: $secondary !default;
+$pagination-active-bg: $dark !default;
+$pagination-active-border-color: $secondary !default;
+$pagination-disabled-color: $secondary !default;
+$pagination-disabled-bg: $dark !default;
+$pagination-disabled-border-color: $secondary !default;
+$table-dark-bg: $body-bg !default;
+$table-dark-border-color: rgba(255, 255, 255, 0.2) !default;
+$alert-bg-level: 10;
+$alert-border-level: 1;
+$alert-color-level: -10;
+$nav-tabs-link-active-color: $body-color !default;
+$hr-border-color: rgba(255, 255, 255, 0.2) !default;
+$custom-control-indicator-checked-bg: $primary2 !default;
+$custom-control-indicator-bg: $white !default;
+$navbar-dark-color: $light !default;
+$navbar-dark-hover-color: $white !default;
+$navbar-dark-disabled-color: $white !default;
+$h1-font-size: 2.1rem !default;
+
+// import bootstrap scss
+@import 'bootstrap/scss/bootstrap.scss';
+@import 'bootstrap-vue/src/index.scss';
+
+// global styles
+@font-face {
+  font-family: 'Visuelt';
+  src: url('../../fonts/Visuelt/Visuelt.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Visuelt-Light';
+  src: url('../../fonts/Visuelt/Visuelt Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SpaceMono-Regular';
+  src: url('../../fonts/SpaceMono/SpaceMono-Regular.ttf') format('truetype');
+}
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  font-family: 'Space Mono', monospace;
+  margin-bottom: 60px;
+  font-size: 0.9rem;
+}
+body::-webkit-scrollbar {
+  width: 10px;
+}
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+body::-webkit-scrollbar-thumb {
+  background-color: $primary2;
+  outline: none;
+}
+.logo {
+  height: 1.65rem;
+}
+.navbar-dark {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+.identicon {
+  display: inline-block;
+}
+.custom-switch .custom-control-label {
+  cursor: pointer;
+}
+.hr {
+  color: gray;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  font-size: 0.8rem;
+}
+.footer a {
+  color: $body-color;
+}
+.close:hover {
+  color: #d1ecf1;
+}
+.toast-body {
+  word-break: break-all;
+}
+pre {
+  font-size: initial;
+  color: $light;
+}
+.nav-tabs .nav-item a {
+  color: $light;
+}
+.text-selected {
+  color: #00effc;
+}
+.btn-selected {
+  color: $primary2;
+  border-color: $primary2;
+  background-color: $body-bg;
+}
+.btn-selected:focus, .btn-selected.focus,
+.btn-selected:hover, .btn-selected.hover {
+  color: #00ffe1;
+  background-color: $body-bg;
+  border-color: #00ffe1;
+  box-shadow: none;
+}
+#selected-validators {
+  display: block !important;
+  position: initial !important;
+}
+.selected-validators .dropdown-menu {
+  width: 400px;
+  padding: 1rem;
+  color: gray;
+}
+.selected-validators .dropdown-menu a span {
+  color: gray;
+}
+@media (max-width: 576px) {
+  .selected-validators .dropdown-menu {
+    width: 350px;
+  }
+}
+
+// navbar
+.navbar {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+}
+.nav-item a {
+  font-weight: 500;
+  font-size: 1rem;
+}
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.5);
+}
+.navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
+  color: rgba(255, 255, 255, 0.75);
+}
+.navbar-container a.btn {
+  font-size: .8rem;
+  border-width: 2px;
+  font-weight: bold;
+  font-family: 'Visuelt-Light','Helvetica','Arial', sans-serif;
+}
+
+a.btn.btn-outline-primary, button.btn.btn-outline-primary {
+  color: $primary2;
+  border-color: $primary2;
+}
+a.btn:hover.btn-outline-primary, a.btn:hover.btn-outline-white, button.btn:hover.btn-outline-primary, button.btn:hover.btn-outline-white {
+  color: #00ffe1;
+  border-color: #00ffe1;
+  background-color: transparent;
+}
+.navbar-container .btn {
+	display: inline-block;
+	font-weight: 500;
+	color: #495057;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: transparent;
+	border: 1px solid transparent;
+	padding: 0.4375rem 1.5rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+		box-shadow 0.15s ease-in-out;
+}
+.navbar-expand-lg .navbar-nav .nav-link {
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
+}
+.navbar-brand {
+	display: inline-block;
+	padding-top: 0.3125rem;
+	padding-bottom: 0.3125rem;
+	margin-right: 1.5rem;
+	font-size: 1.25rem;
+	line-height: inherit;
+	white-space: nowrap;
+}
+.navbar-brand:hover,
+.navbar-brand:focus {
+	text-decoration: none;
+}
+
+// TODO: remove dup
+.navbar {
+	border-bottom: 1px solid rgba(29, 27, 38, 0.08);
+	width: 100%;
+}
+.navbar[data-overlay] {
+	position: absolute;
+}
+.navbar[data-sticky="top"] {
+	transition: background-color 0.2s ease;
+}
+.navbar[data-sticky="top"].scrolled.navbar-dark {
+	background: #1d1b26;
+	border-bottom-color: rgba(0, 0, 0, 0);
+}
+.navbar[data-sticky="top"].scrolled.navbar-light {
+	background: #fff !important;
+}
+.navbar[data-overlay],
+.navbar[data-sticky="top"] {
+	z-index: 999;
+}
+.navbar[data-overlay].scrolled,
+.navbar[data-sticky="top"].scrolled {
+	z-index: 1070;
+}
+.navbar .dropdown-menu {
+	z-index: 1060;
+}
+.navbar .nav-link {
+	transition: color 0.2s ease;
+}
+
+.navbar-container {
+	position: relative;
+}
+
+.navbar-light .navbar-toggler svg path {
+	fill: #212529;
+}
+
+.navbar-dark {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.navbar-dark .navbar-toggler svg path {
+	fill: #fff;
+}
+
+.navbar-toggler {
+	border: none;
+}
+
+@media (min-width: 992px) {
+	.navbar {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.navbar .dropdown-menu {
+		margin-top: 1rem;
+	}
+}
+
+nav[data-overlay].navbar-toggled-show {
+	background: #fff;
+}
+nav[data-overlay].navbar-toggled-show.navbar-dark {
+	background: #1d1b26;
+}
+
+@media (max-width: 991.98px) {
+	.navbar-collapse {
+		max-height: 100vh;
+		overflow-y: scroll;
+	}
+}
+
+.nav-link.disabled {
+	opacity: .25;
+}
+
+.navbar[data-sticky="top"].scrolled.navbar-dark {
+	background: #000000;
+	border-bottom-color: rgba(255, 255, 255, 0.25);
+}
+
+nav[data-overlay].navbar-toggled-show.navbar-dark {
+	background: #000000;
+}
+
+.navbar-dark {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+@media (max-width: 767px) {
+	.navbar-dark {
+		background-color: #000000 !important;
+	}
+}
+.navbar-expand-lg .navbar-nav .nav-link {
+	padding-right: 0.75rem;
+	padding-left: 0.75rem;
+}
+
+.navbar-nav {
+	flex-direction: row;
+}
+
+img.logo {
+	height: 1.75rem;
+}
+
+.nav-link .icon {
+	height: 1.25rem;
+}
+
+.nav-link svg.icon * {
+	fill: #ffffff;
+	opacity: .5;
+}
+
+.nav-link svg.icon *:hover {
+	fill: #ffffff;
+	opacity: .75;
+}
+
+a.nav-link {
+  font-family: 'SpaceMono-Regular','Helvetica','Arial', sans-serif;
+}
+
+// additional component
+.additional-info p {
+  color: $light;
+}
+
+// identicon component
+.identicon {
+  cursor: pointer;
+}
+
+// loading component
+.loading {
+  margin-top: calc(30vh);
+  font-family: 'Visuelt', sans-serif;
+  font-size: 2rem;
+}
+
+// ranking component
+.elected-icon {
+  color: $black;
+  font-size: 1.6rem;
+  border: 2px solid rgb(128 128 128 / 49%);
+  border-radius: 50%;
+}
+.not-elected-icon {
+  color: $black;
+  font-size: 1.6rem;
+  border: 2px solid rgb(128 128 128 / 49%);
+  border-radius: 50%;
+}
+.custom-switch.b-custom-control-lg .custom-control-label,
+.input-group-lg .custom-switch .custom-control-label {
+  font-size: 0.9rem;
+}
+.exclude {
+  padding: 1rem 1rem 0.5rem 1rem;
+  border: 1px solid $primary2;
+}
+.exclude-title {
+  font-size: 0.9rem;
+  color: $light;
+  margin-bottom: 0;
+}
+.select {
+  cursor: pointer;
+}
+.ranking .select .selected,
+.ranking .select .unselected {
+  font-size: 1.2rem;
+}
+.selected-per-page {
+  color: $primary;
+}
+
+// rating component
+.rating {
+  font-size: 1rem;
+}
+
+// selectedValidators component
+.addresses {
+  cursor: pointer;
+}
+.remove,
+.remove:hover,
+.remove:active {
+  color: rgba(255, 0, 0, 0.5);
+}
+.selected-validators .selected-validator {
+  font-size: 0.8rem;
+}
+
+// verifiedIcon component
+.verified .circle {
+  color: #0fccd6;
+}
+.verified .fa-check {
+  color: white;
+}
+
+// metrics page
+.metrics-page p {
+  color: gray;
+}
+
+// nominate page
+.controller-address-validation p {
+  font-size: 0.75rem;
+}
+
+// validator page
+.validator-page .metric {
+  min-height: 10rem;
+}
+.validator-page .card-body {
+  position: relative;
+}
+.validator-page .verified {
+  font-size: 2rem;
+  cursor: pointer;
+}
+.metric {
+  border: 1px solid gray;
+  padding: 1rem;
+}
+.metric .description {
+  color: $light;
+}
