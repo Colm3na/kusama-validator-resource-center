@@ -391,12 +391,12 @@ export default {
     if (this.$cookies.get(`${config.name}-exclude`)) {
       this.exclude = this.$cookies.get(`${config.name}-exclude`)
     }
-    // update ranking every 5 min
+    // update ranking every 30 min
     this.polling = setInterval(async () => {
       // eslint-disable-next-line
       console.log('refreshing...')
       await this.$store.dispatch('ranking/update')
-    }, 300 * 1000)
+    }, 1800 * 1000)
   },
   beforeDestroy() {
     clearInterval(this.polling)
