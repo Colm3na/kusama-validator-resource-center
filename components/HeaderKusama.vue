@@ -61,6 +61,9 @@
                   >Blog</a
                 >
               </li>
+              <li class="nav-item">
+                <nuxt-link to="/" class="nav-link active">Validators</nuxt-link>
+              </li>
               <li class="nav-item nav-item--social">
                 <a
                   href="https://twitter.com/kusamanetwork"
