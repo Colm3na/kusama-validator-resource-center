@@ -36,7 +36,7 @@
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a
-                  href="https://wiki.polkadot.network/docs/en/kusama-index?__hstc=96404163.14865477a95456d1abc2beb8df7fda4b.1599492723813.1606119212820.1606121742157.12&amp;__hssc=96404163.1.1606121742157&amp;__hsfp=2846085235"
+                  href="https://wiki.polkadot.network/docs/en/kusama-index"
                   class="nav-link"
                   target="_blank"
                   rel="noopener"
@@ -54,7 +54,7 @@
               </li>
               <li class="nav-item">
                 <a
-                  href="https://polkadot.network/tag/kusama/?__hstc=96404163.14865477a95456d1abc2beb8df7fda4b.1599492723813.1606119212820.1606121742157.12&amp;__hssc=96404163.1.1606121742157&amp;__hsfp=2846085235"
+                  href="https://polkadot.network/tag/kusama/"
                   class="nav-link"
                   target="_blank"
                   rel="noopener"
