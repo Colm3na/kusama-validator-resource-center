@@ -12,13 +12,19 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: `${config.title} for ${
-      config.name.charAt(0).toUpperCase() + config.name.slice(1)
-    }`,
+    // title: `${config.title} for ${
+    //   config.name.charAt(0).toUpperCase() + config.name.slice(1)
+    // }`,
+    title: `Kusama, Polkadot's Canary Network | Validator ranking`,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          'Kusama is a scalable multi-chain network for radical innovation and early stage Polkadot deployments. Expect Chaos. No promises.',
+      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: config.favicon }],
   },

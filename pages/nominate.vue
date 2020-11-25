@@ -1,5 +1,5 @@
 <template>
-  <b-container class="py-5">
+  <b-container class="page py-5">
     <h1 class="mb-4">Nominate selected</h1>
     <div v-if="loading">
       <Loading />

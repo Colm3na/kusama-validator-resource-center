@@ -1,5 +1,5 @@
 <template>
-  <div class="metrics-page container py-3">
+  <div class="page metrics-page container py-3">
     <div>
       <h1 class="mb-4">Ranking criteria</h1>
       <p>The ranking is based on this on-chain metrics:</p>

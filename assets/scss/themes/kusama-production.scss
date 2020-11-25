@@ -109,6 +109,9 @@ body {
   margin-bottom: 60px;
   font-size: 0.9rem;
 }
+body .page {
+  margin-top: 80px;
+}
 body::-webkit-scrollbar {
   width: 10px;
 }
@@ -140,10 +143,13 @@ body::-webkit-scrollbar-thumb {
   width: 100%;
   height: 60px;
   line-height: 60px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
 .footer a {
   color: $body-color;
+}
+.footer a:hover {
+  text-decoration: none;
 }
 .close:hover {
   color: #d1ecf1;
@@ -261,6 +267,19 @@ a.btn:hover.btn-outline-primary, a.btn:hover.btn-outline-white, button.btn:hover
 .navbar-brand:focus {
 	text-decoration: none;
 }
+.navbar-container .navbar > .container {
+  padding: 0 1.5rem;
+}
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100vw;
+}
+.nav-item--social {
+  margin-top: -2px;
+}
 
 // TODO: remove dup
 .navbar {
@@ -294,26 +313,18 @@ a.btn:hover.btn-outline-primary, a.btn:hover.btn-outline-white, button.btn:hover
 .navbar .nav-link {
 	transition: color 0.2s ease;
 }
-
-.navbar-container {
-	position: relative;
-}
-
 .navbar-light .navbar-toggler svg path {
 	fill: #212529;
 }
-
 .navbar-dark {
 	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 .navbar-dark .navbar-toggler svg path {
 	fill: #fff;
 }
-
 .navbar-toggler {
 	border: none;
 }
-
 @media (min-width: 992px) {
 	.navbar {
 		padding-left: 0;
@@ -323,38 +334,31 @@ a.btn:hover.btn-outline-primary, a.btn:hover.btn-outline-white, button.btn:hover
 		margin-top: 1rem;
 	}
 }
-
 nav[data-overlay].navbar-toggled-show {
 	background: #fff;
 }
 nav[data-overlay].navbar-toggled-show.navbar-dark {
 	background: #1d1b26;
 }
-
 @media (max-width: 991.98px) {
 	.navbar-collapse {
 		max-height: 100vh;
-		overflow-y: scroll;
+		overflow-y: auto;
 	}
 }
-
 .nav-link.disabled {
 	opacity: .25;
 }
-
 .navbar[data-sticky="top"].scrolled.navbar-dark {
 	background: #000000;
 	border-bottom-color: rgba(255, 255, 255, 0.25);
 }
-
 nav[data-overlay].navbar-toggled-show.navbar-dark {
 	background: #000000;
 }
-
 .navbar-dark {
 	border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
-
 @media (max-width: 767px) {
 	.navbar-dark {
 		background-color: #000000 !important;
@@ -364,29 +368,23 @@ nav[data-overlay].navbar-toggled-show.navbar-dark {
 	padding-right: 0.75rem;
 	padding-left: 0.75rem;
 }
-
 .navbar-nav {
 	flex-direction: row;
 }
-
 img.logo {
 	height: 1.75rem;
 }
-
 .nav-link .icon {
 	height: 1.25rem;
 }
-
 .nav-link svg.icon * {
 	fill: #ffffff;
 	opacity: .5;
 }
-
 .nav-link svg.icon *:hover {
 	fill: #ffffff;
 	opacity: .75;
 }
-
 a.nav-link {
   font-family: 'SpaceMono-Regular','Helvetica','Arial', sans-serif;
 }

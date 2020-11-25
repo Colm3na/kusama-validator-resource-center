@@ -2,9 +2,9 @@
   <div class="navbar-container bg-dark">
     <nav class="navbar navbar-expand-lg navbar-dark" data-sticky="top">
       <div class="container">
-        <nuxt-link class="navbar-brand fade-page" to="/">
+        <a class="navbar-brand fade-page" href="https://kusama.network">
           <img :src="config.logo" alt="Kusama" class="logo" />
-        </nuxt-link>
+        </a>
         <button
           class="navbar-toggler"
           type="button"
@@ -133,7 +133,7 @@
           <a
             href="https://www.substrate.io/"
             target="_blank"
-            class="btn btn-outline-primary ml-lg-3"
+            class="btn btn-outline-primary ml-lg-4"
             rel="noopener"
             >Start Building</a
           >
