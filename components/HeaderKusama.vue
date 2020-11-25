@@ -61,9 +61,6 @@
                   >Blog</a
                 >
               </li>
-              <li class="nav-item">
-                <nuxt-link to="/" class="nav-link active">Validators</nuxt-link>
-              </li>
               <li class="nav-item nav-item--social">
                 <a
                   href="https://twitter.com/kusamanetwork"
@@ -148,11 +145,7 @@
 
 <script>
 import { config } from '@/config.js'
-// import SelectedValidators from '@/components/SelectedValidators.vue'
 export default {
-  // components: {
-  //   SelectedValidators,
-  // },
   data() {
     return {
       config,
@@ -164,21 +157,5 @@ export default {
       this.show = !this.show
     },
   },
-  // computed: {
-  //   loading() {
-  //     return this.$store.state.ranking.loading
-  //   },
-  //   selectedValidatorAddresses() {
-  //     return this.$store.state.ranking.selectedAddresses
-  //   },
-  // },
-  // watch: {
-  //   $route(to, from) {
-  //     this.$refs.selectedValidators.hide(true)
-  //   },
-  // },
-  // created() {
-  //   this.$store.dispatch('ranking/loadSelected')
-  // },
 }
 </script>
