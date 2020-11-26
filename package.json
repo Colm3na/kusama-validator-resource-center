@@ -42,7 +42,7 @@
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.19.0",
     "cookie-universal-nuxt": "^2.1.4",
-    "core-js": "^3.7.0",
+    "core-js": "^3.8.0",
     "nuxt": "^2.14.7",
     "nuxt-clipboard2": "^0.2.1",
     "sass": "^1.29.0",
