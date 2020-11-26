@@ -4,6 +4,26 @@
       <Loading />
     </div>
     <div v-else>
+      <b-row v-if="config.showValSelectorInPage">
+        <b-col offset="9" cols="3">
+          <b-dropdown
+            id="selected-validators"
+            ref="selectedValidators"
+            class="selected-validators"
+            toggle-class="btn btn-block btn-selected mb-3"
+            right
+          >
+            <template #button-content>
+              <span v-if="loading">Selected</span>
+              <span v-else>
+                {{ selectedValidatorAddresses.length }}/16 selected
+              </span>
+              <font-awesome-icon icon="hand-paper" />
+            </template>
+            <SelectedValidators />
+          </b-dropdown>
+        </b-col>
+      </b-row>
       <div class="row">
         <div class="col-10">
           <h1 class="mt-3 mb-4">
@@ -143,6 +163,7 @@ import EraPoints from '@/components/metrics/EraPoints.vue'
 import Commission from '@/components/metrics/Commission.vue'
 import Payouts from '@/components/metrics/Payouts.vue'
 import Governance from '@/components/metrics/Governance.vue'
+import SelectedValidators from '@/components/SelectedValidators.vue'
 import commonMixin from '@/mixins/commonMixin.js'
 import { config } from '@/config.js'
 
@@ -161,10 +182,12 @@ export default {
     Commission,
     Payouts,
     Governance,
+    SelectedValidators,
   },
   mixins: [commonMixin],
   data() {
     return {
+      config,
       accountId: this.$route.params.id,
       polling: null,
     }

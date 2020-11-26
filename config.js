@@ -13,6 +13,7 @@ export const config = {
   logo: 'img/logo/kusama.svg',
   favicon: 'img/favicon/kusama.ico',
   baseURL: '/kusama-validator-resource-center/',
+  showValSelectorInPage: true, // set to false when showing val selector in header
 }
 
 // export const config = {
@@ -30,6 +31,7 @@ export const config = {
 //   logo: 'img/logo/polkadot.svg',
 //   favicon: 'img/favicon/polkadot.ico',
 //   baseURL: '/kusama-validator-resource-center/',
+//   showValSelectorInPage: false,
 // }
 
 // export const config = {
@@ -47,6 +49,7 @@ export const config = {
 //   logo: 'img/logo/edgeware.png',
 //   favicon: 'img/favicon/edgeware.ico',
 //   baseURL: '/kusama-validator-resource-center/',
+//   showValSelectorInPage: false,
 // }
 
 // export const config = {
@@ -64,4 +67,5 @@ export const config = {
 //   logo: 'img/logo/stafi.png',
 //   favicon: 'img/favicon/stafi.ico',
 //   baseURL: '/kusama-validator-resource-center/',
+//   showValSelectorInPage: false,
 // }

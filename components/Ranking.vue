@@ -4,19 +4,9 @@
       <Loading />
     </div>
     <div v-else class="ranking">
-      <!-- Filter -->
-      <b-row>
-        <b-col lg="9">
-          <b-form-input
-            id="filterInput"
-            v-model="filter"
-            type="search"
-            placeholder="Search validator by address or name"
-            debounce="500"
-            class="mb-3"
-          />
-        </b-col>
-        <b-col lg="3">
+      <!-- Selected validators  -->
+      <b-row v-if="config.showValSelectorInPage">
+        <b-col offset="9" cols="3">
           <b-dropdown
             id="selected-validators"
             ref="selectedValidators"
@@ -55,6 +45,19 @@
           </div>
         </div>
       </div>
+      <!-- Filter -->
+      <b-row>
+        <b-col col="12">
+          <b-form-input
+            id="filterInput"
+            v-model="filter"
+            type="search"
+            placeholder="Search validator by address or name"
+            debounce="500"
+            class="mb-3"
+          />
+        </b-col>
+      </b-row>
       <p class="mb-2 text-secondary">
         Search results: {{ filteredRows }} / {{ ranking.length }}
       </p>
@@ -321,6 +324,7 @@ export default {
       rows: 0,
       maxValidatorsReached: false,
       polling: null,
+      config,
     }
   },
   computed: {
