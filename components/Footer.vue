@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <div class="container text-center">
+    <div class="container text-center text-muted">
       &copy; {{ new Date().getFullYear() }} {{ capitalize(config.name) }} ·
       <a href="https://kusama.network/privacy" target="_blank"
         >Privacy Policy</a

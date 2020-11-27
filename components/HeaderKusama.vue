@@ -36,11 +36,11 @@
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a
-                  href="https://wiki.polkadot.network/docs/en/kusama-index"
+                  href="https://guide.kusama.network"
                   class="nav-link"
                   target="_blank"
                   rel="noopener"
-                  >Docs</a
+                  >Guide</a
                 >
               </li>
               <li class="nav-item">
