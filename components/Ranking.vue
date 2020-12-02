@@ -47,7 +47,7 @@
       </div>
       <!-- Filter -->
       <b-row>
-        <b-col col="12">
+        <b-col cols="12">
           <b-form-input
             id="filterInput"
             v-model="filter"
