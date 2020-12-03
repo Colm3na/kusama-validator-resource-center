@@ -264,12 +264,25 @@ export const actions = {
         )
 
         // governance
-        const councilBacking = councilVotes.some(
-          (vote) => vote[0].toString() === validator.accountId.toString()
-        )
-        const activeInGovernance = participateInGovernance.includes(
-          validator.accountId.toString()
-        )
+        const councilBacking = validator.identity.parent
+          ? councilVotes.some(
+              (vote) => vote[0].toString() === validator.accountId.toString()
+            ) ||
+            councilVotes.some(
+              (vote) =>
+                vote[0].toString() === validator.identity.parent.toString()
+            )
+          : councilVotes.some(
+              (vote) => vote[0].toString() === validator.accountId.toString()
+            )
+        const activeInGovernance = validator.identity.parent
+          ? participateInGovernance.includes(validator.accountId.toString()) ||
+            participateInGovernance.includes(
+              validator.identity.parent.toString()
+            )
+          : participateInGovernance.includes(
+              validator.identity.parent.toString()
+            )
         const governanceRating =
           councilBacking && activeInGovernance
             ? 3
