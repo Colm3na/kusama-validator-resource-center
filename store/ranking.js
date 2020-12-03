@@ -264,7 +264,7 @@ export const actions = {
         )
 
         // governance
-        const councilBacking = validator.identity.parent
+        const councilBacking = validator.identity?.parent
           ? councilVotes.some(
               (vote) => vote[0].toString() === validator.accountId.toString()
             ) ||
@@ -275,14 +275,12 @@ export const actions = {
           : councilVotes.some(
               (vote) => vote[0].toString() === validator.accountId.toString()
             )
-        const activeInGovernance = validator.identity.parent
+        const activeInGovernance = validator.identity?.parent
           ? participateInGovernance.includes(validator.accountId.toString()) ||
             participateInGovernance.includes(
               validator.identity.parent.toString()
             )
-          : participateInGovernance.includes(
-              validator.identity.parent.toString()
-            )
+          : participateInGovernance.includes(validator.accountId.toString())
         const governanceRating =
           councilBacking && activeInGovernance
             ? 3
