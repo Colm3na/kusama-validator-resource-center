@@ -168,7 +168,7 @@
           <h4>Transaction hash {{ extrinsicHash }}</h4>
           <p>Transaction status: {{ extrinsicStatus }}</p>
         </b-alert>
-        <b-alert variant="warning" v-if="clusterAlert" show dismissible>
+        <b-alert v-if="clusterAlert" variant="warning" show dismissible>
           You have more than one member of the same cluster in your set. If
           there is a slash for a cluster operator, chances are high that many
           cluster members are affected and super-linear slashing occurs
@@ -262,7 +262,6 @@ export default {
         const includedClusterMembers = list.filter(
           ({ clusterName }) => clusterName === validator.clusterName
         )
-        console.log(includedClusterMembers.length)
         if (includedClusterMembers.length > 1) {
           vm.clusterAlert = true
         }

@@ -118,7 +118,7 @@ How it's rated?
 
 ### Governance
 
-Evaluate if the validator is backing a council member and if is participating in a current proposal or referendum (as proposer or voter)
+Evaluate if the validator stash address or its super identity address is backing a council member and if is participating in a current proposal or referendum (as proposer or voter)
 
 How it's rated?
 
