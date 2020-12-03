@@ -169,8 +169,9 @@
           <p>Transaction status: {{ extrinsicStatus }}</p>
         </b-alert>
         <b-alert variant="warning" v-if="clusterAlert" show dismissible>
-          You have at least more than one member of the same cluster in your
-          set. This can increase the risk of being slashed.
+          You have more than one member of the same cluster in your set. If
+          there is a slash for a cluster operator, chances are high that many
+          cluster members are affected and super-linear slashing occurs
         </b-alert>
         <b-button
           type="submit"
