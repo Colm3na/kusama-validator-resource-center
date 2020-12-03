@@ -168,6 +168,10 @@
           <h4>Transaction hash {{ extrinsicHash }}</h4>
           <p>Transaction status: {{ extrinsicStatus }}</p>
         </b-alert>
+        <b-alert variant="warning" v-if="clusterAlert" show dismissible>
+          You have at least more than one member of the same cluster in your
+          set. This can increase the risk of being slashed.
+        </b-alert>
         <b-button
           type="submit"
           variant="outline-primary2"
@@ -227,6 +231,7 @@ export default {
       noAccountsFound: true,
       addressRole: null,
       onGoingElection: false,
+      clusterAlert: false,
     }
   },
   head() {
@@ -248,9 +253,20 @@ export default {
       return this.$store.state.ranking.loading
     },
     list() {
-      return this.$store.state.ranking.list.filter(({ stashAddress }) =>
+      const list = this.$store.state.ranking.list.filter(({ stashAddress }) =>
         this.selectedAddresses.includes(stashAddress)
       )
+      const vm = this
+      list.forEach((validator) => {
+        const includedClusterMembers = list.filter(
+          ({ clusterName }) => clusterName === validator.clusterName
+        )
+        console.log(includedClusterMembers.length)
+        if (includedClusterMembers.length > 1) {
+          vm.clusterAlert = true
+        }
+      })
+      return list
     },
     selectedAddresses() {
       return this.$store.state.ranking.selectedAddresses
