@@ -76,7 +76,10 @@
               />
             </div>
             <div class="col-md-6 mb-5">
-              <Address :account-id="validator.stashAddress" />
+              <Address
+                :account-id="validator.stashAddress"
+                :identity="validator.identity"
+              />
             </div>
           </div>
           <div class="row">
