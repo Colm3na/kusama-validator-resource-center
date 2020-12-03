@@ -42,28 +42,29 @@ export const mutations = {
       selectedAddresses.splice(state.selectedAddresses.indexOf(accountId), 1)
     } else if (selectedAddresses.length < 16) {
       // check if a member of the same cluster is already in the set
-      const validator = state.list.find(
-        ({ stashAddress }) => accountId === stashAddress
-      )
-      const clusterMemberAlreadyIncluded = state.list
-        .filter(({ stashAddress }) =>
-          state.selectedAddresses.includes(stashAddress)
-        )
-        .some(
-          ({ clusterName, partOfCluster }) =>
-            partOfCluster && clusterName === validator.clusterName
-        )
-      if (clusterMemberAlreadyIncluded) {
-        const bootStrapToaster = new BToast()
-        bootStrapToaster.$bvToast.toast('Cluster member already included', {
-          title: 'Selecting more than one member of a cluster is not allowed',
-          variant: 'danger',
-          autoHideDelay: 5000,
-          appendToast: false,
-        })
-      } else {
-        selectedAddresses.push(accountId)
-      }
+      // const validator = state.list.find(
+      //   ({ stashAddress }) => accountId === stashAddress
+      // )
+      // const clusterMemberAlreadyIncluded = state.list
+      //   .filter(({ stashAddress }) =>
+      //     state.selectedAddresses.includes(stashAddress)
+      //   )
+      //   .some(
+      //     ({ clusterName, partOfCluster }) =>
+      //       partOfCluster && clusterName === validator.clusterName
+      //   )
+      // if (clusterMemberAlreadyIncluded) {
+      //   const bootStrapToaster = new BToast()
+      //   bootStrapToaster.$bvToast.toast('Cluster member already included', {
+      //     title: 'Selecting more than one member of a cluster is not allowed',
+      //     variant: 'danger',
+      //     autoHideDelay: 5000,
+      //     appendToast: false,
+      //   })
+      // } else {
+      //   selectedAddresses.push(accountId)
+      // }
+      selectedAddresses.push(accountId)
     } else {
       const bootStrapToaster = new BToast()
       bootStrapToaster.$bvToast.toast(
