@@ -55,15 +55,17 @@ export const mutations = {
         )
       if (clusterMemberAlreadyIncluded) {
         const bootStrapToaster = new BToast()
-        bootStrapToaster.$bvToast.toast('Cluster member already included', {
-          title: 'Selecting more than one member of a cluster is not allowed',
-          variant: 'danger',
-          autoHideDelay: 5000,
-          appendToast: false,
-        })
-      } else {
-        selectedAddresses.push(accountId)
+        bootStrapToaster.$bvToast.toast(
+          'Selecting more than one member of a cluster is not recommended',
+          {
+            title: 'Cluster already included!',
+            variant: 'warning',
+            autoHideDelay: 5000,
+            appendToast: false,
+          }
+        )
       }
+      selectedAddresses.push(accountId)
     } else {
       const bootStrapToaster = new BToast()
       bootStrapToaster.$bvToast.toast(
