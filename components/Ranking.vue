@@ -306,10 +306,10 @@ export default {
         { text: 'No identity', value: 'noIdentity' },
         { text: 'No verified identity', value: 'noVerifiedIdentity' },
         { text: 'No auto-payout', value: 'noAutoPayout' },
-        {
-          text: 'Cluster members',
-          value: 'partOfCluster',
-        },
+        // {
+        //   text: 'Cluster members',
+        //   value: 'partOfCluster',
+        // },
         {
           text: 'Below average era points',
           value: 'belowAverageEraPoints',
@@ -368,9 +368,9 @@ export default {
             ({ governanceRating }) => governanceRating !== 0
           )
         : filteredRanking
-      filteredRanking = this.exclude.includes('partOfCluster')
-        ? filteredRanking.filter(({ partOfCluster }) => !partOfCluster)
-        : filteredRanking
+      // filteredRanking = this.exclude.includes('partOfCluster')
+      //   ? filteredRanking.filter(({ partOfCluster }) => !partOfCluster)
+      //   : filteredRanking
       filteredRanking = this.exclude.includes('belowAverageEraPoints')
         ? filteredRanking.filter(({ eraPointsRating }) => eraPointsRating === 2)
         : filteredRanking
