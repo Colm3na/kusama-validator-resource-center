@@ -48,7 +48,7 @@ How it's rated?
 
 ### Address creation
 
-The older the address is, the more trustable it might be.
+The older the address is, the more trustable it might be. The best value (older address) between the validator stash address and its parent identity address will be used for rating this metric.
 
 How it's rated?
 
