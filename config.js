@@ -12,9 +12,31 @@ export const config = {
   identiconTheme: 'polkadot',
   logo: 'img/logo/kusama.svg',
   favicon: 'img/favicon/kusama.ico',
-  baseURL: '/',
+  baseURL: '/kusama-validator-resource-center/',
   showValSelectorInPage: true, // set to false when showing val selector in header
 }
+
+// kusama production
+
+// export const config = {
+//   name: 'kusama',
+//   title: 'Validator resource center and ranking',
+//   nodeWs: 'wss://kusama-rpc.polkadot.io',
+//   denom: 'KSM',
+//   addressPrefix: 2,
+//   tokenDecimals: 12,
+//   historySize: 28, // 1 week
+//   erasPerDay: 4,
+//   polkascanAPI: 'https://explorer-31.polkascan.io/kusama/api/v1', // no trailing slash
+//   theme: '@/assets/scss/themes/kusama-production.scss',
+//   identiconTheme: 'polkadot',
+//   logo: 'img/logo/kusama.svg',
+//   favicon: 'img/favicon/kusama.ico',
+//   baseURL: '/',
+//   showValSelectorInPage: true, // set to false when showing val selector in header
+// }
+
+// polkadot
 
 // export const config = {
 //   name: 'polkadot',
@@ -34,6 +56,8 @@ export const config = {
 //   showValSelectorInPage: false,
 // }
 
+// edgeware
+
 // export const config = {
 //   name: 'edgeware',
 //   title: 'Validator resource center and ranking',
@@ -51,6 +75,8 @@ export const config = {
 //   baseURL: '/kusama-validator-resource-center/',
 //   showValSelectorInPage: false,
 // }
+
+// stafi
 
 // export const config = {
 //   name: 'stafi',
