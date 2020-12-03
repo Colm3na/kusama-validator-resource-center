@@ -207,7 +207,7 @@ export default {
           id: 'governance',
           title: 'Governance participation',
           description:
-            'If the validator is backing at least one council member and is voting in a current proposal or referendum.',
+            'If the validator stash address or its super identity address is backing at least one council member and is voting in a current democracy proposal or referendum.',
           rating: [
             {
               rating: 0,
