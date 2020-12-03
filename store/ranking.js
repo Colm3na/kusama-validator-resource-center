@@ -158,7 +158,7 @@ export const actions = {
         })
       )
     )
-    api.disconnect()
+    // api.disconnect()
     const dataCollectionEndTime = new Date().getTime()
     const dataCollectionTime = dataCollectionEndTime - startTime
     // eslint-disable-next-line
