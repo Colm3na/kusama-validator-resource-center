@@ -45,7 +45,7 @@
     "core-js": "^3.8.0",
     "nuxt": "^2.14.9",
     "nuxt-clipboard2": "^0.2.1",
-    "sass": "^1.29.0",
+    "sass": "^1.30.0",
     "sass-loader": "^10.1.0",
     "vue-promised": "^1.2.2",
     "vue-scrollto": "^2.20.0",
