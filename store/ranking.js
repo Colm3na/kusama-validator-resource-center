@@ -135,7 +135,13 @@ export const actions = {
     ])
     validators = await Promise.all(
       validatorAddresses.map((authorityId) =>
-        api.derive.staking.account(authorityId)
+        api.derive.staking.query(authorityId, {
+          withDestination: true,
+          withExposure: true,
+          withLedger: true,
+          withNominations: true,
+          withPrefs: true,
+        })
       )
     )
     validators = await Promise.all(
@@ -381,7 +387,7 @@ export const actions = {
           ...validator,
         }
       })
-    // console.log(JSON.parse(JSON.stringify(ranking)))
+    console.log(JSON.parse(JSON.stringify(ranking)))
     context.commit('update', {
       ranking,
       eraHistory: eraIndexes,
