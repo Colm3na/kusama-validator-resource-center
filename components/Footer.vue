@@ -28,10 +28,11 @@ export default {
       Klaro,
     }
   },
-  created: () => {
+  mounted() {
     const kusamaValidatorsNetwork = decodeURIComponent(
       localStorage.getItem('kusamaValidatorsNetwork')
     )
+    console.log(this.$route.path)
     if (kusamaValidatorsNetwork.googleAnalytics) {
       this.$ga.enable()
     }
