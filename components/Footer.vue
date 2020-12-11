@@ -20,7 +20,7 @@ import commonMixin from '@/mixins/commonMixin.js'
 import * as Klaro from 'klaro'
 import { klaroConfig } from '@/klaro.config.js'
 Klaro.setup(klaroConfig)
-
+console.log(Klaro)
 export default {
   mixins: [commonMixin],
   data() {

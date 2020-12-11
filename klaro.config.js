@@ -11,11 +11,11 @@ export const klaroConfig = {
 
   // How Klaro should store the user's preferences. It can be either 'cookies'
   // or 'localStorage'. If undefined, Klaro will use cookies.
-  klaroStorage: 'localStorage',
+  storageMethod: 'localStorage',
 
   // You can customize the name of the cookie that Klaro uses for storing
   // user consent decisions. If undefined, Klaro will use 'klaro'.
-  cookieName: 'kusamaValidatorsNetworkCookie',
+  storageName: 'kusamaValidatorsNetwork',
 
   // You can also set a custom expiration time for the Klaro cookie.
   // By default, it will expire after 120 days.
