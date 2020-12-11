@@ -10,7 +10,7 @@
         >Terms and Conditions</a
       >
       ·
-      <a href="#" target="_blank">Cookie Settings</a>
+      <a href="#" target="_blank" onclick="return klaro.show();">Cookie Settings</a>
     </div>
   </footer>
 </template>

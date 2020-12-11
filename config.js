@@ -14,6 +14,7 @@ export const config = {
   favicon: 'img/favicon/kusama.ico',
   baseURL: '/kusama-validator-resource-center/',
   showValSelectorInPage: true, // set to false when showing val selector in header
+  googleAnalytics: 'G-1Z6YQTB6TK',
 }
 
 // kusama production
