@@ -1,21 +1,16 @@
-// By default, Klaro will load the config from  a global "klaroConfig" variable.
-// You can change this by specifying the "data-config" attribute on your
-// script take, e.g. like this:
-// <script src="klaro.js" data-config="myConfigVariableName" />
-// You can also disable auto-loading of the consent notice by adding
-// data-no-auto-load=true to the script tag.
-var klaroConfig = {
+// https://kiprotect.com/docs/klaro/annotated-configuration
+export const klaroConfig = {
   // You can customize the ID of the DIV element that Klaro will create
   // when starting up. If undefined, Klaro will use 'klaro'.
   elementID: 'klaro',
 
   // How Klaro should store the user's preferences. It can be either 'cookies'
   // or 'localStorage'. If undefined, Klaro will use cookies.
-  klaroStorage: 'localStorage',
+  storageMethod: 'localStorage',
 
   // You can customize the name of the cookie that Klaro uses for storing
   // user consent decisions. If undefined, Klaro will use 'klaro'.
-  cookieName: 'kusamaValidatorsNetworkCookie',
+  storageName: 'kusamaValidatorsNetwork',
 
   // You can also set a custom expiration time for the Klaro cookie.
   // By default, it will expire after 120 days.
@@ -39,7 +34,7 @@ var klaroConfig = {
   // use the value given in the global "lang" variable. If that does
   // not exist, it will use the value given in the "lang" attribute of your
   // HTML tag. If that also doesn't exist, it will use 'en'.
-  //lang: 'en',
+  // lang: 'en',
 
   // You can overwrite existing translations and add translations for your
   // app descriptions and purposes. See `src/translations.yml` for a full
@@ -63,7 +58,7 @@ var klaroConfig = {
   },
 
   // This is a list of third-party apps that Klaro will manage for you.
-  apps: [
+  services: [
     {
       // Each app should have a unique (and short) name.
       name: 'googleAnalytics',
@@ -92,8 +87,8 @@ var klaroConfig = {
         // is not the current domain. If you do not set these values
         // properly, the cookie can't be deleted by Klaro
         // (there is no way to access the path or domain of a cookie in JS)
-        [/^_ga.*$/, '/', 'validators.kusama.network'], //for the production version
-        ['_gid', '/', 'validators.kusama.network'], //for the production version
+        [/^_ga.*$/, '/', 'validators.kusama.network'], // for the production version
+        ['_gid', '/', 'validators.kusama.network'], // for the production version
       ],
 
       // If "required" is set to true, Klaro will not allow this app to

@@ -10,18 +10,22 @@
         >Terms and Conditions</a
       >
       ·
-      <a href="#" target="_blank" onclick="return klaro.show();">Cookie Settings</a>
+      <a href="#" @click.prevent="Klaro.show()">Cookie Settings</a>
     </div>
   </footer>
 </template>
 <script>
 import { config } from '@/config.js'
 import commonMixin from '@/mixins/commonMixin.js'
+import * as Klaro from 'klaro'
+import { klaroConfig } from '@/klaro.config.js'
+Klaro.setup(klaroConfig)
 export default {
   mixins: [commonMixin],
   data() {
     return {
       config,
+      Klaro,
     }
   },
 }

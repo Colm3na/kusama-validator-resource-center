@@ -51,8 +51,19 @@
     <div v-if="identity.web" class="row">
       <div class="col-md-3">Web:</div>
       <div class="col-md-9">
-        <a :href="identity.web" target="_blank">
-          {{ identity.web }}
+        <a
+          :href="
+            identity.web.indexOf('://') === -1
+              ? 'http://' + identity.web
+              : identity.web
+          "
+          target="_blank"
+        >
+          {{
+            identity.web.indexOf('://') === -1
+              ? 'http://' + identity.web
+              : identity.web
+          }}
         </a>
       </div>
     </div>

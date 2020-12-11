@@ -27,38 +27,13 @@ export default {
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: config.favicon }],
-    script: [
-      {
-        type: 'text/javascript',
-        src: 'js/klaro.config.js',
-        defer: true,
-      },
-      {
-        type: 'text/javascript',
-        src: 'js/klaro.js',
-        defer: true,
-      },
-      {
-        type: 'opt-in',
-        ['data-src']: `https://www.googletagmanager.com/gtag/js?id=${config.googleAnalytics}`,
-        ['data-type']: 'application/javascript',
-        ['data-name']: 'googleAnalytics',
-        async: true,
-      },
-      {
-        type: 'opt-in',
-        innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${config.googleAnalytics}', {'cookie_domain': 'validators.kusama.network'});`,
-        ['data-type']: 'application/javascript',
-        ['data-name']: 'googleAnalytics',
-      },
-    ],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [config.theme, '@assets/scss/custom.scss'],
+  css: [config.theme],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['@/plugins/vue-typed-text.js'],
+  plugins: ['@/plugins/vue-typed-text.js', '@/plugins/vue-analytics.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,

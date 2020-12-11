@@ -14,7 +14,7 @@ export const config = {
   favicon: 'img/favicon/kusama.ico',
   baseURL: '/',
   showValSelectorInPage: true, // set to false when showing val selector in header
-  googleAnalytics: 'G-1Z6YQTB6TK',
+  googleAnalytics: 'UA-143271520-2',
 }
 
 // kusama production
@@ -35,6 +35,7 @@ export const config = {
 //   favicon: 'img/favicon/kusama.ico',
 //   baseURL: '/',
 //   showValSelectorInPage: true, // set to false when showing val selector in header
+//   googleAnalytics: 'UA-143271520-2',
 // }
 
 // polkadot
