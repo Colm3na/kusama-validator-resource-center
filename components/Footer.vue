@@ -28,13 +28,5 @@ export default {
       Klaro,
     }
   },
-  mounted() {
-    const kusamaValidatorsNetwork = decodeURIComponent(
-      localStorage.getItem('kusamaValidatorsNetwork')
-    )
-    if (kusamaValidatorsNetwork.googleAnalytics) {
-      this.$ga.enable()
-    }
-  },
 }
 </script>
