@@ -496,11 +496,18 @@ a.nav-link {
 }
 
 // Klaro.js buttons
+.klaro {
+  --green1: #{$primary2};
+}
+
 .cm-btn {
   font-family: 'Visuelt-Light', 'Helvetica', 'Arial', sans-serif;
+}
+
+.cm-btn-success {
+  background: $primary2 !important;
 }
 
 .cm-toggle-all {
   display: none !important;
 }
-
