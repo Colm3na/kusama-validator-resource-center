@@ -28,5 +28,22 @@ export default {
       Klaro,
     }
   },
+  created() {
+    const vm = this
+    setInterval(function () {
+      const kusamaValidatorsNetwork = JSON.parse(
+        decodeURIComponent(localStorage.getItem('kusamaValidatorsNetwork'))
+      )
+      if (kusamaValidatorsNetwork) {
+        if (kusamaValidatorsNetwork.googleAnalytics) {
+          vm.$ga.enable()
+        } else {
+          vm.$ga.disable()
+        }
+      } else {
+        vm.$ga.disable()
+      }
+    }, 10000)
+  },
 }
 </script>
