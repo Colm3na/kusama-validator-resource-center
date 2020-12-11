@@ -27,31 +27,6 @@ export default {
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: config.favicon }],
-    script: [
-      {
-        type: 'text/javascript',
-        src: 'js/klaro.config.js',
-        defer: true,
-      },
-      {
-        type: 'text/javascript',
-        src: 'js/klaro.js',
-        defer: true,
-      },
-      {
-        type: 'opt-in',
-        ['data-src']: `https://www.googletagmanager.com/gtag/js?id=${config.googleAnalytics}`,
-        ['data-type']: 'application/javascript',
-        ['data-name']: 'googleAnalytics',
-        async: true,
-      },
-      {
-        type: 'opt-in',
-        innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${config.googleAnalytics}', {'cookie_domain': 'validators.kusama.network'});`,
-        ['data-type']: 'application/javascript',
-        ['data-name']: 'googleAnalytics',
-      },
-    ],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -78,6 +53,8 @@ export default {
     ],
     // https://github.com/nuxt-community/fontawesome-module
     '@nuxtjs/fontawesome',
+    // https://google-analytics.nuxtjs.org/
+    '@nuxtjs/google-analytics',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -102,6 +79,10 @@ export default {
       solid: true,
       regular: true,
     },
+  },
+  googleAnalytics: {
+    id: config.googleAnalytics,
+    disabled: true,
   },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
