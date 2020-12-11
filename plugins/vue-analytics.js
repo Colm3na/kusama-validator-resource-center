@@ -9,10 +9,12 @@ export default ({ app }) => {
   Vue.use(VueAnalytics, {
     id: config.googleAnalytics,
     router: app.router,
-    disabled: !kusamaValidatorsNetwork.googleAnalytics,
-    debug: {
-      enabled: true,
-    },
+    disabled: kusamaValidatorsNetwork
+      ? !kusamaValidatorsNetwork.googleAnalytics
+      : true,
+    // debug: {
+    //   enabled: true,
+    // },
     fields: {
       cookieDomain: 'validators.kusama.network',
     },
