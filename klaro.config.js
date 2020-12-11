@@ -1,9 +1,4 @@
-// By default, Klaro will load the config from  a global "klaroConfig" variable.
-// You can change this by specifying the "data-config" attribute on your
-// script take, e.g. like this:
-// <script src="klaro.js" data-config="myConfigVariableName" />
-// You can also disable auto-loading of the consent notice by adding
-// data-no-auto-load=true to the script tag.
+// https://kiprotect.com/docs/klaro/annotated-configuration
 export const klaroConfig = {
   // You can customize the ID of the DIV element that Klaro will create
   // when starting up. If undefined, Klaro will use 'klaro'.
@@ -63,7 +58,7 @@ export const klaroConfig = {
   },
 
   // This is a list of third-party apps that Klaro will manage for you.
-  apps: [
+  services: [
     {
       // Each app should have a unique (and short) name.
       name: 'googleAnalytics',
