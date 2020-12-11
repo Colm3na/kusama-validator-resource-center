@@ -44,7 +44,7 @@
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.8.1",
     "klaro": "^0.7.10",
-    "nuxt": "^2.14.10",
+    "nuxt": "^2.14.11",
     "nuxt-clipboard2": "^0.2.1",
     "sass": "^1.30.0",
     "sass-loader": "^10.1.0",
