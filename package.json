@@ -34,7 +34,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
-    "@nuxtjs/axios": "^5.12.3",
+    "@nuxtjs/axios": "^5.12.4",
     "@polkadot/api": "^2.10.1",
     "@polkadot/extension-dapp": "^0.35.1",
     "@polkadot/vue-identicon": "^0.60.1",
