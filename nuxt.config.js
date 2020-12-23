@@ -83,7 +83,20 @@ export default {
   axios: {},
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {},
+  build: {
+    extend(config) {
+      if (config.resolve.extensions) {
+        config.resolve.extensions.push('.mjs')
+      } else {
+        config.resolve.extensions = ['.mjs']
+      }
+      config.module.rules.push({
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      })
+    },
+  },
 
   module: {
     rules: [
