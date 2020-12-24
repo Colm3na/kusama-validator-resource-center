@@ -43,7 +43,7 @@
     "bootstrap-vue": "^2.21.1",
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.8.1",
-    "klaro": "^0.7.10",
+    "klaro": "^0.7.11",
     "nuxt": "^2.14.12",
     "nuxt-clipboard2": "^0.2.1",
     "sass": "^1.30.0",
