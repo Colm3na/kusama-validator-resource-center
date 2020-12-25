@@ -197,7 +197,7 @@ export const actions = {
       }
     })
     const participateInGovernance = []
-    proposals.forEach(({ seconds, image: { proposer } }) => {
+    proposals.forEach(({ seconds, proposer }) => {
       participateInGovernance.push(proposer.toString())
       seconds.forEach((accountId) =>
         participateInGovernance.push(accountId.toString())
