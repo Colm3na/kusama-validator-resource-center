@@ -136,10 +136,10 @@ export const actions = {
     validators = await Promise.all(
       validatorAddresses.map((authorityId) =>
         api.derive.staking.query(authorityId, {
-          withDestination: true,
+          withDestination: false,
           withExposure: true,
           withLedger: true,
-          withNominations: true,
+          withNominations: false,
           withPrefs: true,
         })
       )
