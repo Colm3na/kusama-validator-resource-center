@@ -187,6 +187,7 @@ export const actions = {
       (total, num) => total + num,
       0
     )
+    const erasPointsJSON = JSON.parse(JSON.stringify(erasPoints))
     const eraPointsAverage = eraPointsHistoryTotalsSum / numActiveValidators
     const nominations = nominators.map(([key, nominations]) => {
       const nominator = key.toHuman()[0]
@@ -316,10 +317,19 @@ export const actions = {
         const claimedRewards = JSON.parse(
           JSON.stringify(validator.stakingLedger.claimedRewards)
         )
-        const payoutHistory =
-          JSON.parse(JSON.stringify(eraIndexes)).map((eraIndex) =>
-            claimedRewards.some((claimedEra) => claimedEra === eraIndex)
-          ) || []
+        const payoutHistory = []
+        erasPointsJSON.forEach((eraPoints) => {
+          const eraIndex = eraPoints.era
+          let eraPayoutState = 'inactive'
+          if (Object.keys(eraPoints.validators).includes(stashAddress)) {
+            if (claimedRewards.includes(eraIndex)) {
+              eraPayoutState = 'paid'
+            } else {
+              eraPayoutState = 'pending'
+            }
+          }
+          payoutHistory.push(eraPayoutState)
+        })
         const payoutRating = getPayoutRating(payoutHistory)
 
         // stake
@@ -518,7 +528,7 @@ function getCommissionRating(commission, commissionHistory) {
 }
 
 function getPayoutRating(payoutHistory) {
-  const pendingEras = payoutHistory.filter((era) => !era).length
+  const pendingEras = payoutHistory.filter((era) => era === 'pending').length
   if (pendingEras <= config.erasPerDay) {
     return 3
   } else if (pendingEras <= 3 * config.erasPerDay) {
