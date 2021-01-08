@@ -219,6 +219,9 @@ export const actions = {
         // stash
         const stashAddress = validator.stashId.toString()
 
+        // controller
+        const controllerAddress = validator.controllerId.toString()
+
         // identity
         const {
           verifiedIdentity,
@@ -319,7 +322,7 @@ export const actions = {
         )
         const payoutHistory = []
         erasPointsJSON.forEach((eraPoints) => {
-          const eraIndex = eraPoints.era
+          const eraIndex = parseInt(eraPoints.era)
           let eraPayoutState = 'inactive'
           if (Object.keys(eraPoints.validators).includes(stashAddress)) {
             if (claimedRewards.includes(eraIndex)) {
@@ -365,6 +368,7 @@ export const actions = {
           verifiedIdentity,
           identityRating,
           stashAddress,
+          controllerAddress,
           partOfCluster,
           clusterName,
           clusterMembers,
