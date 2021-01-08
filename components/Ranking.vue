@@ -6,7 +6,7 @@
     <div v-else class="ranking">
       <!-- Selected validators  -->
       <b-row v-if="config.showValSelectorInPage">
-        <b-col offset="9" cols="3">
+        <b-col offset-lg="9" cols="12" lg="3">
           <b-dropdown
             id="selected-validators"
             ref="selectedValidators"
@@ -58,9 +58,23 @@
           />
         </b-col>
       </b-row>
-      <p class="mb-2 text-secondary">
-        Search results: {{ filteredRows }} / {{ ranking.length }}
-      </p>
+      <b-row>
+        <b-col cols="6">
+          <p class="mb-2 text-secondary">
+            Search results: {{ filteredRows }} / {{ ranking.length }}
+          </p>
+        </b-col>
+        <b-col cols="6" class="text-right">
+          <JsonCSV
+            :data="rankingJSON"
+            class="csv-export mb-2"
+            name="kusama_validator_ranking.csv"
+          >
+            <font-awesome-icon icon="file-csv" />
+            export to CSV file
+          </JsonCSV>
+        </b-col>
+      </b-row>
       <b-table
         dark
         hover
@@ -239,6 +253,7 @@
 </template>
 <script>
 import { BigNumber } from 'bignumber.js'
+import JsonCSV from 'vue-json-csv'
 import Loading from '@/components/Loading.vue'
 import Identicon from '@/components/Identicon.vue'
 import VerifiedIcon from '@/components/VerifiedIcon.vue'
@@ -252,6 +267,7 @@ export default {
     VerifiedIcon,
     SelectedValidators,
     Loading,
+    JsonCSV,
   },
   mixins: [commonMixin],
   data() {
@@ -328,6 +344,14 @@ export default {
       return this.$store.state.ranking.loading
     },
     ranking() {
+      return this.$store.state.ranking.list.map((validator) => {
+        return {
+          ...validator,
+          selected: this.isSelected(validator.stashAddress),
+        }
+      })
+    },
+    rankingJSON() {
       return this.$store.state.ranking.list.map((validator) => {
         return {
           ...validator,
