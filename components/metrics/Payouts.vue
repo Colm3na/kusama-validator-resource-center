@@ -50,7 +50,7 @@ export default {
   computed: {
     pending() {
       return this.payoutHistory.filter((era) => era === 'pending').length
-    }
+    },
   },
   props: {
     payoutHistory: {
