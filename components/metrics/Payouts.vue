@@ -22,12 +22,14 @@
       </div>
     </div>
     <div class="description">
-      <p v-if="rating === 3">Payout detected in the last 24 hours</p>
+      <p v-if="rating === 3">
+        Very good, validator has {{ pending }} unclaimed era rewards
+      </p>
       <p v-else-if="rating === 2">
-        Last payout happened between 1-3 days before
+        Good, validator has {{ pending }} unclaimed era rewards
       </p>
       <p v-else-if="rating === 1">
-        Last payout happened between 3-7 days before
+        Neutral, validator has {{ pending }} unclaimed era rewards
       </p>
       <p v-else>No payouts detected in the last week</p>
     </div>
@@ -35,9 +37,20 @@
 </template>
 <script>
 import Rating from '@/components/Rating.vue'
+import { config } from '@/config.js'
 export default {
   components: {
     Rating,
+  },
+  data() {
+    return {
+      config,
+    }
+  },
+  computed: {
+    pending() {
+      return this.payoutHistory.filter((era) => era === 'pending').length
+    }
   },
   props: {
     payoutHistory: {

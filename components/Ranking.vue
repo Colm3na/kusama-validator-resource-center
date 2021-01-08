@@ -388,6 +388,9 @@ export default {
     if (this.$cookies.get(`${config.name}-exclude`)) {
       this.exclude = this.$cookies.get(`${config.name}-exclude`)
     }
+    if (this.$cookies.get(`${config.name}-filter`)) {
+      this.filter = this.$cookies.get(`${config.name}-filter`)
+    }
     // update ranking every 30 min
     this.polling = setInterval(async () => {
       // eslint-disable-next-line
@@ -424,6 +427,11 @@ export default {
     onFiltered(filteredItems) {
       this.rows = filteredItems.length
       this.currentPage = 1
+      // update cookie
+      this.$cookies.set(`${config.name}-filter`, this.filter, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7,
+      })
     },
     sortCompare(aRow, bRow, key) {
       const a = aRow[key]
