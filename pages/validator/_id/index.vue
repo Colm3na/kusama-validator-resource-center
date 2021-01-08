@@ -121,7 +121,7 @@
             <div class="col-md-6 mb-5">
               <Payouts
                 :payout-history="validator.payoutHistory"
-                :rating="validator.payoutsRating"
+                :rating="validator.payoutRating"
               />
             </div>
           </div>

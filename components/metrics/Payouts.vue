@@ -35,7 +35,6 @@
 </template>
 <script>
 import Rating from '@/components/Rating.vue'
-import { config } from '@/config.js'
 export default {
   components: {
     Rating,
@@ -45,18 +44,9 @@ export default {
       type: Array,
       default: () => [],
     },
-  },
-  computed: {
-    rating() {
-      const pendingEras = this.payoutHistory.filter((era) => !era).length
-      if (pendingEras <= config.erasPerDay) {
-        return 3
-      } else if (pendingEras <= 3 * config.erasPerDay) {
-        return 2
-      } else if (pendingEras < 7 * config.erasPerDay) {
-        return 1
-      }
-      return 0
+    rating: {
+      type: Number,
+      default: () => 0,
     },
   },
 }
