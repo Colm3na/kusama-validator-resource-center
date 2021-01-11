@@ -42,16 +42,6 @@ export default {
   components: {
     Rating,
   },
-  data() {
-    return {
-      config,
-    }
-  },
-  computed: {
-    pending() {
-      return this.payoutHistory.filter((era) => era === 'pending').length
-    },
-  },
   props: {
     payoutHistory: {
       type: Array,
@@ -60,6 +50,16 @@ export default {
     rating: {
       type: Number,
       default: () => 0,
+    },
+  },
+  data() {
+    return {
+      config,
+    }
+  },
+  computed: {
+    pending() {
+      return this.payoutHistory.filter((era) => era === 'pending').length
     },
   },
 }
