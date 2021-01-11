@@ -12,7 +12,7 @@ export const config = {
   identiconTheme: 'polkadot',
   logo: 'img/logo/kusama.svg',
   favicon: 'img/favicon/kusama.ico',
-  baseURL: '/kusama-validator-resource-center/',
+  baseURL: '/',
   showValSelectorInPage: true, // set to false when showing val selector in header
   googleAnalytics: 'UA-143271520-2',
 }
