@@ -12,9 +12,13 @@
       <font-awesome-icon icon="check" />
       Neutral
     </span>
-    <span v-else class="text-danger">
+    <span v-else-if="rating === 0" class="text-danger">
       <font-awesome-icon icon="times" />
       Bad
+    </span>
+    <span v-else class="text-secondary">
+      <font-awesome-icon :icon="['fas', 'spinner']" class="fa-pulse" />
+      Loading...
     </span>
   </div>
 </template>
@@ -23,7 +27,7 @@ export default {
   props: {
     rating: {
       type: Number,
-      default: () => 0,
+      default: () => -1,
     },
   },
 }

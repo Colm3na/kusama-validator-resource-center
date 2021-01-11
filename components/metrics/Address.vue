@@ -60,7 +60,7 @@ export default {
     return {
       createdAtBlock: undefined,
       parentCreatedAtBlock: undefined,
-      rating: 0,
+      rating: -1,
       loading: true,
     }
   },
@@ -99,6 +99,8 @@ export default {
                 vm.rating = 2
               } else if (best <= (vm.blockHeight / 4) * 3) {
                 vm.rating = 1
+              } else {
+                vm.rating = 0
               }
               vm.loading = false
             })
