@@ -35,7 +35,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@nuxtjs/axios": "^5.12.5",
-    "@polkadot/api": "^3.3.2",
+    "@polkadot/api": "^3.4.1",
     "@polkadot/extension-dapp": "^0.36.1",
     "@polkadot/vue-identicon": "^0.60.1",
     "@vue/composition-api": "^1.0.0-beta.25",
