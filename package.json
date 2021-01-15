@@ -38,7 +38,7 @@
     "@polkadot/api": "^3.4.1",
     "@polkadot/extension-dapp": "^0.36.1",
     "@polkadot/vue-identicon": "^0.60.1",
-    "@vue/composition-api": "^1.0.0-beta.25",
+    "@vue/composition-api": "^1.0.0-beta.26",
     "bignumber.js": "^9.0.1",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.21.2",
