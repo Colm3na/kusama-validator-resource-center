@@ -1,0 +1,19 @@
+// centrifuge
+export const config = {
+  name: 'centrifuge',
+  title: 'Validator resource center and ranking',
+  nodeWs: 'wss://fullnode.centrifuge.io',
+  denom: 'RAD',
+  addressPrefix: 36,
+  tokenDecimals: 18,
+  historySize: 28, // 1 week
+  erasPerDay: 1,
+  polkascanAPI: '', // no trailing slash
+  theme: '@/assets/scss/themes/centrifuge.scss',
+  identiconTheme: 'substrate',
+  logo: 'img/logo/centrifuge.png',
+  favicon: 'img/favicon/centrifuge.ico',
+  baseURL: '/',
+  showValSelectorInPage: false,
+  googleAnalytics: '',
+}

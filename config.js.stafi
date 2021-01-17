@@ -1,0 +1,19 @@
+// stafi
+export const config = {
+  name: 'stafi',
+  title: 'Validator resource center and ranking',
+  nodeWs: 'wss://mainnet-rpc.stafi.io',
+  denom: 'FIS',
+  addressPrefix: 20,
+  tokenDecimals: 12,
+  historySize: 28, // 1 week
+  erasPerDay: 4,
+  polkascanAPI: '', // no trailing slash
+  theme: '@/assets/scss/themes/stafi.scss',
+  identiconTheme: 'substrate',
+  logo: 'img/logo/stafi.png',
+  favicon: 'img/favicon/stafi.ico',
+  baseURL: '/',
+  showValSelectorInPage: false,
+  googleAnalytics: '',
+}

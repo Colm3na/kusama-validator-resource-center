@@ -127,7 +127,7 @@ How it's rated?
 - Very good: validator is backing a council member and is participating in a current proposal or referendum (as proposer or voter)
 
 
-## Customize
+## Suppor for other networks
 
 This dapp can be used to provide a validator ranking for every substrate based network that uses this pallets:
 
@@ -136,7 +136,17 @@ This dapp can be used to provide a validator ranking for every substrate based n
 - Democracy
 - Council
 
-Currently supports Kusama, Polkadot, Edgeware and Stafi out of the box, you only need to uncomment the desired network config in `config.js`.
+Currently supports:
+
+- Kusama
+- Polkadot
+- Edgeware
+- Stafi
+- Centrifuge
+- Darwinia
+- Darwinia Crab
+
+Just rename `config.js.network` to `config.js`.
 
 ### Steps to use it for another network
 
@@ -149,6 +159,7 @@ Currently supports Kusama, Polkadot, Edgeware and Stafi out of the box, you only
 7. Configure GitHub Pages and execute `yarn generate && yarn deploy`
 8. Enjoy!
 
+A PR with the changes would be awesome ;-)
 
 ### Some screenshots
 
