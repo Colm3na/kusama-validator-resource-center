@@ -1,4 +1,4 @@
-// polkadot
+// https://polkadot.network/
 export const config = {
   name: 'polkadot',
   title: 'Validator resource center and ranking',

@@ -1,4 +1,4 @@
-// darwinia
+// https://darwinia.network/
 export const config = {
   name: 'darwinia',
   title: 'Validator resource center and ranking',
@@ -11,8 +11,8 @@ export const config = {
   polkascanAPI: '', // no trailing slash
   theme: '@/assets/scss/themes/darwinia.scss',
   identiconTheme: 'substrate',
-  logo: 'img/logo/darwinia.svg',
-  favicon: 'img/favicon/darwinia.ico',
+  logo: 'img/logo/darwinia.png',
+  favicon: 'img/favicon/darwinia.png',
   baseURL: '/',
   showValSelectorInPage: true, // set to false when showing val selector in header
   googleAnalytics: '',

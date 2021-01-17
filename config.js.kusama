@@ -1,4 +1,4 @@
-// kusama
+// https://kusama.network/
 export const config = {
   name: 'kusama',
   title: 'Validator resource center and ranking',

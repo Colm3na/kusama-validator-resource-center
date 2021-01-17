@@ -1,4 +1,4 @@
-// edgeware
+// https://edgewa.re/
 export const config = {
   name: 'edgeware',
   title: 'Validator resource center and ranking',

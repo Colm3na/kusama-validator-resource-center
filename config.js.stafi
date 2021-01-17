@@ -1,4 +1,4 @@
-// stafi
+// https://www.stafi.io/
 export const config = {
   name: 'stafi',
   title: 'Validator resource center and ranking',
