@@ -1,16 +1,36 @@
 <template>
   <footer class="footer">
     <div class="container text-center text-muted">
-      &copy; {{ new Date().getFullYear() }} {{ capitalize(config.name) }} ·
-      <a href="https://kusama.network/privacy" target="_blank"
-        >Privacy Policy</a
-      >
+      &copy; {{ new Date().getFullYear() }} {{ capitalize(config.name) }} VRC -
+      Developed by
+      <a href="https://polkastats.io" target="_blank">PolkaStats</a>
       ·
-      <a href="https://kusama.network/terms" target="_blank"
-        >Terms and Conditions</a
-      >
+      <nuxt-link to="/terms">Terms of use</nuxt-link>
+      ·
+      <nuxt-link to="/privacy">Privacy policy</nuxt-link>
       ·
       <a href="#" @click.prevent="Klaro.show()">Cookie Settings</a>
+      ·
+      <a
+        href="https://github.com/Colm3na/kusama-validator-resource-center/"
+        target="_blank"
+        >Fork me on GitHub!</a
+      >
+      <p class="mb-0">
+        <a href="https://kusama.network" target="_blank" title="Kusama">
+          <img class="logo" alt="Kusama" src="img/logo/kusama.svg" />
+        </a>
+      </p>
+      <p class="mt-0">
+        Project funded by
+        <a
+          href="https://kusama.polkassembly.io/motion/217"
+          target="_blank"
+          title="Kusama Treasury"
+        >
+          Kusama Treasury</a
+        >
+      </p>
     </div>
   </footer>
 </template>

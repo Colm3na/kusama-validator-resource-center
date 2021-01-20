@@ -1,4 +1,3 @@
-// https://kusama.network/
 export const config = {
   name: 'kusama',
   title: 'Validator resource center and ranking',
@@ -9,11 +8,11 @@ export const config = {
   historySize: 28, // 1 week
   erasPerDay: 4,
   polkascanAPI: 'https://explorer-31.polkascan.io/kusama/api/v1', // no trailing slash
-  theme: '@/assets/scss/themes/kusama.scss',
+  theme: '@/assets/scss/themes/kusama-production.scss',
   identiconTheme: 'polkadot',
   logo: 'img/logo/kusama.svg',
   favicon: 'img/favicon/kusama.ico',
   baseURL: '/',
-  showValSelectorInPage: false, // set to false when showing val selector in header
-  googleAnalytics: '',
+  showValSelectorInPage: true, // set to false when showing val selector in header
+  googleAnalytics: 'UA-143271520-2',
 }
