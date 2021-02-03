@@ -11513,10 +11513,10 @@ vue-clipboard2@0.2.1:
   dependencies:
     clipboard "^2.0.0"
 
-vue-demi@^0.4.3:
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.4.5.tgz#ea422a4468cb6321a746826a368a770607f87791"
-  integrity sha512-51xf1B6hV2PfjnzYHO/yUForFCRQ49KS8ngQb5T6l1HDEmfghTFtsxtRa5tbx4eqQsH76ll/0gIxuf1gei0ubw==
+vue-demi@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.6.0.tgz#e314282f704cb449119b9fd002cbbc0e39f591fe"
+  integrity sha512-8GEJa0mHJpYJeGeq5fD1pJct2kfdl30PHfmL1NaJ97mgKPyKojlIRt/3inGBK4Y0ylCI6T5vOo3chwpqDOq/Hw==
 
 vue-eslint-parser@^7.1.1:
   version "7.1.1"
@@ -11592,12 +11592,12 @@ vue-no-ssr@^1.1.1:
   resolved "https://registry.yarnpkg.com/vue-no-ssr/-/vue-no-ssr-1.1.1.tgz#875f3be6fb0ae41568a837f3ac1a80eaa137b998"
   integrity sha512-ZMjqRpWabMPqPc7gIrG0Nw6vRf1+itwf0Itft7LbMXs2g3Zs/NFmevjZGN1x7K3Q95GmIjWbQZTVerxiBxI+0g==
 
-vue-promised@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/vue-promised/-/vue-promised-2.0.2.tgz#138e33c0bf1786d6920601a52f6632b9820b46d0"
-  integrity sha512-ku2+nN8j2dCq9uEgey2bNJe4rpnimfMcjFNPhv0Yw/GDId5qAl+pV009Qfoj557//sxnK7XIIjwPe93Mh7EK2w==
+vue-promised@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/vue-promised/-/vue-promised-2.0.3.tgz#57e7543d1a51994787f21e0d5373c68b0a347d60"
+  integrity sha512-VeSWIHSMAxw3jJ94SAPZqcGnTaDBfAk/xdsHdWQ8a0I/xJdjkEXR94Ne8sMxgbQudt/ZPnXPAy7ws4XDjwWcxw==
   dependencies:
-    vue-demi "^0.4.3"
+    vue-demi "^0.6.0"
 
 vue-router@^3.4.9:
   version "3.4.9"
