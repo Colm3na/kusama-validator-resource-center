@@ -7474,10 +7474,10 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
-klaro@^0.7.11:
-  version "0.7.11"
-  resolved "https://registry.yarnpkg.com/klaro/-/klaro-0.7.11.tgz#851a3c1914c85d52648445fdf79e962ca9fd87af"
-  integrity sha512-JtorfBsssKiguXVarKs0LOei4WhPpYJflUFUJzRhs5n2Z0yWhIAWTVm1MSOPKtykZbIQXU9VuO6vVTZaLBa9bg==
+klaro@^0.7.12:
+  version "0.7.12"
+  resolved "https://registry.yarnpkg.com/klaro/-/klaro-0.7.12.tgz#fdb925e8c284f8e283cc7373f79152d86a37f25d"
+  integrity sha512-PCsSu+1uU0Oo0R4liLeVNeU6aciKZoDrifJqrarwPK8vk/fdjiSnCorD2flIjnQH/0SSWbyp1XcbJp3uBtsTiw==
 
 kleur@^3.0.3:
   version "3.0.3"
