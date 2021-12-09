@@ -53,7 +53,7 @@
     "vue-promised": "^2.0.3",
     "vue-scrollto": "^2.20.0",
     "vue-typed-text": "^1.0.5",
-    "vuelidate": "^0.7.6"
+    "vuelidate": "^0.7.7"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^5.15.2",
