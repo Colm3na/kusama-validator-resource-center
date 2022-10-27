@@ -41,7 +41,7 @@
     "@vue/composition-api": "^1.0.0-rc.1",
     "bignumber.js": "^9.0.1",
     "bootstrap": "^4.6.0",
-    "bootstrap-vue": "^2.21.2",
+    "bootstrap-vue": "^2.23.1",
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.8.3",
     "klaro": "^0.7.11",
